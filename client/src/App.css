@@ -1,0 +1,80 @@
+body {
+  font-family: "Raleway", sans-serif;
+}
+
+/* Colors */
+.dark-blue {
+  color: #5244a3;
+}
+
+/* Main container */
+.container-fluid {
+  max-width: 1490px;
+  padding: 0px;
+  margin: 0px 20px;
+}
+
+#map-spinner {
+  width: 10rem;
+  height: 10rem;
+  display: block;
+  position: fixed;
+  z-index: 1;
+  top: calc(50% - (10rem / 2));
+  right: calc(50% - (10rem / 2));
+}
+
+/* Navbar */
+#welcome-message {
+  display: inline;
+  padding-top: 0.5rem;
+  color: #fff;
+}
+
+/* Countries */
+.rsm-svg {
+  border: 1.5px solid #d3d7db;
+  border-radius: 6px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.country-info {
+  border-radius: 6px;
+  background-color: #4cb69f;
+  color: #faf9f8;
+  margin-bottom: 0.6rem;
+  padding: 1rem;
+  text-align: center;
+  height: 28.3rem;
+  font-size: 1.3rem;
+}
+
+#country-info-spinner {
+  margin-top: 5rem;
+  width: 5rem;
+  height: 5rem;
+}
+
+.countries-list {
+  max-height: 28rem;
+  width: 100%;
+  overflow: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.countries-list::-webkit-scrollbar {
+  /* WebKit */
+  width: 0;
+  height: 0;
+}
+
+/* Authentication */
+.auth-container {
+  max-width: 400px;
+  border: 1.5px solid #d3d7db ;
+  border-radius: 6px;
+  padding: 2rem;
+}
