@@ -2,9 +2,17 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { logoutUser } from "../actions/authActions";
+import { logoutUser } from "../actions/userActions";
 
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from "reactstrap";
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink
+} from "reactstrap";
 
 class AppNavbar extends Component {
   constructor(props) {
@@ -30,7 +38,7 @@ class AppNavbar extends Component {
 
   render() {
     // Check if user is authenticated
-    if (this.props.auth.isAuthenticated) {
+    if (this.props.user.isAuthenticated) {
       return (
         // If authenticated
         <Navbar color="dark" dark expand="md">
@@ -40,7 +48,9 @@ class AppNavbar extends Component {
             <Nav className="ml-auto" navbar>
               <span id="welcome-message">Welcome, </span>
               <NavItem>
-                <NavLink href="/profile/">{this.props.auth.user.name}</NavLink>
+                <NavLink href="/profile/">
+                  {this.props.user.currentUser.name}
+                </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="/" onClick={this.handleLogout}>
@@ -60,6 +70,9 @@ class AppNavbar extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
+                <NavLink href="/affiliate/">Affiliate</NavLink>
+              </NavItem>
+              <NavItem>
                 <NavLink href="/login/">Login</NavLink>
               </NavItem>
               <NavItem>
@@ -75,12 +88,12 @@ class AppNavbar extends Component {
 
 // Set propTypes
 Map.propTypes = {
-  auth: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired
 };
 
 // Map state to props
 const mapStateToProps = state => ({
-  auth: state.auth
+  user: state.user
 });
 
 // Connect to store

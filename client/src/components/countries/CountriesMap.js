@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { MAP_COLORS } from "../../consts";
 
 import geographyObject from "../../static/world-10m.json";
-import { ComposableMap, ZoomableGroup, Geographies, Geography } from "react-simple-maps";
+import {
+  ComposableMap,
+  ZoomableGroup,
+  Geographies,
+  Geography
+} from "react-simple-maps";
 import { geoAzimuthalEqualArea } from "d3-geo";
 import { scaleLinear } from "d3-scale";
 
@@ -36,7 +41,12 @@ class CountriesMap extends Component {
 
     return (
       <Col xs="12" md="8">
-        <ComposableMap projection={this.projection} projectionConfig={{ scale: 1135 }} width={1176} height={661}>
+        <ComposableMap
+          projection={this.projection}
+          projectionConfig={{ scale: 1135 }}
+          width={1176}
+          height={661}
+        >
           <ZoomableGroup center={[-6, 60]}>
             <Geographies geography={geographyObject} disableOptimization>
               {(geographies, projection) =>

@@ -80,6 +80,12 @@ function validateLogin(input) {
   };
 }
 
+// Routes
+// GET api/users -- Get all users
+router.get("/", (req, res) => {
+  User.find().then(users => res.json(users));
+});
+
 // POST api/users/register -- Register user
 router.post("/register", (req, res) => {
   // Form validation
@@ -98,6 +104,7 @@ router.post("/register", (req, res) => {
       const user = new User({
         name: req.body.name,
         email: req.body.email,
+        university: req.body.university,
         password: req.body.password,
         role: req.body.role
       });

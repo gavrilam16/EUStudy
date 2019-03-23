@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { EUR } from "../../consts";
+
 import { Table } from "reactstrap";
 
 class CountriesList extends Component {
@@ -9,19 +11,27 @@ class CountriesList extends Component {
     // Sort array by selectedData
     switch (this.props.selectedData) {
       case "firstCycleFees": {
-        countries.sort((a, b) => (a.properties.firstCycleFees < b.properties.firstCycleFees ? 1 : -1));
+        countries.sort((a, b) =>
+          a.properties.firstCycleFees < b.properties.firstCycleFees ? 1 : -1
+        );
         break;
       }
       case "secondCycleFees": {
-        countries.sort((a, b) => (a.properties.secondCycleFees < b.properties.secondCycleFees ? 1 : -1));
+        countries.sort((a, b) =>
+          a.properties.secondCycleFees < b.properties.secondCycleFees ? 1 : -1
+        );
         break;
       }
       case "needBasedGrants": {
-        countries.sort((a, b) => (a.properties.needBasedGrants < b.properties.needBasedGrants ? 1 : -1));
+        countries.sort((a, b) =>
+          a.properties.needBasedGrants < b.properties.needBasedGrants ? 1 : -1
+        );
         break;
       }
       case "meritBasedGrants": {
-        countries.sort((a, b) => (a.properties.meritBasedGrants < b.properties.meritBasedGrants ? 1 : -1));
+        countries.sort((a, b) =>
+          a.properties.meritBasedGrants < b.properties.meritBasedGrants ? 1 : -1
+        );
         break;
       }
       default:
@@ -39,7 +49,7 @@ class CountriesList extends Component {
               <tr>
                 <th>#</th>
                 <th>Country</th>
-                <th>Value</th>
+                <th>{EUR}</th>
               </tr>
             </thead>
           </Table>

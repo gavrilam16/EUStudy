@@ -13,7 +13,9 @@ const store = createStore(
   compose(
     applyMiddleware(...middleware),
     // For the Redux Dev Tools extension
-    (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__()) || compose
+    (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
+      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__()) ||
+      compose
   )
 );
 

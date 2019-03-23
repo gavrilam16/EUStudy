@@ -5,7 +5,8 @@ const path = require("path");
 const passport = require("passport");
 
 const countries = require("./routes/api/countries");
-const users = require('./routes/api/users');
+const universities = require("./routes/api/universities");
+const users = require("./routes/api/users");
 
 const app = express();
 
@@ -21,7 +22,7 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 
-  // Passport middleware
+// Passport middleware
 app.use(passport.initialize());
 
 // Passport config
@@ -29,7 +30,18 @@ require("./config/passport")(passport);
 
 // Use Routes
 app.use("/api/countries", countries);
+app.use("/api/universities", universities);
 app.use("/api/users", users);
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS");
+  next();
+});
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {

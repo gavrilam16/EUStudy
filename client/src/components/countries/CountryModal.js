@@ -4,7 +4,16 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addCountry, modifyCountry } from "../../actions/countryActions";
 
-import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from "reactstrap";
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Form,
+  FormGroup,
+  Label,
+  Input
+} from "reactstrap";
 
 class CountryModal extends Component {
   constructor(props) {
@@ -116,7 +125,9 @@ class CountryModal extends Component {
         </Button>
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggle}>
           {/* Modal Title */}
-          <ModalHeader toggle={this.toggle}>Add data about {this.props.selectedCountry.NAME}</ModalHeader>
+          <ModalHeader toggle={this.toggle}>
+            Add data about {this.props.selectedCountry.NAME}
+          </ModalHeader>
           <ModalBody>
             <Form onSubmit={this.handleSubmit}>
               {/* EU Member input */}

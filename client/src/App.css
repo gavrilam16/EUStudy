@@ -74,7 +74,7 @@ body {
 /* Authentication */
 .auth-container {
   max-width: 400px;
-  border: 1.5px solid #d3d7db ;
+  border: 1.5px solid #d3d7db;
   border-radius: 6px;
   padding: 2rem;
 }

@@ -1,5 +1,11 @@
 import axios from "axios";
-import { GET_COUNTRIES, ADD_COUNTRY, MODIFY_COUNTRY, DELETE_COUNTRY, COUNTRIES_FETCHING } from "./types";
+import {
+  GET_COUNTRIES,
+  ADD_COUNTRY,
+  MODIFY_COUNTRY,
+  DELETE_COUNTRY,
+  COUNTRIES_FETCHING
+} from "./types";
 
 // Get countries
 export const getCountries = () => dispatch => {

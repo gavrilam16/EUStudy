@@ -27,3 +27,6 @@ export const MAP_COLORS = [
   "#5244a3",
   "#362d6b"
 ];
+
+// Euro Smybol
+export const EUR = '€';

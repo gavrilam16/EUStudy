@@ -1,12 +1,14 @@
 import { combineReducers } from "redux";
 
-import authReducer from "./authReducer";
-import errorReducer from "./errorReducer";
+import userReducer from "./userReducer";
 import countryReducer from "./countryReducer";
+import universityReducer from "./universityReducer";
+import errorReducer from "./errorReducer";
 
 // Create rootReducer
 export default combineReducers({
-  auth: authReducer,
-  errors: errorReducer,
-  country: countryReducer
+  user: userReducer,
+  country: countryReducer,
+  university: universityReducer,
+  errors: errorReducer
 });

@@ -8,7 +8,7 @@ const Country = require("../../models/Country");
 // GET api/countries -- Get all countries
 router.get("/", (req, res) => {
   Country.find()
-    // Sort countries by names
+    // Sort countries by name
     .sort({ name: 1 })
     .then(countries => res.json(countries));
 });
@@ -34,7 +34,7 @@ router.post("/", (req, res, next) => {
   });
 });
 
-// PUT api/items/:id -- Modify a country
+// PUT api/countries/:id -- Modify a country
 router.put("/:id", (req, res, next) => {
   Country.findByIdAndUpdate(req.params.id, req.body, err => {
     if (err) {
@@ -44,7 +44,7 @@ router.put("/:id", (req, res, next) => {
   });
 });
 
-// DELETE api/items/:id -- Delete a country
+// DELETE api/countries/:id -- Delete a country
 router.delete("/:id", (req, res, next) => {
   Country.findByIdAndRemove(req.params.id, err => {
     if (err) {

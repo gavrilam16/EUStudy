@@ -2,10 +2,11 @@ import React, { Component } from "react";
 
 import AppNavbar from "./components/AppNavbar";
 import MainPage from "./components/MainPage";
-import Register from "./components/auth/Register";
-import Login from "./components/auth/Login";
-import PrivateRoute from "./components/auth/PrivateRoute";
-import ProfilePage from "./components/auth/ProfilePage";
+import Affiliate from "./components/users/Affiliate";
+import Register from "./components/users/Register";
+import Login from "./components/users/Login";
+import PrivateRoute from "./components/users/PrivateRoute";
+import ProfilePage from "./components/users/ProfilePage";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -17,7 +18,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 
-import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { setCurrentUser, logoutUser } from "./actions/userActions";
 
 import "./App.css";
 
@@ -41,13 +42,14 @@ class App extends Component {
         window.location.href = "./login";
       }
     }
-    
+
     return (
       <Provider store={store}>
         <Router>
           <div className="App">
             <AppNavbar />
             <Route exact path="/" component={MainPage} />
+            <Route exact path="/affiliate" component={Affiliate} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Switch>

@@ -44,7 +44,11 @@ class ConfirmModal extends Component {
               OK
             </Button>
             {/* Cancel button */}
-            <Button className="d-inline ml-1" color="dark" onClick={this.toggle}>
+            <Button
+              className="d-inline ml-1"
+              color="dark"
+              onClick={this.toggle}
+            >
               Cancel
             </Button>
           </ModalBody>

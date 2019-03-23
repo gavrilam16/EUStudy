@@ -3,15 +3,20 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import { EUR } from "../../consts";
+
 import { Spinner } from "reactstrap";
 
 class CountryInfo extends Component {
   render() {
     const country = this.props.selectedCountry;
-    
+
     // Rules for displaying the EU flag
     const displayEuFlag = country.euMember ? (
-      <img src="https://www.countryflags.io/EU/flat/64.png" alt="country flag" />
+      <img
+        src="https://www.countryflags.io/EU/flat/64.png"
+        alt="country flag"
+      />
     ) : null;
 
     // Show spinner if fetching from database
@@ -24,22 +29,29 @@ class CountryInfo extends Component {
       );
       // If no country is selected display message
     } else if (country.firstCycleFees === undefined) {
-      return <div className="country-info">Choose a country from the map or from the drop-down list</div>;
+      return (
+        <div className="country-info">
+          Choose a country from the map or from the drop-down list
+        </div>
+      );
       // If the country is marked as added show data
     } else if (this.props.isAdded) {
       return (
         <div className="country-info">
           <h4 className="font-weight-bold">{country.name}</h4>
-          <img src={`https://www.countryflags.io/${country.ISO_A2}/flat/64.png`} alt="country flag" />
+          <img
+            src={`https://www.countryflags.io/${country.ISO_A2}/flat/64.png`}
+            alt="country flag"
+          />
           {displayEuFlag}
           <div>
             <hr className="m-2" />
             <h6 className="lead font-weight-bold">Study Fees</h6>
             <h6 className="text-left">
-              First cycle: <b>{country.firstCycleFees}</b> &#8364;
+              First cycle: <b>{country.firstCycleFees}</b> {EUR}
             </h6>
             <h6 className="text-left">
-              Second cycle: <b>{country.secondCycleFees}</b> &#8364;
+              Second cycle: <b>{country.secondCycleFees}</b> {EUR}
             </h6>
             <h6 className="text-left">
               <small>{country.payingFees}</small>
@@ -47,10 +59,10 @@ class CountryInfo extends Component {
             <hr className="m-2" />
             <h6 className="lead font-weight-bold">Grants</h6>
             <h6 className="text-left">
-              Need-based: <b>{country.needBasedGrants}</b> &#8364;
+              Need-based: <b>{country.needBasedGrants}</b> {EUR}
             </h6>
             <h6 className="text-left">
-              Merit-based: <b>{country.meritBasedGrants}</b> &#8364;
+              Merit-based: <b>{country.meritBasedGrants}</b> {EUR}
             </h6>
             <h6 className="text-left">
               <small>{country.receivingGrants}</small>
