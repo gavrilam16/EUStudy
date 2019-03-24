@@ -40,7 +40,6 @@ class LoginModal extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-
     // Get errors
     if (nextProps.error) {
       this.setState({
@@ -73,6 +72,8 @@ class LoginModal extends Component {
 
     // Send login request via loginUser action
     this.props.loginUser(userInput);
+
+    this.toggle();
   };
 
   render() {
@@ -134,7 +135,7 @@ class LoginModal extends Component {
                 Log In
               </Button>
               {/* Open register modal */}
-                Don't have an account? <RegisterModal />
+              Don't have an account? <RegisterModal />
             </Form>
           </ModalBody>
         </Modal>

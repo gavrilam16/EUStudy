@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { POSITIONS } from "../../consts";
+
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { registerUser } from "../../actions/userActions";
@@ -32,6 +34,7 @@ class RegisterModal extends Component {
         properties: {}
       },
       selectedUniversity: {},
+      selectedPosition: {},
       name: "",
       email: "",
       password: "",
@@ -49,7 +52,6 @@ class RegisterModal extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-
     // Get errors
     if (nextProps.error) {
       this.setState({
@@ -70,6 +72,19 @@ class RegisterModal extends Component {
     this.setState({ [e.target.id]: e.target.value });
   };
 
+  // When user selects a country from drop-down
+  handleSelectCountry = e => {
+    const seekedCountry = e.target.value;
+    // Search country by name
+    const foundCountry = geographyObject.objects.ne_10m_admin_0_countries.geometries.filter(
+      e => seekedCountry === e.properties.NAME
+    );
+    // Set country as selectedCountry
+    this.setState({
+      selectedCountry: foundCountry[0]
+    });
+  };
+
   // When user selects an university from drop-down
   handleSelectUniversity = e => {
     const seekedUniversity = e.target.value;
@@ -83,16 +98,14 @@ class RegisterModal extends Component {
     });
   };
 
-  // When user selects a country from drop-down
-  handleSelectCountry = e => {
-    const seekedCountry = e.target.value;
-    // Search country by name
-    const foundCountry = geographyObject.objects.ne_10m_admin_0_countries.geometries.filter(
-      e => seekedCountry === e.properties.NAME
-    );
-    // Set country as selectedCountry
+  // When user selects a position from drop-down
+  handleSelectPosition = e => {
+    const seekedPosition = e.target.value;
+    // Search positions by name
+    const foundPosition = POSITIONS.filter(e => seekedPosition === e.forScreen);
+    // Set position as selectedPosition
     this.setState({
-      selectedCountry: foundCountry[0]
+      selectedPosition: foundPosition[0]
     });
   };
 
@@ -107,12 +120,13 @@ class RegisterModal extends Component {
       password: this.state.password,
       passwordConfirm: this.state.passwordConfirm,
       university: this.state.selectedUniversity.name,
-      role: "none"
+      role: this.state.selectedPosition.name
     };
 
     // Send register request via registerUser action
     this.props.registerUser(newUser, this.props.history);
 
+    this.toggle();
     this.mounted = false;
   };
 
@@ -181,8 +195,8 @@ class RegisterModal extends Component {
                 />
                 <span className="text-danger">{errors.password}</span>
               </FormGroup>
+              {/* Confirm password input */}
               <FormGroup>
-                {/* Confirm password input */}
                 <Label for="passwordConfirm">Confirm Password *</Label>
                 <Input
                   type="password"
@@ -247,14 +261,30 @@ class RegisterModal extends Component {
                 </Input>
                 <span className="text-danger">{errors.affiliated}</span>
               </FormGroup>
+              {/* Position drop-down selector*/}
+              <FormGroup>
+                <Input
+                  type="select"
+                  name="selectPosition"
+                  id="selectPosition"
+                  defaultValue={this.state.selectedPosition.name}
+                  onChange={e => this.handleSelectPosition(e)}
+                >
+                  <option value="" hidden>
+                    {" "}
+                    Select position{" "}
+                  </option>
+                  {POSITIONS.map((position, i) => (
+                    <option key={i}>{position.forScreen}</option>
+                  ))}
+                </Input>
+              </FormGroup>
               {/* Sign Up button */}
               <Button className="mb-3" color="dark" block>
                 Sign Up
               </Button>
               {/* Open login modal */}
-              <p>
-                Already have an account? <LoginModal name="Login"/>
-              </p>
+              Already have an account? <LoginModal name="Login" />
             </Form>
           </ModalBody>
         </Modal>

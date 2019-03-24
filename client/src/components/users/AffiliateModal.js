@@ -96,11 +96,15 @@ class AffiliateModal extends Component {
     const newUniversity = {
       name: this.state.selectedUniversity.name,
       countryCode: this.state.selectedUniversity.alpha_two_code,
+      website: this.state.selectedUniversity.web_pages[0],
       enabled: false
     };
 
     // Send add request via addUniversity action
     this.props.addUniversity(newUniversity);
+
+    this.toggle();
+
   };
 
   render() {

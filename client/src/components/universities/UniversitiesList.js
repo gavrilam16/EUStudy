@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { EUR } from "../../consts";
+
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getUniversities } from "../../actions/universityActions";
@@ -34,13 +36,39 @@ class UniversitiesList extends Component {
       <Row id="university-panel">
         {universities
           .filter(university => university.enabled)
-          .map(university => (
+          .map((university, i) => (
             // University card
-            <Card className="university-card">
-              <CardHeader>{university.name}</CardHeader>
+            <Card key={i} className="university-card">
+              <CardHeader>
+                <img
+                  src={`https://www.countryflags.io/${
+                    university.countryCode
+                  }/flat/32.png`}
+                  alt="country flag"
+                />{" "}
+                {university.name}
+              </CardHeader>
               <CardBody>
-                <CardTitle>Special Title Treatment</CardTitle>
-                <CardText>{university.foundingYear}</CardText>
+                <CardTitle>
+                  <a
+                    href={`${university.website}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    alt="university website"
+                  >
+                    {`${university.website}`
+                      .replace(/^https?:\/\//i, "")
+                      .replace(/\/$/, "")}
+                  </a>
+                </CardTitle>
+                <CardText>
+                  <span className="text-left d-block">
+                    First cycle: <b>{university.firstCycleFees}</b> {EUR}
+                  </span>
+                  <span className="text-left d-block">
+                    Second cycle: <b>{university.secondCycleFees}</b> {EUR}
+                  </span>
+                </CardText>
                 <Button>Learn More</Button>
               </CardBody>
             </Card>

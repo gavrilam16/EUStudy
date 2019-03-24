@@ -23,7 +23,11 @@ router.post("/", (req, res, next) => {
       const university = new University({
         name: req.body.name,
         countryCode: req.body.countryCode,
+        website: req.body.website,
         foundingYear: req.body.foundingYear,
+        firstCycleFees: req.body.firstCycleFees,
+        secondCycleFees: req.body.secondCycleFees,
+        subscriptionUntil: req.body.subscriptionUntil,
         enabled: req.body.enabled
       });
 

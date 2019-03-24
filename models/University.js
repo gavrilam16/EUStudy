@@ -11,8 +11,25 @@ const UniversitySchema = new Schema({
     type: String,
     required: true
   },
-  foundingYear: {
+    foundingYear: {
     type: Number
+  },
+  website: {
+    type: String
+  },
+  description: {
+    type: String
+  },
+  firstCycleFees: {
+    type: Number,
+    default: 0
+  },
+  secondCycleFees: {
+    type: Number,
+    default: 0
+  },
+  subscriptionUntil: {
+    type: Date
   },
   enabled: {
     type: Boolean,

@@ -30,3 +30,23 @@ export const MAP_COLORS = [
 
 // Euro Smybol
 export const EUR = '€';
+
+// Positions
+export const POSITIONS = [
+  {
+    name: "faculty",
+    forScreen: "Faculty"
+  },
+  {
+    name: "futureStudent",
+    forScreen: "Future Student"
+  },
+  {
+    name: "student",
+    forScreen: "Student"
+  },
+  {
+    name: "alumnus",
+    forScreen: "Alumnus"
+  }
+];
