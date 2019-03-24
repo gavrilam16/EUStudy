@@ -39,7 +39,7 @@ body {
     z-index: 1;
     opacity: 0.95;
   }
-}  
+}
 
 .rsm-svg {
   border: 1px solid #d3d7db;
@@ -93,12 +93,4 @@ body {
 
 #university-panel {
   background-color: #f0eff7;
-}
-
-/* Authentication */
-.auth-container {
-  max-width: 400px;
-  border: 1px solid #d3d7db;
-  border-radius: 3px;
-  padding: 2rem;
 }

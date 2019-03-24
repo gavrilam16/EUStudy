@@ -4,6 +4,10 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logoutUser } from "../actions/userActions";
 
+import RegisterModal from "./users/RegisterModal";
+import LoginModal from "./users/LoginModal";
+import AffiliateModal from "./users/AffiliateModal";
+
 import {
   Collapse,
   Navbar,
@@ -53,6 +57,9 @@ class AppNavbar extends Component {
                 </NavLink>
               </NavItem>
               <NavItem>
+                <AffiliateModal />
+              </NavItem>
+              <NavItem>
                 <NavLink href="/" onClick={this.handleLogout}>
                   Log Out
                 </NavLink>
@@ -70,13 +77,13 @@ class AppNavbar extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/affiliate/">Affiliate</NavLink>
+                <LoginModal name="Affiliate" />
               </NavItem>
               <NavItem>
-                <NavLink href="/login/">Login</NavLink>
+                <LoginModal name="Login" />
               </NavItem>
               <NavItem>
-                <NavLink href="/register/">Sign Up</NavLink>
+                <RegisterModal />
               </NavItem>
             </Nav>
           </Collapse>

@@ -1,18 +1,20 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
 
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import { registerUser } from "../../actions/userActions";
+
+import LoginModal from "./LoginModal";
 
 import universityObject from "../../static/world_universities_and_domains.json";
 import geographyObject from "../../static/world-10m.json";
 
 import {
-  Container,
-  Row,
-  Col,
   Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  NavLink,
   Form,
   FormGroup,
   Label,
@@ -21,10 +23,11 @@ import {
 
 import classnames from "classnames";
 
-class Register extends Component {
-  constructor() {
-    super();
+class RegisterModal extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
+      modal: false,
       selectedCountry: {
         properties: {}
       },
@@ -38,13 +41,15 @@ class Register extends Component {
   }
 
   componentDidMount() {
-    // If user is logged in navigates to Register, it should be redirected to Profile Page
-    if (this.props.user.isAuthenticated) {
-      this.props.history.push("/profile");
-    }
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   componentWillReceiveProps(nextProps) {
+
     // Get errors
     if (nextProps.error) {
       this.setState({
@@ -53,11 +58,16 @@ class Register extends Component {
     }
   }
 
+  // On modal toggle
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  };
+
   // Get user input in state
   handleChange = e => {
-    this.setState({
-      [e.target.id]: e.target.value
-    });
+    this.setState({ [e.target.id]: e.target.value });
   };
 
   // When user selects an university from drop-down
@@ -86,12 +96,7 @@ class Register extends Component {
     });
   };
 
-  // Get user input in state
-  handleChange = e => {
-    this.setState({ [e.target.id]: e.target.value });
-  };
-
-  // When user clicks the Sign Up button
+  // When user clicks the Log In button
   handleSubmit = e => {
     e.preventDefault();
 
@@ -107,15 +112,23 @@ class Register extends Component {
 
     // Send register request via registerUser action
     this.props.registerUser(newUser, this.props.history);
+
+    this.mounted = false;
   };
 
   render() {
     const { errors } = this.state;
 
     return (
-      <Container className="mt-5 auth-container ">
-        <Row>
-          <Col>
+      <div className="d-inline">
+        {/* Modal button -- Text from parent component */}
+        <NavLink href="#" onClick={this.toggle} className="d-inline">
+          Sign Up
+        </NavLink>
+        <Modal isOpen={this.state.modal} toggle={this.toggle}>
+          {/* Title from parent component */}
+          <ModalHeader toggle={this.toggle}>Sign Up</ModalHeader>
+          <ModalBody>
             <Form onSubmit={this.handleSubmit}>
               {/* Name input */}
               <FormGroup>
@@ -194,7 +207,7 @@ class Register extends Component {
                   onChange={e => this.handleSelectCountry(e)}
                 >
                   <option value="" hidden>
-                    Choose a country *
+                    Choose a country
                   </option>
                   {geographyObject.objects.ne_10m_admin_0_countries.geometries.map(
                     ({ properties }) =>
@@ -222,7 +235,7 @@ class Register extends Component {
                 >
                   <option value="" hidden>
                     {" "}
-                    Choose an university *{" "}
+                    Choose an university{" "}
                   </option>
                   {universityObject.map((university, i) =>
                     // Display only countries with store data
@@ -238,20 +251,20 @@ class Register extends Component {
               <Button className="mb-3" color="dark" block>
                 Sign Up
               </Button>
-              {/* Link to login */}
+              {/* Open login modal */}
               <p>
-                Already have an account? <Link to="/login">Log in</Link>
+                Already have an account? <LoginModal name="Login"/>
               </p>
             </Form>
-          </Col>
-        </Row>
-      </Container>
+          </ModalBody>
+        </Modal>
+      </div>
     );
   }
 }
 
 // Set propTypes
-Register.propTypes = {
+RegisterModal.propTypes = {
   registerUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   error: PropTypes.object.isRequired
@@ -267,4 +280,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { registerUser }
-)(withRouter(Register));
+)(RegisterModal);

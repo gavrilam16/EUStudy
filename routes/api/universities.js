@@ -22,7 +22,7 @@ router.post("/", (req, res, next) => {
     } else {
       const university = new University({
         name: req.body.name,
-        countrCode: req.body.countryCode,
+        countryCode: req.body.countryCode,
         foundingYear: req.body.foundingYear,
         enabled: req.body.enabled
       });

@@ -1,16 +1,17 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
 import { loginUser } from "../../actions/userActions";
 
+import RegisterModal from "./RegisterModal";
+
 import {
-  Container,
-  Row,
-  Col,
   Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  NavLink,
   Form,
   FormGroup,
   Label,
@@ -19,10 +20,11 @@ import {
 
 import classnames from "classnames";
 
-class Login extends Component {
-  constructor() {
-    super();
+class LoginModal extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
+      modal: false,
       email: "",
       password: "",
       errors: {}
@@ -30,17 +32,14 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    // If user is logged in navigates to Login, it should be redirected to Profile Page
-    if (this.props.user.isAuthenticated) {
-      this.props.history.push("/profile");
-    }
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   componentWillReceiveProps(nextProps) {
-    // If user has just logged in, it shoud be redirected to the root page
-    if (nextProps.user.isAuthenticated) {
-      this.props.history.push("/");
-    }
 
     // Get errors
     if (nextProps.error) {
@@ -49,6 +48,13 @@ class Login extends Component {
       });
     }
   }
+
+  // On modal toggle
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  };
 
   // Get user input in state
   handleChange = e => {
@@ -73,9 +79,15 @@ class Login extends Component {
     const { errors } = this.state;
 
     return (
-      <Container className="mt-5 auth-container">
-        <Row>
-          <Col>
+      <div className="d-inline">
+        {/* Modal button -- Text from parent component */}
+        <NavLink href="#" onClick={this.toggle} className="d-inline">
+          {this.props.name}
+        </NavLink>
+        <Modal isOpen={this.state.modal} toggle={this.toggle}>
+          {/* Title from parent component */}
+          <ModalHeader toggle={this.toggle}>Login</ModalHeader>
+          <ModalBody>
             <Form onSubmit={this.handleSubmit}>
               {/* Email input */}
               <FormGroup>
@@ -121,20 +133,18 @@ class Login extends Component {
               <Button className="mb-3" color="dark" block>
                 Log In
               </Button>
-              {/* Link to register */}
-              <p>
-                Don't have an account? <Link to="/register">Sign Up</Link>
-              </p>
+              {/* Open register modal */}
+                Don't have an account? <RegisterModal />
             </Form>
-          </Col>
-        </Row>
-      </Container>
+          </ModalBody>
+        </Modal>
+      </div>
     );
   }
 }
 
 // Set propTypes
-Login.propTypes = {
+LoginModal.propTypes = {
   loginUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   error: PropTypes.object.isRequired
@@ -150,4 +160,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { loginUser }
-)(Login);
+)(LoginModal);

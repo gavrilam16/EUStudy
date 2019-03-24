@@ -2,9 +2,6 @@ import React, { Component } from "react";
 
 import AppNavbar from "./components/AppNavbar";
 import MainPage from "./components/MainPage";
-import Affiliate from "./components/users/Affiliate";
-import Register from "./components/users/Register";
-import Login from "./components/users/Login";
 import PrivateRoute from "./components/users/PrivateRoute";
 import ProfilePage from "./components/users/ProfilePage";
 
@@ -49,9 +46,6 @@ class App extends Component {
           <div className="App">
             <AppNavbar/>
             <Route exact path="/" component={MainPage} />
-            <Route exact path="/affiliate" component={Affiliate} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
             <Switch>
               <PrivateRoute exact path="/profile" component={ProfilePage} />
             </Switch>
