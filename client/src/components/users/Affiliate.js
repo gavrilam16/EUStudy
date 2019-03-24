@@ -47,9 +47,9 @@ class Affiliate extends Component {
 
   componentWillReceiveProps(nextProps) {
     // Get errors
-    if (nextProps.errors) {
+    if (nextProps.error) {
       this.setState({
-        errors: nextProps.errors
+        errors: nextProps.error
       });
     }
   }
@@ -89,28 +89,31 @@ class Affiliate extends Component {
   handleSubmit = async e => {
     e.preventDefault();
 
-    const newUniversity = {
-      name: this.state.selectedUniversity.name,
-      country_code: this.state.selectedUniversity.alpha_two_code,
-      enabled: false
+    // Get user input from state
+    const newUser = {
+      name: this.state.name,
+      email: this.state.email,
+      university: this.state.selectedUniversity.name,
+      password: this.state.password,
+      passwordConfirm: this.state.passwordConfirm,
+      role: "faculty"
     };
 
-    await this.props.addUniversity(newUniversity);
+    // Send register request via registerUser action
+    await this.props.registerUser(newUser, this.props.history);
 
     const { errors } = this.state;
-    if (!Object.keys(errors).length === 0) {
-      // Get user input from state
-      const newUser = {
-        name: this.state.name,
-        email: this.state.email,
-        university: this.state.selectedUniversity.name,
-        password: this.state.password,
-        passwordConfirm: this.state.passwordConfirm,
-        role: "faculty"
+    // Check if there were no errors adding the new user
+    if (Object.keys(errors).length !== 0) {
+      // Get university input from state
+      const newUniversity = {
+        name: this.state.selectedUniversity.name,
+        countryCode: this.state.selectedUniversity.alpha_two_code,
+        enabled: false
       };
 
-      // Send register request via registerUser action
-      this.props.registerUser(newUser, this.props.history);
+      // Send add request via addUniversity action
+      this.props.addUniversity(newUniversity);
     }
   };
 
@@ -124,7 +127,7 @@ class Affiliate extends Component {
             <Form onSubmit={this.handleSubmit}>
               {/* Country drop-down selector*/}
               <FormGroup>
-                <Input
+                <Input required
                   type="select"
                   name="selectCountry"
                   id="selectCountry"
@@ -148,14 +151,14 @@ class Affiliate extends Component {
               </FormGroup>
               {/* University drop-down selector*/}
               <FormGroup>
-                <Input
+                <Input required
                   type="select"
                   name="selectUniversity"
                   id="selectUniversity"
                   className={classnames("", {
-                    invalid: errors.university
+                    invalid: errors.affiliated
                   })}
-                  error={errors.university}
+                  error={errors.affiliated}
                   defaultValue={this.state.selectedUniversity.name}
                   onChange={e => this.handleSelectUniversity(e)}
                 >
@@ -171,7 +174,7 @@ class Affiliate extends Component {
                     ) : null
                   )}
                 </Input>
-                <span className="text-danger">{errors.university}</span>
+                <span className="text-danger">{errors.affiliated}</span>
               </FormGroup>
               {/* Name input */}
               <FormGroup>
@@ -261,13 +264,13 @@ Affiliate.propTypes = {
   registerUser: PropTypes.func.isRequired,
   addUniversity: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  error: PropTypes.object.isRequired
 };
 
 // Map state to props
 const mapStateToProps = state => ({
   user: state.user,
-  errors: state.errors
+  error: state.error
 });
 
 // Connect to store

@@ -43,9 +43,9 @@ class Login extends Component {
     }
 
     // Get errors
-    if (nextProps.errors) {
+    if (nextProps.error) {
       this.setState({
-        errors: nextProps.errors
+        errors: nextProps.error
       });
     }
   }
@@ -73,7 +73,7 @@ class Login extends Component {
     const { errors } = this.state;
 
     return (
-      <Container className="mt-5 auth-container ">
+      <Container className="mt-5 auth-container">
         <Row>
           <Col>
             <Form onSubmit={this.handleSubmit}>
@@ -137,13 +137,13 @@ class Login extends Component {
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  error: PropTypes.object.isRequired
 };
 
 // Map state to props
 const mapStateToProps = state => ({
   user: state.user,
-  errors: state.errors
+  error: state.error
 });
 
 // Connect to store

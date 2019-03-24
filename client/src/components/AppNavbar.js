@@ -41,7 +41,7 @@ class AppNavbar extends Component {
     if (this.props.user.isAuthenticated) {
       return (
         // If authenticated
-        <Navbar color="dark" dark expand="md">
+        <Navbar color="dark" dark expand="md" fixed="top">
           <NavbarBrand href="/">Study in Europe</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
@@ -64,7 +64,7 @@ class AppNavbar extends Component {
     } else {
       return (
         // If unauthenticated
-        <Navbar color="dark" dark expand="md">
+        <Navbar color="dark" dark expand="md" fixed="top">
           <NavbarBrand href="/">Study in Europe</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>

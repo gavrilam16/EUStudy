@@ -8,7 +8,15 @@ import {
   modifyUniversity
 } from "../../actions/universityActions";
 
-import { Row, Col, FormGroup, Input, CustomInput, Table, Spinner } from "reactstrap";
+import {
+  Row,
+  Col,
+  FormGroup,
+  Input,
+  CustomInput,
+  Table,
+  Spinner
+} from "reactstrap";
 
 class AdminPanel extends Component {
   constructor() {
@@ -49,7 +57,7 @@ class AdminPanel extends Component {
     // Set rules for showing data
     const showData = !this.props.university.isFetching ? (
       // Show users data if Users is selected
-      this.state.selectedData === "Users"  ? (
+      this.state.selectedData === "Users" ? (
         <Table>
           <thead>
             <tr>
@@ -85,7 +93,7 @@ class AdminPanel extends Component {
           <tbody>
             {universities.map(university => (
               <tr key={university._id}>
-              {console.log(university._id)}
+                {console.log(university._id)}
                 <th scope="row">{i++}</th>
                 <td>{university.name}</td>
                 <td>
@@ -102,9 +110,10 @@ class AdminPanel extends Component {
             ))}
           </tbody>
         </Table>
-      )) : (
-          <Spinner color="info" />
-      );
+      )
+    ) : (
+      <Spinner color="info" />
+    );
     return (
       <Row className="mt-5">
         <Col>
@@ -112,6 +121,7 @@ class AdminPanel extends Component {
             <Input
               type="select"
               name="selectedData"
+              className="custom-select"
               id="selectedData"
               defaultValue={this.state.selectedData}
               onChange={e => this.handleSelect(e)}
@@ -134,13 +144,13 @@ AdminPanel.propTypes = {
   getUniversities: PropTypes.func.isRequired,
   modifyUniversity: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  university: PropTypes.object.isRequired,
+  university: PropTypes.object.isRequired
 };
 
 // Map state to props
 const mapStateToProps = state => ({
   user: state.user,
-  university: state.university,
+  university: state.university
 });
 
 // Connect to store

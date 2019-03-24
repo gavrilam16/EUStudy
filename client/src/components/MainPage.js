@@ -6,7 +6,15 @@ import PropTypes from "prop-types";
 import { getCountries, deleteCountry } from "../actions/countryActions";
 
 import geographyObject from "../static/world-10m.json";
-import { Container, Row, Col, Spinner, FormGroup, Input } from "reactstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Spinner,
+  Form,
+  FormGroup,
+  Input
+} from "reactstrap";
 import uuid from "uuid";
 
 import CountryModal from "./countries/CountryModal";
@@ -14,6 +22,7 @@ import CountriesMap from "./countries/CountriesMap";
 import CountriesList from "./countries/CountriesList";
 import CountryInfo from "./countries/CountryInfo";
 import ConfirmModal from "./ConfirmModal";
+import UniversitiesList from "./universities/UniversitiesList";
 
 class MainPage extends Component {
   constructor(props) {
@@ -144,7 +153,8 @@ class MainPage extends Component {
     // Rules for Add, Modify, Delete buttons display
     const displayButtons =
       // If admin and a country is selected
-      this.props.user.currentUser.role === "admin" && this.state.selectedCountry.properties.NAME !== undefined ?  (
+      this.props.user.currentUser.role === "admin" &&
+      this.state.selectedCountry.properties.NAME !== undefined ? (
         [
           // If the country is marked as isAdded show Delete and Modify button
           this.state.isAdded ? (
@@ -188,20 +198,52 @@ class MainPage extends Component {
     } else {
       return (
         <Container className="container-fluid">
-          <Row className="mt-5">
-            <Col xs="12" md="2">
-              {/* Data drop-down selector */}
-              <FormGroup>
-                <Input
-                  type="select"
-                  name="selectedData"
-                  id="selectedData"
-                  onChange={e => this.handleSelectData(e)}
-                >
-                  {displayDataDropDownOptions}
-                </Input>
-              </FormGroup>
+          <Row id="country-panel-top">
+            <Col xs={12} md={{ size: 4, offset: 6 }}>
+              <Form inline>
+                {/* Data drop-down selector */}
+                <FormGroup className="country-selectors">
+                  <Input
+                    type="select"
+                    name="selectedData"
+                    className="custom-select"
+                    id="selectedData"
+                    onChange={e => this.handleSelectData(e)}
+                  >
+                    {displayDataDropDownOptions}
+                  </Input>
+                </FormGroup>
+                {/* Country drop-down selector*/}
+                <FormGroup className="pl-2 country-selectors">
+                  <Input
+                    type="select"
+                    name="selectCountry"
+                    className="custom-select"
+                    id="selectCountry"
+                    value={this.state.selectedCountry.properties.name}
+                    onChange={e => this.handleSelectCountry(e)}
+                  >
+                    <option value="" hidden>
+                      {" "}
+                      Choose a country{" "}
+                    </option>
+                    {geographyObject.objects.ne_10m_admin_0_countries.geometries.map(
+                      ({ properties, i }) =>
+                        // Display only countries with store data
+                        properties._id !== undefined ? (
+                          <option key={properties._id}>
+                            {properties.name}
+                          </option>
+                        ) : null
+                    )}
+                  </Input>
+                </FormGroup>
+              </Form>
               {/* Countries List */}
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={2} className="d-none d-sm-block">
               <CountriesList
                 countries={
                   geographyObject.objects.ne_10m_admin_0_countries.geometries
@@ -214,29 +256,7 @@ class MainPage extends Component {
               selectedData={this.state.selectedData}
               callBack={this.handleClick}
             />
-            <Col xs="12" md="2">
-              {/* Country drop-down selector*/}
-              <FormGroup>
-                <Input
-                  type="select"
-                  name="selectCountry"
-                  id="selectCountry"
-                  value={this.state.selectedCountry.properties.name}
-                  onChange={e => this.handleSelectCountry(e)}
-                >
-                  <option value="" hidden>
-                    {" "}
-                    Choose a country{" "}
-                  </option>
-                  {geographyObject.objects.ne_10m_admin_0_countries.geometries.map(
-                    ({ properties, i }) =>
-                      // Display only countries with store data
-                      properties._id !== undefined ? (
-                        <option key={properties._id}>{properties.name}</option>
-                      ) : null
-                  )}
-                </Input>
-              </FormGroup>
+            <Col xs={12} md={2}>
               {/* Country Info*/}
               <CountryInfo
                 selectedCountry={this.state.selectedCountry.properties}
@@ -246,6 +266,7 @@ class MainPage extends Component {
               {displayButtons}
             </Col>
           </Row>
+          <UniversitiesList countryCode={this.state.selectedCountry.properties.ISO_A2} />
         </Container>
       );
     }

@@ -18,11 +18,11 @@ router.post("/", (req, res, next) => {
   // Check if user already exists
   University.findOne({ name: req.body.name }).then(university => {
     if (university) {
-      return res.status(400).json({ university: "University is already affiliated" });
+      return res.status(400).json({ affiliated: "University is already affiliated" });
     } else {
       const university = new University({
         name: req.body.name,
-        country_code: req.body.country_code,
+        countrCode: req.body.countryCode,
         foundingYear: req.body.foundingYear,
         enabled: req.body.enabled
       });

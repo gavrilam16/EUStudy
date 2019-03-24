@@ -10,5 +10,5 @@ export default combineReducers({
   user: userReducer,
   country: countryReducer,
   university: universityReducer,
-  errors: errorReducer
+  error: errorReducer
 });

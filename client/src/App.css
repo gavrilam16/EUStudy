@@ -32,16 +32,25 @@ body {
 }
 
 /* Countries */
+@media screen and (min-width: 600px) {
+  .country-selectors {
+    position: relative;
+    top: 3.5rem;
+    z-index: 1;
+    opacity: 0.95;
+  }
+}  
+
 .rsm-svg {
-  border: 1.5px solid #d3d7db;
-  border-radius: 6px;
+  border: 1px solid #d3d7db;
+  border-radius: 3px;
   width: 100%;
   height: auto;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
 
 .country-info {
-  border-radius: 6px;
+  border-radius: 3px;
   background-color: #4cb69f;
   color: #faf9f8;
   margin-bottom: 0.6rem;
@@ -51,6 +60,11 @@ body {
   font-size: 1.3rem;
 }
 
+#country-panel-top {
+  margin-top: 3.5rem;
+  margin-bottom: 0.5rem;
+}
+
 #country-info-spinner {
   margin-top: 5rem;
   width: 5rem;
@@ -58,7 +72,7 @@ body {
 }
 
 .countries-list {
-  max-height: 28rem;
+  max-height: 31.5rem;
   width: 100%;
   overflow: auto;
   scrollbar-width: none; /* Firefox */
@@ -71,10 +85,20 @@ body {
   height: 0;
 }
 
+/* Universities */
+.university-card {
+  width: 20rem;
+  margin: 1rem;
+}
+
+#university-panel {
+  background-color: #f0eff7;
+}
+
 /* Authentication */
 .auth-container {
   max-width: 400px;
-  border: 1.5px solid #d3d7db;
-  border-radius: 6px;
+  border: 1px solid #d3d7db;
+  border-radius: 3px;
   padding: 2rem;
 }

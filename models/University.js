@@ -7,7 +7,7 @@ const UniversitySchema = new Schema({
     type: String,
     required: true
   },
-  country_code: {
+  countryCode: {
     type: String,
     required: true
   },
