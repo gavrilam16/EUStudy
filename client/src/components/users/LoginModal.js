@@ -32,7 +32,14 @@ class LoginModal extends Component {
   }
 
   componentDidMount() {
+    // Get errors
     this.mounted = true;
+
+    if (this.props.error) {
+      this.setState({
+        errors: this.props.error
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -51,7 +58,8 @@ class LoginModal extends Component {
   // On modal toggle
   toggle = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
+      errors: {}
     });
   };
 
@@ -73,7 +81,7 @@ class LoginModal extends Component {
     // Send login request via loginUser action
     this.props.loginUser(userInput);
 
-    this.toggle();
+    this.mounted = false;
   };
 
   render() {

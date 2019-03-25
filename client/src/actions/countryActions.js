@@ -20,32 +20,44 @@ export const getCountries = () => dispatch => {
 
 // Add country
 export const addCountry = country => dispatch => {
-  axios.post("/api/countries", country).then(res =>
-    dispatch({
-      type: ADD_COUNTRY,
-      payload: res.data
-    })
-  );
+  dispatch(setCountriesFetching());
+  axios
+    .post("/api/countries", country)
+    .then(res =>
+      dispatch({
+        type: ADD_COUNTRY,
+        payload: res.data
+      })
+    )
+    .then(res => dispatch(getCountries()));
 };
 
 // Modify country
 export const modifyCountry = country => dispatch => {
-  axios.put(`/api/countries/${country.id}`, country).then(res =>
-    dispatch({
-      type: MODIFY_COUNTRY,
-      payload: res.data
-    })
-  );
+  dispatch(setCountriesFetching());
+  axios
+    .put(`/api/countries/${country.id}`, country)
+    .then(res =>
+      dispatch({
+        type: MODIFY_COUNTRY,
+        payload: res.data
+      })
+    )
+    .then(res => dispatch(getCountries()));
 };
 
 // Delete country
 export const deleteCountry = id => dispatch => {
-  axios.delete(`/api/countries/${id}`).then(res =>
-    dispatch({
-      type: DELETE_COUNTRY,
-      payload: id
-    })
-  );
+  dispatch(setCountriesFetching());
+  axios
+    .delete(`/api/countries/${id}`)
+    .then(res =>
+      dispatch({
+        type: DELETE_COUNTRY,
+        payload: id
+      })
+    )
+    .then(res => dispatch(getCountries()));
 };
 
 // Countries fetching

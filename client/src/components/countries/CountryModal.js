@@ -85,7 +85,7 @@ class CountryModal extends Component {
   };
 
   // When user clicks the Submit button
-  handleSubmit = async e => {
+  handleSubmit = e => {
     e.preventDefault();
 
     const country = {
@@ -102,9 +102,9 @@ class CountryModal extends Component {
 
     // Add country via addCountry action
     if (this.props.modify) {
-      await this.props.modifyCountry(country);
+      this.props.modifyCountry(country);
     } else {
-      await this.props.addCountry(country);
+      this.props.addCountry(country);
     }
 
     // Refresh CountryInfo
@@ -117,6 +117,7 @@ class CountryModal extends Component {
   render() {
     // Set isModalOpen button text
     const buttonText = this.props.modify ? "Edit" : "Add";
+
     return (
       <div className="d-inline">
         {/* Modal button */}

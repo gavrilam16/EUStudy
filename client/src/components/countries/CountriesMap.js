@@ -25,7 +25,7 @@ class CountriesMap extends Component {
   // Set selected country when user clicks on the map
   handleClick = geography => {
     let callBackSelected = {};
-    if (geography.properties._id === undefined) {
+    if (geography.properties.firstCycleFees === -1) {
       callBackSelected = { selectedCountry: geography, isAdded: false };
     } else {
       callBackSelected = { selectedCountry: geography, isAdded: true };

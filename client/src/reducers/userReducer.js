@@ -29,11 +29,6 @@ export default function(state = initialState, action) {
         isAuthenticated: !isEmpty(action.payload),
         currentUser: action.payload
       };
-    case USERS_FETCHING:
-      return {
-        ...state,
-        isFetching: true
-      };
     case MODIFY_USER:
       return {
         ...state,
@@ -42,13 +37,17 @@ export default function(state = initialState, action) {
             ? { ...state.users, user: action.payload }
             : state.users
         ),
-        isFetching: true
+        isFetching: false
       };
     case DELETE_USER:
       return {
         ...state,
         users: state.users.filter(user => user._id !== action.payload),
-        isFetching: true
+        isFetching: false
+      };
+    case USERS_FETCHING:
+      return {
+        ...state
       };
     default:
       return state;

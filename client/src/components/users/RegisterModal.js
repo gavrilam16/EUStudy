@@ -44,7 +44,13 @@ class RegisterModal extends Component {
   }
 
   componentDidMount() {
+    // Get errors
     this.mounted = true;
+    if (this.props.error) {
+      this.setState({
+        errors: this.props.error
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -63,7 +69,8 @@ class RegisterModal extends Component {
   // On modal toggle
   toggle = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
+      errors: {}
     });
   };
 
@@ -124,9 +131,8 @@ class RegisterModal extends Component {
     };
 
     // Send register request via registerUser action
-    this.props.registerUser(newUser, this.props.history);
+    this.props.registerUser(newUser);
 
-    this.toggle();
     this.mounted = false;
   };
 

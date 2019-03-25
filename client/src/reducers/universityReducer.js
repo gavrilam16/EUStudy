@@ -23,7 +23,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         universities: [...state.universities, action.payload],
-        isFetching: true
+        isFetching: false
       };
     case MODIFY_UNIVERSITY:
       return {
@@ -33,7 +33,7 @@ export default function(state = initialState, action) {
             ? { ...state.universities, university: action.payload }
             : state.universities
         ),
-        isFetching: true
+        isFetching: false
       };
     case DELETE_UNIVERSITY:
       return {
@@ -41,12 +41,11 @@ export default function(state = initialState, action) {
         universities: state.universities.filter(
           university => university._id !== action.payload
         ),
-        isFetching: true
+        isFetching: false
       };
     case UNIVERSITIES_FETCHING:
       return {
-        ...state,
-        isFetching: true
+        ...state
       };
     default:
       return state;

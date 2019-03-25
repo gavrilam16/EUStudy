@@ -23,7 +23,7 @@ export const getUsers = () => dispatch => {
 };
 
 // Register user
-export const registerUser = (userData, history) => dispatch => {
+export const registerUser = userData => dispatch => {
   axios
     .post("/api/users/register", userData)
     .then(res => dispatch(loginUser(userData)))
@@ -86,20 +86,28 @@ export const logoutUser = () => dispatch => {
 
 // Modify user
 export const modifyUser = user => dispatch => {
-  axios.put(`/api/users/${user.id}`, user).then(res =>
-    dispatch({
-      type: MODIFY_USER,
-      payload: res.data
-    })
-  );
+  dispatch(setUsersFetching());
+  axios
+    .put(`/api/users/${user.id}`, user)
+    .then(res =>
+      dispatch({
+        type: MODIFY_USER,
+        payload: res.data
+      })
+    )
+    .then(res => dispatch(getUsers()));
 };
 
 // Delete user
 export const deleteUser = id => dispatch => {
-  axios.delete(`/api/users/${id}`).then(res =>
-    dispatch({
-      type: DELETE_USER,
-      payload: id
-    })
-  );
+  dispatch(setUsersFetching());
+  axios
+    .delete(`/api/users/${id}`)
+    .then(res =>
+      dispatch({
+        type: DELETE_USER,
+        payload: id
+      })
+    )
+    .then(res => dispatch(getUsers()));
 };

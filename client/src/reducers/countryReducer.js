@@ -23,7 +23,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         countries: [...state.countries, action.payload],
-        isFetching: true
+        isFetching: false
       };
     case MODIFY_COUNTRY:
       return {
@@ -33,7 +33,7 @@ export default function(state = initialState, action) {
             ? { ...state.countries, country: action.payload }
             : state.countries
         ),
-        isFetching: true
+        isFetching: false
       };
     case DELETE_COUNTRY:
       return {
@@ -41,7 +41,7 @@ export default function(state = initialState, action) {
         countries: state.countries.filter(
           country => country._id !== action.payload
         ),
-        isFetching: true
+        isFetching: false
       };
     case COUNTRIES_FETCHING:
       return {

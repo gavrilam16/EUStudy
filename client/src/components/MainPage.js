@@ -105,39 +105,28 @@ class MainPage extends Component {
 
   // When the country modal sends callback after add or modify
   update = () => {
-    // Get the updated array of countries
-    this.props.getCountries();
-    // Mark country as isAdded - will refresh the CountryInfo component
+    // Mark country as isAdded
     this.setState({
       isAdded: true
     });
   };
 
   // When the confirm modal sends callback
-  handleDelete = async id => {
+  handleDelete = id => {
     // Delete country from database via deleteCountry action
-    await this.props.deleteCountry(id);
-    // Get the updated array of country
-    await this.props.getCountries();
-    // Set the country id as undefined in geograpyObject
-    geographyObject.objects.ne_10m_admin_0_countries.geometries.forEach(
-      element => {
-        if (element.properties._id === id) {
-          element.properties._id = undefined;
-        }
+    this.props.deleteCountry(id);
+
+    let countryData =
+      geographyObject.objects.ne_10m_admin_0_countries.geometries;
+    countryData.forEach((element, index, countryData) => {
+      countryData[index] = element;
+      if (element.properties._id === id) {
+        element.properties._id = undefined;
+        countryData[index] = element;
+        console.log(element.properties)
       }
-    );
-    // Set the country id as undefined in selectedCountry and mark it as not isAdded
-    this.setState({
-      selectedCountry: {
-        ...this.state.selectedCountry,
-        properties: {
-          ...this.state.selectedCountry.properties,
-          _id: undefined
-        }
-      },
-      isAdded: false
-    });
+    }, countryData);
+    
   };
 
   render() {
@@ -158,7 +147,7 @@ class MainPage extends Component {
         [
           // If the country is marked as isAdded show Delete and Modify button
           this.state.isAdded ? (
-            <div key={uuid()} id="country-buttons" className="d-inline">
+            <div key={uuid()} className="d-inline country-buttons">
               <CountryModal
                 key={uuid()}
                 selectedCountry={this.state.selectedCountry.properties}
@@ -183,12 +172,13 @@ class MainPage extends Component {
             </div>
           ) : (
             // Else show Add button
-            <CountryModal
-              key={uuid()}
-              selectedCountry={this.state.selectedCountry.properties}
-              modify={false}
-              callBack={this.update}
-            />
+            <div key={uuid()} className="country-buttons ml-5">
+              <CountryModal
+                selectedCountry={this.state.selectedCountry.properties}
+                modify={false}
+                callBack={this.update}
+              />
+            </div>
           )
         ]
       ) : (

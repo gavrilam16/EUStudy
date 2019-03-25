@@ -109,7 +109,7 @@ class UserModal extends Component {
   };
 
   // When user clicks the Log In button
-  handleSubmit = async e => {
+  handleSubmit = e => {
     e.preventDefault();
 
     // Get user input from state
@@ -122,10 +122,7 @@ class UserModal extends Component {
     };
 
     // Send modify request via modifyUser action
-    await this.props.modifyUser(user);
-
-    // Refresh AdminPanel
-    this.props.callBack();
+    this.props.modifyUser(user);
 
     // Close modal
     this.toggle();

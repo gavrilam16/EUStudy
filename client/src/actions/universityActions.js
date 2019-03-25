@@ -21,6 +21,7 @@ export const getUniversities = () => dispatch => {
 
 // Add university
 export const addUniversity = university => dispatch => {
+    dispatch(setUniversitiesFetching());
   axios
     .post("/api/universities", university)
     .then(res =>
@@ -34,27 +35,29 @@ export const addUniversity = university => dispatch => {
         type: GET_ERRORS,
         payload: err.response.data
       })
-    );
+  ).then(res=>dispatch(getUniversities()));
 };
 
 // Modify university
 export const modifyUniversity = university => dispatch => {
+    dispatch(setUniversitiesFetching());
   axios.put(`/api/universities/${university.id}`, university).then(res =>
     dispatch({
       type: MODIFY_UNIVERSITY,
       payload: res.data
     })
-  );
+  ).then(res=>dispatch(getUniversities()));
 };
 
 // Delete university
 export const deleteUniversity = id => dispatch => {
+    dispatch(setUniversitiesFetching());
   axios.delete(`/api/universities/${id}`).then(res =>
     dispatch({
       type: DELETE_UNIVERSITY,
       payload: id
     })
-  );
+  ).then(res=>dispatch(getUniversities()));
 };
 
 // Universities fetching
