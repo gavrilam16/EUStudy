@@ -8,6 +8,7 @@ import { getUniversities } from "../../actions/universityActions";
 
 import {
   Row,
+  Col,
   Card,
   Button,
   CardHeader,
@@ -37,7 +38,8 @@ class UniversitiesList extends Component {
         {universities
           .filter(university => university.enabled)
           .map((university, i) => (
-            // University card
+            <Col sm={12} md={3}>
+            {/* University card */}
             <Card key={i} className="university-card">
               <CardHeader>
                 <img
@@ -62,16 +64,17 @@ class UniversitiesList extends Component {
                   </a>
                 </CardTitle>
                 <CardText>
-                  <span className="text-left d-block">
+                  <span className="d-block">
                     First cycle: <b>{university.firstCycleFees}</b> {EUR}
                   </span>
-                  <span className="text-left d-block">
+                  <span className="d-block">
                     Second cycle: <b>{university.secondCycleFees}</b> {EUR}
                   </span>
                 </CardText>
-                <Button>Learn More</Button>
+                <Button color="info" size="sm">Learn More</Button>
               </CardBody>
             </Card>
+            </Col>
           ))}
       </Row>
     );

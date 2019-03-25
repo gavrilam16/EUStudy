@@ -86,7 +86,6 @@ class LoginModal extends Component {
           {this.props.name}
         </NavLink>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          {/* Title from parent component */}
           <ModalHeader toggle={this.toggle}>Login</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.handleSubmit}>

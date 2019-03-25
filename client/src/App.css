@@ -12,6 +12,8 @@ body {
   max-width: 1490px;
   padding: 0px;
   margin: 0px 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #map-spinner {
@@ -60,17 +62,6 @@ body {
   font-size: 1.3rem;
 }
 
-#country-panel-top {
-  margin-top: 3.5rem;
-  margin-bottom: 0.5rem;
-}
-
-#country-info-spinner {
-  margin-top: 5rem;
-  width: 5rem;
-  height: 5rem;
-}
-
 .countries-list {
   max-height: 31.5rem;
   width: 100%;
@@ -85,6 +76,27 @@ body {
   height: 0;
 }
 
+#country-panel-top {
+  margin-top: 3.5rem;
+  margin-bottom: 0.5rem;
+}
+
+#country-info-spinner {
+  margin-top: 5rem;
+  width: 5rem;
+  height: 5rem;
+}
+
+@media screen and (min-width: 600px) {
+  #country-buttons {
+    position: relative;
+    top: 2.5rem;
+    right: 11rem;
+    z-index: 1;
+    opacity: 0.95;
+  }
+}
+
 /* Universities */
 .university-card {
   width: 20rem;
@@ -93,4 +105,9 @@ body {
 
 #university-panel {
   background-color: #f0eff7;
+}
+
+/* Profile */
+#profile-panel {
+  margin-top: 5rem;
 }

@@ -49,7 +49,7 @@ export const modifyUniversity = university => dispatch => {
 
 // Delete university
 export const deleteUniversity = id => dispatch => {
-  axios.delete(`/api/university/${id}`).then(res =>
+  axios.delete(`/api/universities/${id}`).then(res =>
     dispatch({
       type: DELETE_UNIVERSITY,
       payload: id

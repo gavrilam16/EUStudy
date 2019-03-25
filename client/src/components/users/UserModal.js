@@ -4,9 +4,7 @@ import { POSITIONS } from "../../consts";
 
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { registerUser } from "../../actions/userActions";
-
-import LoginModal from "./LoginModal";
+import { modifyUser } from "../../actions/userActions";
 
 import universityObject from "../../static/world_universities_and_domains.json";
 import geographyObject from "../../static/world-10m.json";
@@ -16,7 +14,6 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  NavLink,
   Form,
   FormGroup,
   Label,
@@ -25,7 +22,7 @@ import {
 
 import classnames from "classnames";
 
-class RegisterModal extends Component {
+class UserModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,8 +34,6 @@ class RegisterModal extends Component {
       selectedPosition: {},
       name: "",
       email: "",
-      password: "",
-      passwordConfirm: "",
       errors: {}
     };
   }
@@ -62,9 +57,13 @@ class RegisterModal extends Component {
 
   // On modal toggle
   toggle = () => {
+    if(this.mounted) {
     this.setState({
+      name: this.props.selectedUser.name,
+      email: this.props.selectedUser.email,
       modal: !this.state.modal
     });
+    }
   };
 
   // Get user input in state
@@ -110,37 +109,39 @@ class RegisterModal extends Component {
   };
 
   // When user clicks the Log In button
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
 
     // Get user input from state
-    const newUser = {
+    const user = {
+      id: this.props.selectedUser._id,
       name: this.state.name,
       email: this.state.email,
-      password: this.state.password,
-      passwordConfirm: this.state.passwordConfirm,
       university: this.state.selectedUniversity.name,
       role: this.state.selectedPosition.name
     };
 
-    // Send register request via registerUser action
-    this.props.registerUser(newUser, this.props.history);
+    // Send modify request via modifyUser action
+    await this.props.modifyUser(user);
 
+    // Refresh AdminPanel
+    this.props.callBack();
+
+    // Close modal
     this.toggle();
-    this.mounted = false;
   };
 
   render() {
     const { errors } = this.state;
 
     return (
-      <div className="d-inline">
+      <td>
         {/* Modal button */}
-        <NavLink href="#" onClick={this.toggle} className="d-inline">
-          Sign Up
-        </NavLink>
+        <Button color="info" href="#" onClick={this.toggle}>
+          Edit
+        </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Sign Up</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Edit</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.handleSubmit}>
               {/* Name input */}
@@ -177,38 +178,6 @@ class RegisterModal extends Component {
                   onChange={e => this.handleChange(e)}
                 />
                 <span className="text-danger">{errors.email}</span>
-              </FormGroup>
-              {/* Password input */}
-              <FormGroup>
-                <Label for="password">Password *</Label>
-                <Input
-                  type="password"
-                  name="password"
-                  id="password"
-                  autoComplete="new-password"
-                  className={classnames("", {
-                    invalid: errors.password
-                  })}
-                  placeholder="Your password"
-                  onChange={e => this.handleChange(e)}
-                />
-                <span className="text-danger">{errors.password}</span>
-              </FormGroup>
-              {/* Confirm password input */}
-              <FormGroup>
-                <Label for="passwordConfirm">Confirm Password *</Label>
-                <Input
-                  type="password"
-                  name="passwordConfirm"
-                  id="passwordConfirm"
-                  autoComplete="new-password"
-                  className={classnames("", {
-                    invalid: errors.passwordConfirm
-                  })}
-                  placeholder="Your password"
-                  onChange={e => this.handleChange(e)}
-                />
-                <span className="text-danger">{errors.passwordConfirm}</span>
               </FormGroup>
               {/* Country drop-down selector*/}
               <FormGroup>
@@ -278,23 +247,21 @@ class RegisterModal extends Component {
                   ))}
                 </Input>
               </FormGroup>
-              {/* Sign Up button */}
+              {/* Submit button */}
               <Button className="mb-3" color="dark" block>
-                Sign Up
+                Submit
               </Button>
-              {/* Open login modal */}
-              Already have an account? <LoginModal name="Login" />
             </Form>
           </ModalBody>
         </Modal>
-      </div>
+      </td>
     );
   }
 }
 
 // Set propTypes
-RegisterModal.propTypes = {
-  registerUser: PropTypes.func.isRequired,
+UserModal.propTypes = {
+  modifyUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   error: PropTypes.object.isRequired
 };
@@ -308,5 +275,5 @@ const mapStateToProps = state => ({
 // Connect to store
 export default connect(
   mapStateToProps,
-  { registerUser }
-)(RegisterModal);
+  { modifyUser }
+)(UserModal);

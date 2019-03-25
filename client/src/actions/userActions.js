@@ -6,6 +6,8 @@ import {
   GET_USERS,
   SET_CURRENT_USER,
   USERS_FETCHING,
+  MODIFY_USER,
+  DELETE_USER,
   GET_ERRORS
 } from "./types";
 
@@ -19,6 +21,7 @@ export const getUsers = () => dispatch => {
     })
   );
 };
+
 // Register user
 export const registerUser = (userData, history) => dispatch => {
   axios
@@ -79,4 +82,24 @@ export const logoutUser = () => dispatch => {
   setAuthToken(false);
   // Set current user to empty object, which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
+};
+
+// Modify user
+export const modifyUser = user => dispatch => {
+  axios.put(`/api/users/${user.id}`, user).then(res =>
+    dispatch({
+      type: MODIFY_USER,
+      payload: res.data
+    })
+  );
+};
+
+// Delete user
+export const deleteUser = id => dispatch => {
+  axios.delete(`/api/users/${id}`).then(res =>
+    dispatch({
+      type: DELETE_USER,
+      payload: id
+    })
+  );
 };

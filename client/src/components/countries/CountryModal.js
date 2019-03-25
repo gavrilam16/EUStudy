@@ -110,15 +110,15 @@ class CountryModal extends Component {
     // Refresh CountryInfo
     this.props.callBack();
 
-    // Close isModalOpen
+    // Close modal
     this.toggle();
   };
 
   render() {
     // Set isModalOpen button text
-    const buttonText = this.props.modify ? "Modify" : "Add";
+    const buttonText = this.props.modify ? "Edit" : "Add";
     return (
-      <div className="d-inline ml-1">
+      <div className="d-inline">
         {/* Modal button */}
         <Button color="info" onClick={this.toggle}>
           {buttonText}

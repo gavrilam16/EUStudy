@@ -27,10 +27,15 @@ class ConfirmModal extends Component {
   };
 
   render() {
+    const Tag = this.props.tag;
+
+    const inline = this.props.inline ? "d-inline" : null;
+    const marginLeft = this.props.isSecondButton ? "ml-1" : null
+
     return (
-      <div className="d-inline">
+      <Tag className={inline}>
         {/* Modal button -- Text from parent component */}
-        <Button color="dark" onClick={this.toggle}>
+        <Button color="dark" className={marginLeft} onClick={this.toggle}>
           {this.props.buttonText}
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
@@ -53,7 +58,7 @@ class ConfirmModal extends Component {
             </Button>
           </ModalBody>
         </Modal>
-      </div>
+      </Tag>
     );
   }
 }

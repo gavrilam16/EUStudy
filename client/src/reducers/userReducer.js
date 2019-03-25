@@ -1,4 +1,10 @@
-import { GET_USERS, SET_CURRENT_USER, USERS_FETCHING } from "../actions/types";
+import {
+  GET_USERS,
+  SET_CURRENT_USER,
+  MODIFY_USER,
+  DELETE_USER,
+  USERS_FETCHING
+} from "../actions/types";
 
 const isEmpty = require("is-empty");
 
@@ -26,6 +32,22 @@ export default function(state = initialState, action) {
     case USERS_FETCHING:
       return {
         ...state,
+        isFetching: true
+      };
+    case MODIFY_USER:
+      return {
+        ...state,
+        users: state.users.map(user =>
+          user._id === action.payload._id
+            ? { ...state.users, user: action.payload }
+            : state.users
+        ),
+        isFetching: true
+      };
+    case DELETE_USER:
+      return {
+        ...state,
+        users: state.users.filter(user => user._id !== action.payload),
         isFetching: true
       };
     default:

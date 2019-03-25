@@ -2,6 +2,8 @@
 export const GET_USERS = "GET_USERS";
 export const USERS_FETCHING = "USERS_FETCHING";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const MODIFY_USER = "MODIFY_USER";
+export const DELETE_USER = "DELETE_USER";
 
 // Countries
 export const GET_COUNTRIES = "GET_COUNTRIES";

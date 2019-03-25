@@ -105,7 +105,7 @@ class MainPage extends Component {
 
   // When the country modal sends callback after add or modify
   update = () => {
-    // Get the updated array of country
+    // Get the updated array of countries
     this.props.getCountries();
     // Mark country as isAdded - will refresh the CountryInfo component
     this.setState({
@@ -158,24 +158,27 @@ class MainPage extends Component {
         [
           // If the country is marked as isAdded show Delete and Modify button
           this.state.isAdded ? (
-            <div key={uuid()} className="d-inline">
-              <ConfirmModal
-                key={uuid()}
-                buttonText="Delete"
-                title="Delete"
-                message={`Are you sure you want to delete the data for ${
-                  this.state.selectedCountry.properties.name
-                }?`}
-                callBack={this.handleDelete.bind(
-                  this,
-                  this.state.selectedCountry.properties._id
-                )}
-              />
+            <div key={uuid()} id="country-buttons" className="d-inline">
               <CountryModal
                 key={uuid()}
                 selectedCountry={this.state.selectedCountry.properties}
                 modify={true}
                 callBack={this.update}
+              />
+              <ConfirmModal
+                key={uuid()}
+                tag="div"
+                inline={true}
+                buttonText="Delete"
+                title="Delete"
+                message={`Are you sure you want to delete the data for ${
+                  this.state.selectedCountry.properties.name
+                }?`}
+                isSecondButton={true}
+                callBack={this.handleDelete.bind(
+                  this,
+                  this.state.selectedCountry.properties._id
+                )}
               />
             </div>
           ) : (
@@ -266,7 +269,9 @@ class MainPage extends Component {
               {displayButtons}
             </Col>
           </Row>
-          <UniversitiesList countryCode={this.state.selectedCountry.properties.ISO_A2} />
+          <UniversitiesList
+            countryCode={this.state.selectedCountry.properties.ISO_A2}
+          />
         </Container>
       );
     }

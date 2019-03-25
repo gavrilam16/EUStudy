@@ -5,14 +5,13 @@ import geographyObject from "../../static/world-10m.json";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { addUniversity } from "../../actions/universityActions";
+import { modifyUniversity } from "../../actions/universityActions";
 
 import {
   Button,
   Modal,
   ModalHeader,
   ModalBody,
-  NavLink,
   Form,
   FormGroup,
   Input
@@ -20,7 +19,7 @@ import {
 
 import classnames from "classnames";
 
-class AffiliateModal extends Component {
+class UniversityModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -109,15 +108,16 @@ class AffiliateModal extends Component {
 
   render() {
     const { errors } = this.state;
+    const Tag = this.props.tag;
 
     return (
-      <div className="d-inline">
+      <Tag>
         {/* Modal button */}
-        <NavLink href="#" onClick={this.toggle}>
-          Affiliate
-        </NavLink>
+        <Button href="#" color="info" onClick={this.toggle}>
+          Edit
+        </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Affiliate</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Edit</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.handleSubmit}>
               {/* Country drop-down selector*/}
@@ -180,14 +180,14 @@ class AffiliateModal extends Component {
             </Form>
           </ModalBody>
         </Modal>
-      </div>
+      </Tag>
     );
   }
 }
 
 // Set propTypes
-AffiliateModal.propTypes = {
-  addUniversity: PropTypes.func.isRequired,
+UniversityModal.propTypes = {
+  modifyUniversity: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   error: PropTypes.object.isRequired
 };
@@ -201,5 +201,5 @@ const mapStateToProps = state => ({
 // Connect to store
 export default connect(
   mapStateToProps,
-  { addUniversity }
-)(AffiliateModal);
+  { modifyUniversity }
+)(UniversityModal);

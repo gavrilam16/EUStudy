@@ -181,4 +181,25 @@ router.post("/login", (req, res) => {
   });
 });
 
+// PUT api/users/:id -- Modify an user
+router.put("/:id", (req, res, next) => {
+  User.findByIdAndUpdate(req.params.id, req.body, err => {
+    if (err) {
+      return next(err);
+    }
+    res.send("User updated");
+  });
+});
+
+
+// DELETE api/users/:id -- Delete an user
+router.delete("/:id", (req, res, next) => {
+  User.findByIdAndRemove(req.params.id, err => {
+    if (err) {
+      return next(err);
+    }
+    res.send("Deleted successfully");
+  });
+});
+
 module.exports = router;

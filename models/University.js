@@ -11,7 +11,7 @@ const UniversitySchema = new Schema({
     type: String,
     required: true
   },
-    foundingYear: {
+  foundingYear: {
     type: Number
   },
   website: {

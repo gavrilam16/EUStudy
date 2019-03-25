@@ -20,16 +20,14 @@ class ProfilePage extends Component {
     // Set rule for showing the admin panel
     const showAdminPanel = currentUser.role === "admin" ? <AdminPanel /> : null;
     return (
-      <Container>
-        <Row className="mt-5">
+      <Container className="container-fluid">
+        <Row id="profile-panel">
           <Col>
-            <h5>
-              Hey there, {currentUser.name.split(" ")[0]}! You are logged in!
-            </h5>
-            <Button onClick={this.handleLogout}>Log Out</Button>
-            {/* Show admin panel if admin */}
+            <h5>Hey there, {currentUser.name.split(" ")[0]}!</h5>
+            <Button color="primary" onClick={this.handleLogout}>Log Out</Button>
           </Col>
         </Row>
+        {/* Show admin panel if admin */}
         {showAdminPanel}
       </Container>
     );

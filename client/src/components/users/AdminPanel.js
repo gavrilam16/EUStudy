@@ -2,27 +2,25 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getUsers } from "../../actions/userActions";
+import { getUsers, deleteUser } from "../../actions/userActions";
 import {
   getUniversities,
-  modifyUniversity
+  modifyUniversity,
+  deleteUniversity
 } from "../../actions/universityActions";
 
-import {
-  Row,
-  Col,
-  FormGroup,
-  Input,
-  CustomInput,
-  Table,
-  Spinner
-} from "reactstrap";
+import UserModal from "./UserModal";
+import UniversityModal from "./../universities/UniversityModal";
+import ConfirmModal from "./../ConfirmModal";
+
+import { Row, Col, Button, Table, Spinner, FormGroup, CustomInput } from "reactstrap";
+import uuid from "uuid";
 
 class AdminPanel extends Component {
   constructor() {
     super();
     this.state = {
-      selectedData: "Users"
+      selectedData: "users"
     };
   }
 
@@ -32,9 +30,10 @@ class AdminPanel extends Component {
     this.props.getUniversities();
   }
 
-  handleSelect = e => {
+  // When user clicks one of the select data buttons
+  handleClick = e => {
     this.setState({
-      [e.target.name]: e.target.value
+      selectedData: e.target.name
     });
   };
 
@@ -48,6 +47,34 @@ class AdminPanel extends Component {
     this.props.getUniversities();
   };
 
+  // When the user modal sends callback after modify
+  updateUser = async () => {
+    // Get the updated array of users
+    await this.props.getUsers();
+  };
+
+  // When the university modal sends callback after modify
+  updateUniversity = async () => {
+    // Get the updated array of universities
+    await this.props.getUniversities();
+  };
+
+  // When the confirm modal sends callback
+  handleDeleteUser = async id => {
+    // Delete user from database via deleteUser action
+    await this.props.deleteUser(id);
+    // Get the updated array of users
+    await this.props.getUsers();
+  };
+
+  // When the confirm modal sends callback
+  handleDeleteUniversity = async id => {
+    // Delete university from database via deleteUniversity action
+    await this.props.deleteUniversity(id);
+    // Get the updated array of universities
+    await this.props.getUniversities();
+  };
+
   render() {
     const { users } = this.props.user;
     const { universities } = this.props.university;
@@ -57,8 +84,8 @@ class AdminPanel extends Component {
     // Set rules for showing data
     const showData = !this.props.university.isFetching ? (
       // Show users data if Users is selected
-      this.state.selectedData === "Users" ? (
-        <Table>
+      this.state.selectedData === "users" ? (
+        <Table className="mt-3">
           <thead>
             <tr>
               <th>#</th>
@@ -66,36 +93,62 @@ class AdminPanel extends Component {
               <th>Email</th>
               <th>University</th>
               <th>Role</th>
+              <th colSpan="2">Manage</th>
             </tr>
           </thead>
           <tbody>
             {users.map(user => (
-              <tr key={user._id}>
+              <tr key={uuid()}>
                 <th scope="row">{i++}</th>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user.university}</td>
                 <td>{user.role}</td>
+                <UserModal
+                  key={uuid()}
+                  selectedUser={user}
+                  callBack={this.updateUser}
+                />
+                <ConfirmModal
+                  key={uuid()}
+                  tag="td"
+                  buttonText="Delete"
+                  title="Delete"
+                  message={`Are you sure you want to delete the data for ${
+                    user.name
+                  }?`}
+                  callBack={this.handleDeleteUser.bind(this, user._id)}
+                />
               </tr>
             ))}
           </tbody>
         </Table>
       ) : (
         // Show universities data if Universities is selected
-        <Table>
+        <Table className="mt-3">
           <thead>
             <tr>
               <th>#</th>
               <th>Name</th>
+              <th>Founding Year</th>
+              <th>Website</th>
+              <th>Description</th>
+              <th>First Cycle Fees</th>
+              <th>Second Cycle Fees</th>
               <th>Enabled</th>
+              <th colSpan="2">Manage</th>
             </tr>
           </thead>
           <tbody>
             {universities.map(university => (
               <tr key={university._id}>
-                {console.log(university._id)}
                 <th scope="row">{i++}</th>
                 <td>{university.name}</td>
+                <td>{university.foundingYear}</td>
+                <td>{university.website}</td>
+                <td>{university.description}</td>
+                <td>{university.firstCycleFees}</td>
+                <td>{university.secondCycleFees}</td>
                 <td>
                   <FormGroup>
                     <CustomInput
@@ -106,6 +159,25 @@ class AdminPanel extends Component {
                     />
                   </FormGroup>
                 </td>
+                <UniversityModal
+                  key={uuid()}
+                  tag="td"
+                  selectedUniversity={university}
+                  callBack={this.updateUniversity}
+                />
+                <ConfirmModal
+                  key={uuid()}
+                  tag="td"
+                  buttonText="Delete"
+                  title="Delete"
+                  message={`Are you sure you want to delete the data for ${
+                    university.name
+                  }?`}
+                  callBack={this.handleDeleteUniversity.bind(
+                    this,
+                    university._id
+                  )}
+                />
               </tr>
             ))}
           </tbody>
@@ -114,47 +186,53 @@ class AdminPanel extends Component {
     ) : (
       <Spinner color="info" />
     );
-    return (
-      <Row className="mt-5">
-        <Col>
-          <FormGroup>
-            <Input
-              type="select"
-              name="selectedData"
-              className="custom-select"
-              id="selectedData"
-              defaultValue={this.state.selectedData}
-              onChange={e => this.handleSelect(e)}
+
+    // Show spinner if fetching from database
+    if (this.props.isFetching) {
+      return <Spinner color="info" />;
+    } else {
+      return (
+        <Row className="mt-5">
+          <Col>
+            <Button name="users" onClick={e => this.handleClick(e)}>
+              Users
+            </Button>
+            <Button
+              name="universities"
+              className="ml-2"
+              onClick={e => this.handleClick(e)}
             >
-              <option>Users</option>
-              <option>Universities</option>
-              )}
-            </Input>
-          </FormGroup>
-          {showData}
-        </Col>
-      </Row>
-    );
+              Universities
+            </Button>
+            {showData}
+          </Col>
+        </Row>
+      );
+    }
   }
 }
 
 // Set propTypes
 AdminPanel.propTypes = {
   getUsers: PropTypes.func.isRequired,
+  deleteUser: PropTypes.func.isRequired,
   getUniversities: PropTypes.func.isRequired,
   modifyUniversity: PropTypes.func.isRequired,
+  deleteUniversity: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  university: PropTypes.object.isRequired
+  university: PropTypes.object.isRequired,
+  isFetching: PropTypes.bool.isRequired
 };
 
 // Map state to props
 const mapStateToProps = state => ({
   user: state.user,
-  university: state.university
+  university: state.university,
+  isFetching: state.user.isFetching
 });
 
 // Connect to store
 export default connect(
   mapStateToProps,
-  { getUsers, getUniversities, modifyUniversity }
+  { getUsers, deleteUser, getUniversities, modifyUniversity, deleteUniversity }
 )(AdminPanel);
