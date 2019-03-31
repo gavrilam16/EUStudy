@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getUsers, deleteUser } from "../../actions/userActions";
+import { getUsers, modifyUser, deleteUser } from "../../actions/userActions";
 import {
   getUniversities,
   modifyUniversity,
@@ -73,7 +73,7 @@ class AdminPanel extends Component {
     //Counter for list number
     let i = 1;
     // Set rules for showing data
-    const showData = !this.props.isFetching ? (
+    const showData =
       // Show users data if Users is selected
       this.state.selectedData === "users" ? (
         <Table className="mt-3">
@@ -147,7 +147,7 @@ class AdminPanel extends Component {
                   </FormGroup>
                 </td>
                 <UniversityModal
-                  key={uuid()}
+                  key={university._id}
                   tag="td"
                   selectedUniversity={university}
                 />
@@ -168,28 +168,32 @@ class AdminPanel extends Component {
             ))}
           </tbody>
         </Table>
-      )
-    ) : (
-      <Spinner color="info" />
-    );
+      );
 
-    return (
-      <Row className="mt-5">
-        <Col>
-          <Button name="users" onClick={e => this.handleClick(e)}>
-            Users
-          </Button>
-          <Button
-            name="universities"
-            className="ml-2"
-            onClick={e => this.handleClick(e)}
-          >
-            Universities
-          </Button>
-          {showData}
-        </Col>
-      </Row>
-    );
+    // Show spinner if fetching from database
+    if (this.props.isFetching) {
+      return <div className="text-center">
+      <Spinner id="admin-info-spinner" color="info" />
+      </div>
+    } else {
+      return (
+        <Row className="mt-5">
+          <Col>
+            <Button name="users" onClick={e => this.handleClick(e)}>
+              Users
+            </Button>
+            <Button
+              name="universities"
+              className="ml-2"
+              onClick={e => this.handleClick(e)}
+            >
+              Universities
+            </Button>
+            {showData}
+          </Col>
+        </Row>
+      );
+    }
   }
 }
 
@@ -210,11 +214,18 @@ AdminPanel.propTypes = {
 const mapStateToProps = state => ({
   user: state.user,
   university: state.university,
-  isFetching: state.university.isFetching 
+  isFetching: state.university.isFetching || state.user.isFetching
 });
 
 // Connect to store
 export default connect(
   mapStateToProps,
-  { getUsers, deleteUser, getUniversities, modifyUniversity, deleteUniversity }
+  {
+    getUsers,
+    modifyUser,
+    deleteUser,
+    getUniversities,
+    modifyUniversity,
+    deleteUniversity
+  }
 )(AdminPanel);

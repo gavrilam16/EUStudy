@@ -22,8 +22,7 @@ export default function(state = initialState, action) {
     case ADD_UNIVERSITY:
       return {
         ...state,
-        universities: [...state.universities, action.payload],
-        isFetching: false
+        universities: [...state.universities, action.payload]
       };
     case MODIFY_UNIVERSITY:
       return {
@@ -32,20 +31,19 @@ export default function(state = initialState, action) {
           university._id === action.payload._id
             ? { ...state.universities, university: action.payload }
             : state.universities
-        ),
-        isFetching: false
+        )
       };
     case DELETE_UNIVERSITY:
       return {
         ...state,
         universities: state.universities.filter(
           university => university._id !== action.payload
-        ),
-        isFetching: false
+        )
       };
     case UNIVERSITIES_FETCHING:
       return {
-        ...state
+        ...state,
+        isFetching: true
       };
     default:
       return state;

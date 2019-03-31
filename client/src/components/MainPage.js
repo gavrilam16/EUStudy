@@ -123,10 +123,14 @@ class MainPage extends Component {
       if (element.properties._id === id) {
         element.properties._id = undefined;
         countryData[index] = element;
-        console.log(element.properties)
+        console.log(element.properties);
       }
     }, countryData);
-    
+
+    // Will refresh CountryInfo
+    this.setState({
+      isAdded: false
+    });
   };
 
   render() {
@@ -259,6 +263,8 @@ class MainPage extends Component {
               {displayButtons}
             </Col>
           </Row>
+          <hr />
+          <hr />
           <UniversitiesList
             countryCode={this.state.selectedCountry.properties.ISO_A2}
           />

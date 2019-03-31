@@ -7,6 +7,7 @@ import { logoutUser } from "../actions/userActions";
 import RegisterModal from "./users/RegisterModal";
 import LoginModal from "./users/LoginModal";
 import AffiliateModal from "./users/AffiliateModal";
+import logo from "../static/images/logo.png";
 
 import {
   Collapse,
@@ -46,11 +47,14 @@ class AppNavbar extends Component {
       return (
         // If authenticated
         <Navbar color="dark" dark expand="md" fixed="top">
-          <NavbarBrand href="/">Study in Europe</NavbarBrand>
+          <NavbarBrand href="/">
+            <img id="header-logo" src={logo} alt="Logo" />
+            <span className="ml-2"> Study in Europe</span>
+          </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <span id="welcome-message">Welcome, </span>
+              <span id="welcome-message" className="navbar-text">Welcome, </span>
               <NavItem>
                 <NavLink href="/profile/">
                   {this.props.user.currentUser.name}

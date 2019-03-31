@@ -22,8 +22,7 @@ export default function(state = initialState, action) {
     case ADD_COUNTRY:
       return {
         ...state,
-        countries: [...state.countries, action.payload],
-        isFetching: false
+        countries: [...state.countries, action.payload]
       };
     case MODIFY_COUNTRY:
       return {
@@ -32,16 +31,14 @@ export default function(state = initialState, action) {
           country._id === action.payload._id
             ? { ...state.countries, country: action.payload }
             : state.countries
-        ),
-        isFetching: false
+        )
       };
     case DELETE_COUNTRY:
       return {
         ...state,
         countries: state.countries.filter(
           country => country._id !== action.payload
-        ),
-        isFetching: false
+        )
       };
     case COUNTRIES_FETCHING:
       return {

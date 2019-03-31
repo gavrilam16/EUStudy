@@ -22,7 +22,7 @@ class CountryInfo extends Component {
     // Show spinner if fetching from database
     if (this.props.isFetching) {
       return (
-        <div className="country-info">
+        <div className="country-info text-center">
           <h4 className="font-weight-bold mt-5">Loading...</h4>
           <Spinner id="country-info-spinner" color="light" />
         </div>
@@ -37,7 +37,7 @@ class CountryInfo extends Component {
       // If the country is marked as added show data
     } else if (this.props.isAdded) {
       return (
-        <div className="country-info">
+        <div className="country-info text-center">
           <h4 className="font-weight-bold">{country.name}</h4>
           <img
             src={`https://www.countryflags.io/${country.ISO_A2}/flat/64.png`}
@@ -73,7 +73,7 @@ class CountryInfo extends Component {
       // Else show no data message
     } else {
       return (
-        <div className="country-info">
+        <div className="country-info text-center">
           <h4 className="font-weight-bold mt-5">No data</h4>
         </div>
       );

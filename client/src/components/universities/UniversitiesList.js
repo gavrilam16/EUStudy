@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getUniversities } from "../../actions/universityActions";
 
+import UniversityPanel from "./UniversityPanel";
+
 import {
   Row,
   Col,
@@ -13,15 +15,36 @@ import {
   Button,
   CardHeader,
   CardBody,
-  CardTitle,
   CardText
 } from "reactstrap";
+import scrollToComponent from "react-scroll-to-component";
 
 class UniversitiesList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedUniversity: {}
+    };
+  }
+
   componentDidMount() {
     // Get universities from store via getUniversities action
     this.props.getUniversities();
   }
+
+  // Set selected university when user clicks on a Learn More button
+  handleClick = university => {
+    this.setState({
+      selectedUniversity: university
+    });
+
+  // Scroll to University Panel component
+    scrollToComponent(this.University, {
+      offset: 0,
+      align: "middle",
+      duration: 250
+    });
+  };
 
   render() {
     let { universities } = this.props.university;
@@ -34,25 +57,18 @@ class UniversitiesList extends Component {
     }
 
     return (
-      <Row id="university-panel">
+      <Row>
         {universities
           .filter(university => university.enabled)
           .map((university, i) => (
             <Col key={i} sm={12} md={3}>
               {/* University card */}
               <Card className="university-card">
-                <CardHeader>
-                  <img
-                    src={`https://www.countryflags.io/${
-                      university.countryCode
-                    }/flat/32.png`}
-                    alt="country flag"
-                  />{" "}
-                  {university.name}
-                </CardHeader>
-                <CardBody>
-                  <CardTitle>
+                <CardHeader className="university-card-header">
+                  <div id="university-card-left">
+                    <span>{university.name}</span>
                     <a
+                      className="university-website d-block"
                       href={`${university.website}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -62,7 +78,17 @@ class UniversitiesList extends Component {
                         .replace(/^https?:\/\//i, "")
                         .replace(/\/$/, "")}
                     </a>
-                  </CardTitle>
+                  </div>
+                  <div id="university-card-right">
+                    <img
+                      src={`https://www.countryflags.io/${
+                        university.countryCode
+                      }/flat/32.png`}
+                      alt="country flag"
+                    />
+                  </div>
+                </CardHeader>
+                <CardBody>
                   <CardText>
                     <span className="d-block">
                       First cycle: <b>{university.firstCycleFees}</b> {EUR}
@@ -71,13 +97,29 @@ class UniversitiesList extends Component {
                       Second cycle: <b>{university.secondCycleFees}</b> {EUR}
                     </span>
                   </CardText>
-                  <Button color="info" size="sm">
-                    Learn More
-                  </Button>
+                  <div className="mt-4 text-center">
+                    <Button
+                      color="info"
+                      onClick={() => this.handleClick(university)}
+                    >
+                      Learn More
+                    </Button>
+                  </div>
                 </CardBody>
               </Card>
             </Col>
           ))}
+        <Col md={12}>
+          <section
+            ref={section => {
+              this.University = section;
+            }}
+          >
+            <UniversityPanel
+              selectedUniversity={this.state.selectedUniversity}
+            />
+          </section>
+        </Col>
       </Row>
     );
   }

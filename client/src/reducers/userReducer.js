@@ -36,18 +36,17 @@ export default function(state = initialState, action) {
           user._id === action.payload._id
             ? { ...state.users, user: action.payload }
             : state.users
-        ),
-        isFetching: false
+        )
       };
     case DELETE_USER:
       return {
         ...state,
-        users: state.users.filter(user => user._id !== action.payload),
-        isFetching: false
+        users: state.users.filter(user => user._id !== action.payload)
       };
     case USERS_FETCHING:
       return {
-        ...state
+        ...state,
+        isFetching: true
       };
     default:
       return state;

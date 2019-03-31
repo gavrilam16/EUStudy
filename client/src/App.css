@@ -2,6 +2,10 @@ body {
   font-family: "Raleway", sans-serif;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 /* Colors */
 .dark-blue {
   color: #5244a3;
@@ -28,9 +32,12 @@ body {
 
 /* Navbar */
 #welcome-message {
-  display: inline;
-  padding-top: 0.5rem;
   color: #fff;
+}
+
+#header-logo {
+  height: 3.1rem;
+  width: 3.1rem;
 }
 
 /* Countries */
@@ -57,7 +64,6 @@ body {
   color: #faf9f8;
   margin-bottom: 0.6rem;
   padding: 1rem;
-  text-align: center;
   height: 28.3rem;
   font-size: 1.3rem;
 }
@@ -103,11 +109,37 @@ body {
   margin: 1rem;
 }
 
-#university-panel {
-  background-color: #f0eff7;
+.university-website {
+  color: #bbbfc4;
+}
+
+.university-website:hover {
+  color: #faf9f8;
+}
+
+.university-card-header {
+  background-color: #c15772;
+  color: #faf9f8;
+}
+
+#university-card-left {
+  float: left;
+  width: 90%;
+  padding: 0.2rem;
+}
+#university-card-right {
+  float: left;
+  width: 10%;
+  padding: 0.2rem;
 }
 
 /* Profile */
 #profile-panel {
   margin-top: 5rem;
+}
+
+#admin-info-spinner {
+  margin-top: 15rem;
+  width: 10rem;
+  height: 10rem;
 }
