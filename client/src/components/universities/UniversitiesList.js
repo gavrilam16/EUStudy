@@ -15,7 +15,9 @@ import {
   Button,
   CardHeader,
   CardBody,
-  CardText
+  CardText,
+  Input,
+  InputGroup
 } from "reactstrap";
 import scrollToComponent from "react-scroll-to-component";
 
@@ -24,7 +26,8 @@ class UniversitiesList extends Component {
     super(props);
     this.state = {
       selectedUniversity: {},
-      countryCode: this.props.countryCode
+      countryCode: this.props.countryCode,
+      search: ""
     };
   }
 
@@ -33,10 +36,10 @@ class UniversitiesList extends Component {
     this.props.getUniversities();
   }
 
-  componentWillReceiveProps({countryCode}) {
+  componentWillReceiveProps({ countryCode }) {
     this.setState({
       countryCode: countryCode
-    })
+    });
   }
 
   // Set selected university when user clicks on a Learn More button
@@ -53,11 +56,17 @@ class UniversitiesList extends Component {
     });
   };
 
+  handleSearch = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
   handleViewAll = () => {
     this.setState({
       countryCode: undefined
-    })
-  }
+    });
+  };
 
   render() {
     let { universities } = this.props.university;
@@ -69,10 +78,29 @@ class UniversitiesList extends Component {
       );
     }
 
+    if(universities !== undefined && universities.length >= 0) {
+    universities = universities.filter(university => {
+      return (
+        university.name
+          .toLowerCase()
+          .indexOf(this.state.search.toLowerCase()) !== -1
+      );
+    });
+  }
+
     return (
       <Row>
-        <Col md={{ size: 1, offset: 11 }}>
-          <Button onClick={this.handleViewAll}>View All</Button>
+        <Col md={{ size: 3, offset: 9 }}>
+          <InputGroup>
+            <Input
+              type="search"
+              name="search"
+              id="searchUniversity"
+              placeholder="Search University"
+              onChange={e => this.handleSearch(e)}
+            />
+            <Button onClick={this.handleViewAll} className="ml-2">View All</Button>
+            </InputGroup>
         </Col>
         {universities
           .filter(university => university.enabled)

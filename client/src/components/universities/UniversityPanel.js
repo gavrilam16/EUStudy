@@ -54,12 +54,8 @@ class UniversityPanel extends Component {
           <Col>
             <div className="p-3">
               <p>
-                Choose an university by pressing the <strong>Learn More</strong>{" "}
-                button of one of the cards above.
-              </p>
-              <p>
-                If no university card is available, select another country from
-                the map of from the countries drop-down list{" "}
+                Select an university by pressing the <strong>Learn More</strong> button of one of the cards above. Choose another country from
+                the map or click the <strong>View All</strong> button if no university card is available.
               </p>
             </div>
           </Col>

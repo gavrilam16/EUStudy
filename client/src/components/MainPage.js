@@ -271,7 +271,6 @@ class MainPage extends Component {
           <Row>
             <Col>
             <div className="text-center mt-3 mb-4">
-            Developed &#038; Designed {COPYRIGHT}{" "}
             <a
               href="https://github.com/gavrilam16"
               target="_blank"
@@ -280,6 +279,7 @@ class MainPage extends Component {
             >
                Mihai Gavrilă
             </a>
+            {" "}{COPYRIGHT}{" "}{new Date().getFullYear()}
             </div>
             </Col>
           </Row>
