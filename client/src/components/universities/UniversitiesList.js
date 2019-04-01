@@ -36,9 +36,10 @@ class UniversitiesList extends Component {
     this.props.getUniversities();
   }
 
+  // Update country code when user clicks on map
   componentWillReceiveProps({ countryCode }) {
     this.setState({
-      countryCode: countryCode
+      countryCode
     });
   }
 
@@ -56,12 +57,14 @@ class UniversitiesList extends Component {
     });
   };
 
+  // When user types in the search input
   handleSearch = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
   };
 
+  // When user clicks the View All button
   handleViewAll = () => {
     this.setState({
       countryCode: undefined
@@ -69,28 +72,35 @@ class UniversitiesList extends Component {
   };
 
   render() {
-    let { universities } = this.props.university;
+    // Copy universities array from store
+    let universities = JSON.parse(
+      JSON.stringify(this.props.university.universities)
+    );
 
-    // Filter by country if a country is selected
+    // Filter universities if a country is selected
     if (this.state.countryCode) {
       universities = universities.filter(
         university => university.countryCode === this.state.countryCode
       );
     }
-
-    if(universities !== undefined && universities.length >= 0) {
+    console.log(universities);
+    // Filter universities on search
     universities = universities.filter(university => {
-      return (
-        university.name
-          .toLowerCase()
-          .indexOf(this.state.search.toLowerCase()) !== -1
-      );
+      if (university.name !== undefined) {
+        return (
+          university.name
+            .toLowerCase()
+            .indexOf(this.state.search.toLowerCase()) !== -1
+        );
+      } else {
+        return null;
+      }
     });
-  }
 
     return (
       <Row>
         <Col md={{ size: 3, offset: 9 }}>
+          {/* Search and View All */}
           <InputGroup>
             <Input
               type="search"
@@ -99,8 +109,10 @@ class UniversitiesList extends Component {
               placeholder="Search University"
               onChange={e => this.handleSearch(e)}
             />
-            <Button onClick={this.handleViewAll} className="ml-2">View All</Button>
-            </InputGroup>
+            <Button onClick={this.handleViewAll} className="ml-2">
+              View All
+            </Button>
+          </InputGroup>
         </Col>
         {universities
           .filter(university => university.enabled)
@@ -154,6 +166,7 @@ class UniversitiesList extends Component {
             </Col>
           ))}
         <Col md={12}>
+          {/* University panel */}
           <section
             ref={section => {
               this.University = section;
@@ -172,12 +185,14 @@ class UniversitiesList extends Component {
 // Set propTypes
 UniversitiesList.propTypes = {
   getUniversities: PropTypes.func.isRequired,
-  university: PropTypes.object.isRequired
+  university: PropTypes.object.isRequired,
+  isFetching: PropTypes.bool.isRequired
 };
 
 // Map state to props
 const mapStateToProps = state => ({
-  university: state.university
+  university: state.university,
+  isFetching: state.university.isFetching
 });
 
 // Connect to store

@@ -268,19 +268,20 @@ class MainPage extends Component {
             countryCode={this.state.selectedCountry.properties.ISO_A2}
           />
           <hr />
+          {/* Footer*/}
           <Row>
             <Col>
-            <div className="text-center mt-3 mb-4">
-            <a
-              href="https://github.com/gavrilam16"
-              target="_blank"
-              rel="noopener noreferrer"
-              alt="developer name"
-            >
-               Mihai Gavrilă
-            </a>
-            {" "}{COPYRIGHT}{" "}{new Date().getFullYear()}
-            </div>
+              <div className="text-center mt-3 mb-4">
+                <a
+                  href="https://github.com/gavrilam16"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  alt="developer name"
+                >
+                  Mihai Gavrilă
+                </a>{" "}
+                {COPYRIGHT} {new Date().getFullYear()}
+              </div>
             </Col>
           </Row>
         </Container>

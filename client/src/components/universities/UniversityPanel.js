@@ -19,12 +19,15 @@ class UniversityPanel extends Component {
 
       return (
         <Row id="university-panel">
+          {/* Panel Header */}
           <Col md={12} id="university-panel-header" className="p-2">
             {selectedUniversity.name}
           </Col>
+          {/* Panel Left Side */}
           <Col sm={12} md={6}>
             <div className="p-3">Details</div>
           </Col>
+          {/* Panel Right Side */}
           <Col sm={12} md={6}>
             <div className="p-3">
               {domains.map((domain, i) => (
@@ -54,8 +57,10 @@ class UniversityPanel extends Component {
           <Col>
             <div className="p-3">
               <p>
-                Select an university by pressing the <strong>Learn More</strong> button of one of the cards above. Choose another country from
-                the map or click the <strong>View All</strong> button if no university card is available.
+                Select an university by pressing the <strong>Learn More</strong>{" "}
+                button of one of the cards above. Choose another country from
+                the map or click the <strong>View All</strong> button if no
+                university card is available.
               </p>
             </div>
           </Col>

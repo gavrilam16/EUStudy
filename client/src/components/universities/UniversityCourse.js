@@ -14,6 +14,7 @@ class UniversityCourse extends Component {
     };
   }
 
+  // When user clicks the +/- button
   handleDetails = () => {
     this.setState({
       isShowingDetails: !this.state.isShowingDetails
