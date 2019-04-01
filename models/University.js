@@ -28,6 +28,24 @@ const UniversitySchema = new Schema({
     type: Number,
     default: 0
   },
+  programs: [{
+    name: {
+      type: String
+    },
+    domain: {
+      type: String
+    },
+    degree: {
+      type: String
+    },
+    fees: {
+      type: Number,
+      default: 0
+    },
+    description: {
+      type: String
+    }
+  }],
   subscriptionUntil: {
     type: Date
   },

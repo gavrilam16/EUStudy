@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { DATA_SETS } from "../consts";
+import { DATA_SETS, COPYRIGHT } from "../consts";
 
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -264,10 +264,25 @@ class MainPage extends Component {
             </Col>
           </Row>
           <hr />
-          <hr />
           <UniversitiesList
             countryCode={this.state.selectedCountry.properties.ISO_A2}
           />
+          <hr />
+          <Row>
+            <Col>
+            <div className="text-center mt-3 mb-4">
+            Developed &#038; Designed {COPYRIGHT}{" "}
+            <a
+              href="https://github.com/gavrilam16"
+              target="_blank"
+              rel="noopener noreferrer"
+              alt="developer name"
+            >
+               Mihai Gavrilă
+            </a>
+            </div>
+            </Col>
+          </Row>
         </Container>
       );
     }

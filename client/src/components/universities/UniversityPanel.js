@@ -4,16 +4,68 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { modifyUniversity } from "../../actions/universityActions";
 
+import UniversityCourse from "./UniversityCourse";
+
 import { Row, Col } from "reactstrap";
 
 class UniversityPanel extends Component {
-
   render() {
-    return (
-      <Row>
-        <Col><h4>{this.props.selectedUniversity.name}</h4></Col>
-      </Row>
-    );
+    const { selectedUniversity } = this.props;
+
+    if (selectedUniversity.programs !== undefined) {
+      // Get domains from programs
+      let domains = selectedUniversity.programs.map(program => program.domain);
+      domains = [...new Set(domains)].sort();
+
+      return (
+        <Row id="university-panel">
+          <Col md={12} id="university-panel-header" className="p-2">
+            {selectedUniversity.name}
+          </Col>
+          <Col sm={12} md={6}>
+            <div className="p-3">Details</div>
+          </Col>
+          <Col sm={12} md={6}>
+            <div className="p-3">
+              {domains.map((domain, i) => (
+                <div key={i}>
+                  <h5>{domain}</h5>
+                  {selectedUniversity.programs
+                    .filter(program => program.domain === domain)
+                    .map(program => (
+                      <UniversityCourse
+                        key={program._id}
+                        selectedProgram={program}
+                      />
+                    ))}
+                </div>
+              ))}
+            </div>
+          </Col>
+        </Row>
+      );
+      // If no university is selected
+    } else {
+      return (
+        <Row id="university-panel">
+          <Col md={12} id="university-panel-header" className="p-2">
+            Choose an university
+          </Col>
+          <Col>
+            <div className="p-3">
+              <p>
+                Choose an university by pressing the <strong>Learn More</strong>{" "}
+                button of one of the cards above.
+              </p>
+              <p>
+                If no university card is available, select another country from
+                the map of from the countries drop-down list{" "}
+              </p>
+            </div>
+          </Col>
+        </Row>
+      );
+    }
   }
 }
 

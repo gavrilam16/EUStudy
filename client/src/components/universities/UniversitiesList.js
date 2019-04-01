@@ -23,7 +23,8 @@ class UniversitiesList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedUniversity: {}
+      selectedUniversity: {},
+      countryCode: this.props.countryCode
     };
   }
 
@@ -32,13 +33,19 @@ class UniversitiesList extends Component {
     this.props.getUniversities();
   }
 
+  componentWillReceiveProps({countryCode}) {
+    this.setState({
+      countryCode: countryCode
+    })
+  }
+
   // Set selected university when user clicks on a Learn More button
   handleClick = university => {
     this.setState({
       selectedUniversity: university
     });
 
-  // Scroll to University Panel component
+    // Scroll to University Panel component
     scrollToComponent(this.University, {
       offset: 0,
       align: "middle",
@@ -46,18 +53,27 @@ class UniversitiesList extends Component {
     });
   };
 
+  handleViewAll = () => {
+    this.setState({
+      countryCode: undefined
+    })
+  }
+
   render() {
     let { universities } = this.props.university;
 
     // Filter by country if a country is selected
-    if (this.props.countryCode) {
+    if (this.state.countryCode) {
       universities = universities.filter(
-        university => university.countryCode === this.props.countryCode
+        university => university.countryCode === this.state.countryCode
       );
     }
 
     return (
       <Row>
+        <Col md={{ size: 1, offset: 11 }}>
+          <Button onClick={this.handleViewAll}>View All</Button>
+        </Col>
         {universities
           .filter(university => university.enabled)
           .map((university, i) => (
@@ -65,7 +81,7 @@ class UniversitiesList extends Component {
               {/* University card */}
               <Card className="university-card">
                 <CardHeader className="university-card-header">
-                  <div id="university-card-left">
+                  <div className="university-card-left">
                     <span>{university.name}</span>
                     <a
                       className="university-website d-block"
@@ -79,7 +95,7 @@ class UniversitiesList extends Component {
                         .replace(/\/$/, "")}
                     </a>
                   </div>
-                  <div id="university-card-right">
+                  <div className="university-card-right">
                     <img
                       src={`https://www.countryflags.io/${
                         university.countryCode

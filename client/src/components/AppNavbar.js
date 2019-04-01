@@ -49,7 +49,7 @@ class AppNavbar extends Component {
         <Navbar color="dark" dark expand="md" fixed="top">
           <NavbarBrand href="/">
             <img id="header-logo" src={logo} alt="Logo" />
-            <span className="ml-2"> Study in Europe</span>
+            <span id="header-title" className="ml-2"> Study in Europe</span>
           </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>

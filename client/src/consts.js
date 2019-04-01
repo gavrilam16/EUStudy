@@ -31,6 +31,9 @@ export const MAP_COLORS = [
 // Euro Smybol
 export const EUR = '€';
 
+// Copyright Symbol
+export const COPYRIGHT = '©';
+
 // Positions
 export const POSITIONS = [
   {

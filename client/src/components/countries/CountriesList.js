@@ -5,6 +5,7 @@ import { EUR } from "../../consts";
 import { Table } from "reactstrap";
 
 class CountriesList extends Component {
+  
   render() {
     // Copy countries array so that the sorting does not affect the parent array
     const countries = this.props.countries.map(a => ({ ...a }));

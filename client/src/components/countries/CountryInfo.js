@@ -8,6 +8,7 @@ import { EUR } from "../../consts";
 import { Spinner } from "reactstrap";
 
 class CountryInfo extends Component {
+  
   render() {
     const country = this.props.selectedCountry;
 
@@ -30,7 +31,7 @@ class CountryInfo extends Component {
       // If no country is selected display message
     } else if (country.firstCycleFees === undefined) {
       return (
-        <div className="country-info">
+        <div className="country-info text-center">
           Choose a country from the map or from the drop-down list
         </div>
       );
