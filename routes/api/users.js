@@ -1,4 +1,5 @@
 const express = require("express");
+const axios = require("axios");
 const router = express.Router();
 
 // User Model
@@ -12,8 +13,9 @@ const validator = require("validator");
 const isEmpty = require("is-empty");
 
 // Register validation
-function validateRegistration(input) {
+function validateRegistration(input, universities) {
   let errors = {};
+  let isDomainCorrect = false;
 
   // Convert empty fields to empty string so validator functions work
   input.name = !isEmpty(input.name) ? input.name : "";
@@ -33,6 +35,19 @@ function validateRegistration(input) {
     errors.email = "Email field is required";
   } else if (!validator.isEmail(input.email)) {
     errors.email = "Email is invalid";
+  } else if (input.role === "faculty") {
+    universities.map(university => {
+      if (university.name === input.university) {
+        university.domains.map(domain => {
+          if (domain === input.email.split("@").pop()) {
+            isDomainCorrect = true;
+          }
+        });
+      }
+    });
+    if (!isDomainCorrect) {
+      errors.email = "Email domain not matching university";
+    }
   }
 
   // Check password
@@ -89,41 +104,46 @@ router.get("/", (req, res) => {
 
 // POST api/users/register -- Register user
 router.post("/register", (req, res) => {
-  // Form validation
-  const { errors, isValid } = validateRegistration(req.body);
+  // Get universities from university-domains-list-api
+  axios.get("http://universities.hipolabs.com/search?").then(response => {
+    // Form validation
+    const { errors, isValid } = validateRegistration(req.body, response.data);
 
-  // Check validation
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
-
-  // Check if user already exists
-  User.findOne({ email: req.body.email }).then(user => {
-    if (user) {
-      return res.status(400).json({ email: "Email address is already in use" });
-    } else {
-      const user = new User({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        university: req.body.university,
-        role: req.body.role
-      });
-
-      // Hash password and save user in database
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(user.password, salt, (err, hash) => {
-          if (err) {
-            throw err;
-          }
-          user.password = hash;
-          user
-            .save()
-            .then(user => res.json(user))
-            .catch(err => console.log(err));
-        });
-      });
+    // Check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
     }
+
+    // Check if user already exists
+    User.findOne({ email: req.body.email }).then(user => {
+      if (user) {
+        return res
+          .status(400)
+          .json({ email: "Email address is already in use" });
+      } else {
+        const user = new User({
+          name: req.body.name,
+          email: req.body.email,
+          password: req.body.password,
+          university: req.body.university,
+          role: req.body.role
+        });
+
+        // Hash password and save user in database
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(user.password, salt, (err, hash) => {
+            if (err) {
+              throw err;
+            }
+            user.password = hash;
+            user
+              .save()
+              .then(user => res.json(user))
+              .catch(err => console.log(err));
+          });
+        });
+      }
+    });
   });
 });
 
@@ -155,6 +175,8 @@ router.post("/login", (req, res) => {
         const payload = {
           id: user.id,
           name: user.name,
+          email: user.email,
+          university: user.university,
           role: user.role
         };
 
@@ -190,7 +212,6 @@ router.put("/:id", (req, res, next) => {
     res.send("User updated");
   });
 });
-
 
 // DELETE api/users/:id -- Delete an user
 router.delete("/:id", (req, res, next) => {

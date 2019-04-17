@@ -83,7 +83,6 @@ class UniversitiesList extends Component {
         university => university.countryCode === this.state.countryCode
       );
     }
-    console.log(universities);
     // Filter universities on search
     universities = universities.filter(university => {
       if (university.name !== undefined) {

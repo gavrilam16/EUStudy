@@ -57,12 +57,12 @@ class UserModal extends Component {
 
   // On modal toggle
   toggle = () => {
-    if(this.mounted) {
-    this.setState({
-      name: this.props.selectedUser.name,
-      email: this.props.selectedUser.email,
-      modal: !this.state.modal
-    });
+    if (this.mounted) {
+      this.setState({
+        name: this.props.selectedUser.name,
+        email: this.props.selectedUser.email,
+        modal: !this.state.modal
+      });
     }
   };
 
@@ -99,13 +99,24 @@ class UserModal extends Component {
 
   // When user selects a position from drop-down
   handleSelectPosition = e => {
-    const seekedPosition = e.target.value;
-    // Search positions by name
-    const foundPosition = POSITIONS.filter(e => seekedPosition === e.forScreen);
-    // Set position as selectedPosition
-    this.setState({
-      selectedPosition: foundPosition[0]
-    });
+    if (e.target.value === "Admin") {
+      this.setState({
+        selectedPosition: {
+            name: "admin",
+            forScreen: "Admin"
+        }
+      });
+    } else {
+      const seekedPosition = e.target.value;
+      // Search positions by name
+      const foundPosition = POSITIONS.filter(
+        e => seekedPosition === e.forScreen
+      );
+      // Set position as selectedPosition
+      this.setState({
+        selectedPosition: foundPosition[0]
+      });
+    }
   };
 
   // When user clicks the Log In button
@@ -178,6 +189,7 @@ class UserModal extends Component {
               </FormGroup>
               {/* Country drop-down selector*/}
               <FormGroup>
+              <Label for="selectUniversity">University</Label>
                 <Input
                   type="select"
                   name="selectCountry"
@@ -242,6 +254,9 @@ class UserModal extends Component {
                   {POSITIONS.map((position, i) => (
                     <option key={i}>{position.forScreen}</option>
                   ))}
+                  {this.props.user.currentUser.role === "admin" ? (
+                    <option>Admin</option>
+                  ) : null}
                 </Input>
               </FormGroup>
               {/* Submit button */}

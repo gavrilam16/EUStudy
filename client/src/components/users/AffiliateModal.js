@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { SUBSCRIPTIONS, EUR } from "../../consts";
+
 import universityObject from "../../static/world_universities_and_domains.json";
 import geographyObject from "../../static/world-10m.json";
 
@@ -15,10 +17,15 @@ import {
   NavLink,
   Form,
   FormGroup,
-  Input
+  Input,
+  Card,
+  CardText,
+  CardBody,
+  CardTitle
 } from "reactstrap";
 
 import classnames from "classnames";
+import moment from 'moment';
 
 class AffiliateModal extends Component {
   constructor(props) {
@@ -35,6 +42,21 @@ class AffiliateModal extends Component {
 
   componentDidMount() {
     this.mounted = true;
+
+    if (this.props.error) {
+      this.setState({
+        errors: this.props.error
+      });
+    }
+
+    universityObject.map(university => {
+      if (university.name === this.props.user.currentUser.university) {
+        this.setState({
+          selectedUniversity: university
+        });
+      }
+      return university;
+    });
   }
 
   componentWillUnmount() {
@@ -53,7 +75,8 @@ class AffiliateModal extends Component {
   // On modal toggle
   toggle = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
+      errors: {}
     });
   };
 
@@ -97,91 +120,191 @@ class AffiliateModal extends Component {
       name: this.state.selectedUniversity.name,
       countryCode: this.state.selectedUniversity.alpha_two_code,
       website: this.state.selectedUniversity.web_pages[0],
+      subscriptionUntil: moment().add(e.target.name, 'months').format(),
       enabled: false
     };
 
     // Send add request via addUniversity action
     this.props.addUniversity(newUniversity);
-
-    this.toggle();
-
   };
 
   render() {
     const { errors } = this.state;
 
-    return (
-      <div className="d-inline">
-        {/* Modal button */}
-        <NavLink href="#" onClick={this.toggle}>
-          Affiliate
-        </NavLink>
-        <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Affiliate</ModalHeader>
-          <ModalBody>
-            <Form onSubmit={this.handleSubmit}>
-              {/* Country drop-down selector*/}
-              <FormGroup>
-                <Input
-                  required
-                  type="select"
-                  name="selectCountry"
-                  id="selectCountry"
-                  defaultValue={this.state.selectedCountry.properties.name}
-                  onChange={e => this.handleSelectCountry(e)}
-                >
-                  <option value="" hidden>
-                    {" "}
-                    Choose a country *{" "}
-                  </option>
-                  {geographyObject.objects.ne_10m_admin_0_countries.geometries.map(
-                    ({ properties }) =>
+    // If user is admin
+    if (this.props.user.currentUser.role === "admin") {
+      return (
+        <div className="d-inline">
+          {/* Modal button */}
+          <NavLink href="#" onClick={this.toggle}>
+            Affiliate
+          </NavLink>
+          <Modal isOpen={this.state.modal} toggle={this.toggle}>
+            <ModalHeader toggle={this.toggle}>Affiliate</ModalHeader>
+            <ModalBody>
+              <Form onSubmit={this.handleSubmit}>
+                {/* Country drop-down selector*/}
+                <FormGroup>
+                  <Input
+                    required
+                    type="select"
+                    name="selectCountry"
+                    id="selectCountry"
+                    defaultValue={this.state.selectedCountry.properties.name}
+                    onChange={e => this.handleSelectCountry(e)}
+                  >
+                    <option value="" hidden>
+                      {" "}
+                      Choose a country *{" "}
+                    </option>
+                    {geographyObject.objects.ne_10m_admin_0_countries.geometries.map(
+                      ({ properties }) =>
+                        // Display only countries from Europe having universities
+                        (properties.CONTINENT === "Europe" &&
+                        properties.ISO_A2 !== "AX" && // Except Aland Islands
+                        properties.ISO_A2 !== "GI" && // Except Gibraltar
+                        properties.ISO_A2 !== "GG" && // Except Guernsey
+                        properties.ISO_A2 !== "IM" && // Except Isle of Man
+                          properties.ISO_A2 !== "JE") || // Except Jersey
+                        properties.ISO_A2 === "TR" || // Add Turkey
+                        properties.ISO_A2 === "CY" ? ( // Add Cyprus
+                          <option key={properties.ISO_A2}>
+                            {properties.NAME}
+                          </option>
+                        ) : null
+                    )}
+                  </Input>
+                </FormGroup>
+                {/* University drop-down selector*/}
+                <FormGroup>
+                  <Input
+                    required
+                    type="select"
+                    name="selectUniversity"
+                    id="selectUniversity"
+                    className={classnames("", {
+                      invalid: errors.affiliated
+                    })}
+                    error={errors.affiliated}
+                    defaultValue={this.state.selectedUniversity.name}
+                    onChange={e => this.handleSelectUniversity(e)}
+                  >
+                    <option value="" hidden>
+                      {" "}
+                      Choose an university *{" "}
+                    </option>
+                    {universityObject.map((university, i) =>
                       // Display only countries with store data
-                      properties.CONTINENT === "Europe" ? (
-                        <option key={properties.ISO_A2}>
-                          {properties.NAME}
-                        </option>
+                      university.alpha_two_code ===
+                      this.state.selectedCountry.properties.ISO_A2 ? (
+                        <option key={i}>{university.name}</option>
                       ) : null
-                  )}
-                </Input>
-              </FormGroup>
-              {/* University drop-down selector*/}
-              <FormGroup>
-                <Input
-                  required
-                  type="select"
-                  name="selectUniversity"
-                  id="selectUniversity"
-                  className={classnames("", {
-                    invalid: errors.affiliated
-                  })}
-                  error={errors.affiliated}
-                  defaultValue={this.state.selectedUniversity.name}
-                  onChange={e => this.handleSelectUniversity(e)}
-                >
-                  <option value="" hidden>
-                    {" "}
-                    Choose an university *{" "}
-                  </option>
-                  {universityObject.map((university, i) =>
-                    // Display only countries with store data
-                    university.alpha_two_code ===
-                    this.state.selectedCountry.properties.ISO_A2 ? (
-                      <option key={i}>{university.name}</option>
-                    ) : null
-                  )}
-                </Input>
-                <span className="text-danger">{errors.affiliated}</span>
-              </FormGroup>
-              {/* Sign Up button */}
-              <Button className="mb-3" color="dark" block>
-                Send Request
-              </Button>
-            </Form>
-          </ModalBody>
-        </Modal>
-      </div>
-    );
+                    )}
+                  </Input>
+                </FormGroup>
+                {/* Send Request button */}
+                <div id="subscription-panel" className="mb-1">
+                  {SUBSCRIPTIONS.map((subscription, i) => (
+                    <Card key={i} className="ml-3 mr-3 text-center">
+                      <CardBody>
+                        <CardTitle>
+                          <h5>{subscription.forScreen}</h5>
+                        </CardTitle>
+                        <CardText className="subscription-price">
+                          {subscription.price} {EUR}
+                        </CardText>
+                        {/* Send button */}
+                        <Button
+                          color="info"
+                          id={subscription.id}
+                          name={subscription.months}
+                          onClick={e => this.handleSubmit(e)}
+                        >
+                          Send
+                        </Button>
+                      </CardBody>
+                    </Card>
+                  ))}
+                </div>
+                <div className="mt-2">
+                  <span className="text-danger">{errors.affiliated}</span>
+                </div>
+              </Form>
+            </ModalBody>
+          </Modal>
+        </div>
+      );
+      // If user is faculty
+    } else if (this.props.user.currentUser.role === "faculty") {
+      return (
+        <div className="d-inline">
+          {/* Modal button */}
+          <NavLink href="#" onClick={this.toggle}>
+            Affiliate
+          </NavLink>
+          <Modal isOpen={this.state.modal} toggle={this.toggle}>
+            <ModalHeader toggle={this.toggle}>Affiliate</ModalHeader>
+            <ModalBody>
+              <Form onSubmit={this.handleSubmit}>
+                <div>
+                  You can affiliate the following institution:{" "}
+                  <p className="font-weight-bold">
+                    {this.props.user.currentUser.university}
+                  </p>
+                </div>
+                <p className="lead">Choose a payment plan:</p>
+                <div id="subscription-panel" className="mb-1">
+                  {SUBSCRIPTIONS.map((subscription, i) => (
+                    <Card key={i} className="ml-3 mr-3 text-center">
+                      <CardBody>
+                        <CardTitle>
+                          <h5>{subscription.forScreen}</h5>
+                        </CardTitle>
+                        <CardText>
+                          <h3>
+                            {subscription.price} {EUR}
+                          </h3>
+                        </CardText>
+                        {/* Send button */}
+                        <Button
+                          color="info"
+                          id={subscription.id}
+                          onClick={e => this.handleSubmit(e)}
+                        >
+                          Send
+                        </Button>
+                      </CardBody>
+                    </Card>
+                  ))}
+                </div>
+                <div className="mt-2">
+                  <span className="text-danger">{errors.affiliated}</span>
+                </div>
+              </Form>
+            </ModalBody>
+          </Modal>
+        </div>
+      );
+      // If user is not admin or faculty
+    } else {
+      return (
+        <div className="d-inline">
+          {/* Modal button */}
+          <NavLink href="#" onClick={this.toggle}>
+            Affiliate
+          </NavLink>
+          <Modal isOpen={this.state.modal} toggle={this.toggle}>
+            <ModalHeader toggle={this.toggle}>Affiliate</ModalHeader>
+            <ModalBody>
+              <div className="m-3 lead">
+                You must be a faculty member in order to affiliate an
+                university.
+              </div>
+            </ModalBody>
+          </Modal>
+        </div>
+      );
+    }
   }
 }
 

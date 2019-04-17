@@ -29,7 +29,7 @@ export const addCountry = country => dispatch => {
         payload: res.data
       })
     )
-    .then(res => dispatch(getCountries()));
+    .then(() => dispatch(getCountries()));
 };
 
 // Modify country
@@ -43,7 +43,7 @@ export const modifyCountry = country => dispatch => {
         payload: res.data
       })
     )
-    .then(res => dispatch(getCountries()));
+    .then(() => dispatch(getCountries()));
 };
 
 // Delete country
@@ -57,7 +57,7 @@ export const deleteCountry = id => dispatch => {
         payload: id
       })
     )
-    .then(res => dispatch(getCountries()));
+    .then(() => dispatch(getCountries()));
 };
 
 // Countries fetching

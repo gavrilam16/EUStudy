@@ -23,8 +23,8 @@ import {
   Input
 } from "reactstrap";
 
-import classnames from "classnames";
 
+import classnames from "classnames";
 class RegisterModal extends Component {
   constructor(props) {
     super(props);
@@ -46,6 +46,7 @@ class RegisterModal extends Component {
   componentDidMount() {
     // Get errors
     this.mounted = true;
+
     if (this.props.error) {
       this.setState({
         errors: this.props.error
@@ -218,10 +219,11 @@ class RegisterModal extends Component {
               </FormGroup>
               {/* Country drop-down selector*/}
               <FormGroup>
+                <Label for="selectUniversity">University</Label>
                 <Input
                   type="select"
                   name="selectCountry"
-                  id="selectCountry"
+                  id="selectCountryOfStudy"
                   defaultValue={this.state.selectedCountry.properties.name}
                   onChange={e => this.handleSelectCountry(e)}
                 >
@@ -230,8 +232,15 @@ class RegisterModal extends Component {
                   </option>
                   {geographyObject.objects.ne_10m_admin_0_countries.geometries.map(
                     ({ properties }) =>
-                      // Display only countries with store data
-                      properties.CONTINENT === "Europe" ? (
+                      // Display only countries from Europe having universities
+                      (properties.CONTINENT === "Europe" &&
+                      properties.ISO_A2 !== "AX" && // Except Aland Islands
+                      properties.ISO_A2 !== "GI" && // Except Gibraltar
+                      properties.ISO_A2 !== "GG" && // Except Guernsey
+                      properties.ISO_A2 !== "IM" && // Except Isle of Man
+                        properties.ISO_A2 !== "JE") || // Except Jersey
+                      properties.ISO_A2 === "TR" || // Add Turkey
+                      properties.ISO_A2 === "CY" ? ( // Add Cyprus
                         <option key={properties.ISO_A2}>
                           {properties.NAME}
                         </option>

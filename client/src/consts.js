@@ -53,3 +53,25 @@ export const POSITIONS = [
     forScreen: "Alumnus"
   }
 ];
+
+// Subscription Plans
+export const SUBSCRIPTIONS = [
+  {
+    id: "threeMonthsSubscription",
+    months: 3,
+    price: 45,
+    forScreen: "3 Months"
+  },
+  {
+    id: "sixMonthsSubscription",
+    months: 6,
+    price: 80,
+    forScreen: "6 Months"
+  },
+  {
+    id: "oneYearSubscription",
+    months: 12,
+    price: 135,
+    forScreen: "1 Year"
+  }
+]

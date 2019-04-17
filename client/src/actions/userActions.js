@@ -95,7 +95,7 @@ export const modifyUser = user => dispatch => {
         payload: res.data
       })
     )
-    .then(res => dispatch(getUsers()));
+    .then(() => dispatch(getUsers()));
 };
 
 // Delete user
@@ -109,5 +109,5 @@ export const deleteUser = id => dispatch => {
         payload: id
       })
     )
-    .then(res => dispatch(getUsers()));
+    .then(() => dispatch(getUsers()));
 };

@@ -49,12 +49,16 @@ class AppNavbar extends Component {
         <Navbar color="dark" dark expand="md" fixed="top">
           <NavbarBrand href="/">
             <img id="header-logo" src={logo} alt="Logo" />
-            <span id="header-title" className="ml-2"> Study in Europe</span>
+            <span id="header-title" className="ml-2">
+              EU Study
+            </span>
           </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <span id="welcome-message" className="navbar-text">Welcome, </span>
+              <span id="welcome-message" className="navbar-text">
+                Welcome,{" "}
+              </span>
               <NavItem>
                 <NavLink href="/profile/">
                   {this.props.user.currentUser.name}
@@ -76,7 +80,12 @@ class AppNavbar extends Component {
       return (
         // If unauthenticated
         <Navbar color="dark" dark expand="md" fixed="top">
-          <NavbarBrand href="/">Study in Europe</NavbarBrand>
+          <NavbarBrand href="/">
+            <img id="header-logo" src={logo} alt="Logo" />
+            <span id="header-title" className="ml-2">
+              EU Study
+            </span>
+          </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>

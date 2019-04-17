@@ -35,7 +35,7 @@ export const addUniversity = university => dispatch => {
         type: GET_ERRORS,
         payload: err.response.data
       })
-  ).then(res=>dispatch(getUniversities()));
+  ).then(() => dispatch(getUniversities()));
 };
 
 // Modify university
@@ -46,7 +46,7 @@ export const modifyUniversity = university => dispatch => {
       type: MODIFY_UNIVERSITY,
       payload: res.data
     })
-  ).then(res=>dispatch(getUniversities()));
+    ).then(() => dispatch(getUniversities()));
 };
 
 // Delete university
@@ -57,7 +57,7 @@ export const deleteUniversity = id => dispatch => {
       type: DELETE_UNIVERSITY,
       payload: id
     })
-  ).then(res=>dispatch(getUniversities()));
+    ).then(() => dispatch(getUniversities()));
 };
 
 // Universities fetching

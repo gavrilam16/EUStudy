@@ -152,6 +152,16 @@ a:hover {
   font-size: 2rem;
 }
 
+/* Affiliate */
+.subscription-price {
+  font-size: 1.7rem;
+}
+
+#subscription-panel {
+  display: inline-flex;
+}
+
+
 /* Profile */
 #profile-panel {
   margin-top: 5rem;
