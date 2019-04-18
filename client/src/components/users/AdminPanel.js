@@ -22,7 +22,9 @@ import {
   FormGroup,
   CustomInput
 } from "reactstrap";
+
 import uuid from "uuid";
+import moment from 'moment';
 
 class AdminPanel extends Component {
   constructor() {
@@ -117,11 +119,7 @@ class AdminPanel extends Component {
             <tr>
               <th>#</th>
               <th>Name</th>
-              <th>Founding Year</th>
-              <th>Website</th>
-              <th>Description</th>
-              <th>First Cycle Fees</th>
-              <th>Second Cycle Fees</th>
+              <th>Subscribed Until</th>
               <th>Enabled</th>
               <th colSpan="2">Manage</th>
             </tr>
@@ -131,11 +129,7 @@ class AdminPanel extends Component {
               <tr key={university._id}>
                 <th scope="row">{i++}</th>
                 <td>{university.name}</td>
-                <td>{university.foundingYear}</td>
-                <td>{university.website}</td>
-                <td>{university.description}</td>
-                <td>{university.firstCycleFees}</td>
-                <td>{university.secondCycleFees}</td>
+                <td>{moment(university.subscribedUntil).format('MMMM Do YYYY, h:mm:ss a')}</td>
                 <td>
                   <FormGroup>
                     <CustomInput

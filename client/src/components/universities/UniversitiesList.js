@@ -97,10 +97,10 @@ class UniversitiesList extends Component {
     });
 
     return (
-      <Row>
+      <Row id="universities-panel">
         <Col md={{ size: 3, offset: 9 }}>
           {/* Search and View All */}
-          <InputGroup>
+          <InputGroup className="mt-3">
             <Input
               type="search"
               name="search"

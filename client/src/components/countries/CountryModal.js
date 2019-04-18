@@ -116,7 +116,7 @@ class CountryModal extends Component {
 
   render() {
     // Set isModalOpen button text
-    const buttonText = this.props.modify ? "Edit" : "Add";
+    const buttonText = this.props.modify ? "Modify" : "Add";
 
     return (
       <div className="d-inline">

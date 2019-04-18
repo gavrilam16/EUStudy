@@ -47,7 +47,7 @@ class AppNavbar extends Component {
       return (
         // If authenticated
         <Navbar color="dark" dark expand="md" fixed="top">
-          <NavbarBrand href="/">
+          <NavbarBrand href="/" className="p-0">
             <img id="header-logo" src={logo} alt="Logo" />
             <span id="header-title" className="ml-2">
               EU Study
@@ -80,7 +80,7 @@ class AppNavbar extends Component {
       return (
         // If unauthenticated
         <Navbar color="dark" dark expand="md" fixed="top">
-          <NavbarBrand href="/">
+          <NavbarBrand href="/" className="p-0">
             <img id="header-logo" src={logo} alt="Logo" />
             <span id="header-title" className="ml-2">
               EU Study

@@ -25,17 +25,20 @@ import {
 } from "reactstrap";
 
 import classnames from "classnames";
-import moment from 'moment';
+import moment from "moment";
 
 class AffiliateModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
+      isSent: false,
       selectedCountry: {
         properties: {}
       },
-      selectedUniversity: {},
+      selectedUniversity: {
+        web_pages: []
+      },
       errors: {}
     };
   }
@@ -76,6 +79,7 @@ class AffiliateModal extends Component {
   toggle = () => {
     this.setState({
       modal: !this.state.modal,
+      isSent: false,
       errors: {}
     });
   };
@@ -120,16 +124,43 @@ class AffiliateModal extends Component {
       name: this.state.selectedUniversity.name,
       countryCode: this.state.selectedUniversity.alpha_two_code,
       website: this.state.selectedUniversity.web_pages[0],
-      subscriptionUntil: moment().add(e.target.name, 'months').format(),
+      subscribedUntil: moment()
+        .add(e.target.name, "months")
+        .calendar(),
       enabled: false
     };
 
     // Send add request via addUniversity action
     this.props.addUniversity(newUniversity);
+
+    if (
+      Object.entries(this.state.errors).length === 0 &&
+      this.state.errors.constructor === Object
+    ) {
+      this.setState({
+        isSent: true
+      });
+    }
   };
 
   render() {
     const { errors } = this.state;
+    // Set rules for the message showing after pressing the Send button
+    const showSentMessage =
+      Object.entries(errors).length === 0 &&
+      errors.constructor === Object &&
+      this.state.isSent ? (
+        this.props.user.currentUser.role === "admin" ? (
+          <p>Affiliation request sent.</p>
+        ) : (
+          <p>
+            An affiliation request has been sent to the page administrators. You
+            will recieve a response by email in the next hours.
+          </p>
+        )
+      ) : (
+        <span className="text-danger">{errors.affiliated}</span>
+      );
 
     // If user is admin
     if (this.props.user.currentUser.role === "admin") {
@@ -146,7 +177,6 @@ class AffiliateModal extends Component {
                 {/* Country drop-down selector*/}
                 <FormGroup>
                   <Input
-                    required
                     type="select"
                     name="selectCountry"
                     id="selectCountry"
@@ -178,7 +208,6 @@ class AffiliateModal extends Component {
                 {/* University drop-down selector*/}
                 <FormGroup>
                   <Input
-                    required
                     type="select"
                     name="selectUniversity"
                     id="selectUniversity"
@@ -226,9 +255,8 @@ class AffiliateModal extends Component {
                     </Card>
                   ))}
                 </div>
-                <div className="mt-2">
-                  <span className="text-danger">{errors.affiliated}</span>
-                </div>
+                {/* Sent message */}
+                <div className="mt-2">{showSentMessage}</div>
               </Form>
             </ModalBody>
           </Modal>
@@ -260,15 +288,14 @@ class AffiliateModal extends Component {
                         <CardTitle>
                           <h5>{subscription.forScreen}</h5>
                         </CardTitle>
-                        <CardText>
-                          <h3>
+                        <CardText className="subscription-price">
                             {subscription.price} {EUR}
-                          </h3>
                         </CardText>
                         {/* Send button */}
                         <Button
                           color="info"
                           id={subscription.id}
+                          name={subscription.months}
                           onClick={e => this.handleSubmit(e)}
                         >
                           Send
@@ -277,9 +304,8 @@ class AffiliateModal extends Component {
                     </Card>
                   ))}
                 </div>
-                <div className="mt-2">
-                  <span className="text-danger">{errors.affiliated}</span>
-                </div>
+                {/* Sent message */}
+                <div className="mt-2">{showSentMessage}</div>
               </Form>
             </ModalBody>
           </Modal>

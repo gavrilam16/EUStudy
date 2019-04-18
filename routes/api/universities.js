@@ -27,7 +27,7 @@ router.post("/", (req, res, next) => {
         foundingYear: req.body.foundingYear,
         firstCycleFees: req.body.firstCycleFees,
         secondCycleFees: req.body.secondCycleFees,
-        subscriptionUntil: req.body.subscriptionUntil,
+        subscribedUntil: req.body.subscribedUntil,
         enabled: req.body.enabled
       });
 

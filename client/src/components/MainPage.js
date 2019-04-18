@@ -24,6 +24,8 @@ import CountryInfo from "./countries/CountryInfo";
 import ConfirmModal from "./ConfirmModal";
 import UniversitiesList from "./universities/UniversitiesList";
 
+import topImage from "../static/images/top.jpg";
+
 class MainPage extends Component {
   constructor(props) {
     super(props);
@@ -196,6 +198,9 @@ class MainPage extends Component {
       return (
         <Container className="container-fluid">
           <Row id="country-panel-top">
+            <img id="top-image" src={topImage} alt="students" />
+          </Row>
+          <Row>
             <Col xs={12} md={{ size: 4, offset: 6 }}>
               <Form inline>
                 {/* Data drop-down selector */}
@@ -217,7 +222,11 @@ class MainPage extends Component {
                     name="selectCountry"
                     className="custom-select"
                     id="selectCountry"
-                    value={this.state.selectedCountry.properties.name}
+                    value={
+                      this.state.selectedCountry.properties.name
+                        ? this.state.selectedCountry.properties.name
+                        : ""
+                    }
                     onChange={e => this.handleSelectCountry(e)}
                   >
                     <option value="" hidden>
@@ -239,7 +248,7 @@ class MainPage extends Component {
               {/* Countries List */}
             </Col>
           </Row>
-          <Row>
+          <Row id="country-panel">
             <Col xs={12} md={2} className="d-none d-sm-block">
               <CountriesList
                 countries={
@@ -263,7 +272,6 @@ class MainPage extends Component {
               {displayButtons}
             </Col>
           </Row>
-          <hr />
           <UniversitiesList
             countryCode={this.state.selectedCountry.properties.ISO_A2}
           />

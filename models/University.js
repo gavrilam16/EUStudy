@@ -46,7 +46,7 @@ const UniversitySchema = new Schema({
       type: String
     }
   }],
-  subscriptionUntil: {
+  subscribedUntil: {
     type: Date
   },
   enabled: {

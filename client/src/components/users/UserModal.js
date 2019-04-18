@@ -119,7 +119,7 @@ class UserModal extends Component {
     }
   };
 
-  // When user clicks the Log In button
+  // When user clicks the Submit button
   handleSubmit = e => {
     e.preventDefault();
 
@@ -146,17 +146,17 @@ class UserModal extends Component {
       <td>
         {/* Modal button */}
         <Button color="info" href="#" onClick={this.toggle}>
-          Edit
+          Modify
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Edit</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Modifiy</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.handleSubmit}>
               {/* Name input */}
               <FormGroup>
                 <Label for="name">Name *</Label>
                 <Input
-                  type="name"
+                  type="text"
                   name="name"
                   id="name"
                   className={classnames("", {

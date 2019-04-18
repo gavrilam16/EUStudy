@@ -117,7 +117,7 @@ class RegisterModal extends Component {
     });
   };
 
-  // When user clicks the Log In button
+  // When user clicks the Sign Up button
   handleSubmit = e => {
     e.preventDefault();
 
@@ -154,7 +154,7 @@ class RegisterModal extends Component {
               <FormGroup>
                 <Label for="name">Name *</Label>
                 <Input
-                  type="name"
+                  type="text"
                   name="name"
                   id="name"
                   className={classnames("", {
