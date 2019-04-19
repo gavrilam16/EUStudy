@@ -17,6 +17,8 @@ import setAuthToken from "./utils/setAuthToken";
 
 import { setCurrentUser, logoutUser } from "./actions/userActions";
 
+import ScrollUpButton from "react-scroll-up-button";
+
 import "./App.css";
 
 class App extends Component {
@@ -49,6 +51,7 @@ class App extends Component {
             <Switch>
               <PrivateRoute exact path="/profile" component={ProfilePage} />
             </Switch>
+            <ScrollUpButton />
           </div>
         </Router>
       </Provider>

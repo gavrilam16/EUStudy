@@ -201,15 +201,15 @@ class MainPage extends Component {
             <img id="top-image" src={topImage} alt="students" />
           </Row>
           <Row>
-            <Col xs={12} md={{ size: 4, offset: 6 }}>
+            <Col xs={12} md={{ size: 4, offset: 7 }}>
               <Form inline>
                 {/* Data drop-down selector */}
                 <FormGroup className="country-selectors">
                   <Input
                     type="select"
                     name="selectedData"
-                    className="custom-select"
                     id="selectedData"
+                    size="sm"
                     onChange={e => this.handleSelectData(e)}
                   >
                     {displayDataDropDownOptions}
@@ -220,8 +220,8 @@ class MainPage extends Component {
                   <Input
                     type="select"
                     name="selectCountry"
-                    className="custom-select"
                     id="selectCountry"
+                    size="sm"
                     value={
                       this.state.selectedCountry.properties.name
                         ? this.state.selectedCountry.properties.name

@@ -155,6 +155,7 @@ class UniversitiesList extends Component {
                   <div className="mt-4 text-center">
                     <Button
                       color="info"
+                      size="sm"
                       onClick={() => this.handleClick(university)}
                     >
                       Learn More
