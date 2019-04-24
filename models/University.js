@@ -32,6 +32,9 @@ const UniversitySchema = new Schema({
     name: {
       type: String
     },
+    link: {
+      type: String
+    },
     domain: {
       type: String
     },

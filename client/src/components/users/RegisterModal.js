@@ -29,7 +29,7 @@ class RegisterModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false,
+      isModalOpen: false,
       selectedCountry: {
         properties: {}
       },
@@ -67,10 +67,10 @@ class RegisterModal extends Component {
     }
   }
 
-  // On modal toggle
+  // On isModalOpen toggle
   toggle = () => {
     this.setState({
-      modal: !this.state.modal,
+      isModalOpen: !this.state.isModalOpen,
       errors: {}
     });
   };
@@ -134,6 +134,7 @@ class RegisterModal extends Component {
     // Send register request via registerUser action
     this.props.registerUser(newUser);
 
+    // Close modal
     this.mounted = false;
   };
 
@@ -146,7 +147,7 @@ class RegisterModal extends Component {
         <NavLink href="#" onClick={this.toggle} className="d-inline">
           Sign Up
         </NavLink>
-        <Modal isOpen={this.state.modal} toggle={this.toggle}>
+        <Modal isOpen={this.state.isModalOpen} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Sign Up</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.handleSubmit}>

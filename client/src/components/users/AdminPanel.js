@@ -22,9 +22,10 @@ import {
   FormGroup,
   CustomInput
 } from "reactstrap";
+import { FaUserAlt, FaUniversity } from "react-icons/fa";
 
 import uuid from "uuid";
-import moment from 'moment';
+import moment from "moment";
 
 class AdminPanel extends Component {
   constructor() {
@@ -78,7 +79,7 @@ class AdminPanel extends Component {
     const showData =
       // Show users data if Users is selected
       this.state.selectedData === "users" ? (
-        <Table className="mt-3">
+        <Table className="mt-3 text-center">
           <thead>
             <tr>
               <th>#</th>
@@ -114,7 +115,7 @@ class AdminPanel extends Component {
         </Table>
       ) : (
         // Show universities data if Universities is selected
-        <Table className="mt-3">
+        <Table className="mt-3 text-center">
           <thead>
             <tr>
               <th>#</th>
@@ -129,7 +130,11 @@ class AdminPanel extends Component {
               <tr key={university._id}>
                 <th scope="row">{i++}</th>
                 <td>{university.name}</td>
-                <td>{moment(university.subscribedUntil).format('MMMM Do YYYY, h:mm:ss a')}</td>
+                <td>
+                  {moment(university.subscribedUntil).format(
+                    "MMMM Do YYYY, h:mm:ss a"
+                  )}
+                </td>
                 <td>
                   <FormGroup>
                     <CustomInput
@@ -166,22 +171,29 @@ class AdminPanel extends Component {
 
     // Show spinner if fetching from database
     if (this.props.isFetching) {
-      return <div className="text-center">
-      <Spinner id="admin-info-spinner" color="info" />
-      </div>
+      return (
+        <div className="text-center">
+          <Spinner id="admin-info-spinner" color="info" />
+        </div>
+      );
     } else {
       return (
         <Row className="mt-5">
-          <Col>
-            <Button name="users" onClick={e => this.handleClick(e)}>
-              Users
+          <Col xs={12} md={{ size: 10, offset: 1 }}>
+            <Button
+              color="primary"
+              name="users"
+              onClick={e => this.handleClick(e)}
+            >
+              <FaUserAlt />
             </Button>
             <Button
+              color="primary"
               name="universities"
               className="ml-2"
               onClick={e => this.handleClick(e)}
             >
-              Universities
+              <FaUniversity />
             </Button>
             {showData}
           </Col>

@@ -23,6 +23,7 @@ import {
   CardBody,
   CardTitle
 } from "reactstrap";
+import { FaPaperPlane } from "react-icons/fa";
 
 import classnames from "classnames";
 import moment from "moment";
@@ -31,7 +32,7 @@ class AffiliateModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false,
+      isModalOpen: false,
       isSent: false,
       selectedCountry: {
         properties: {}
@@ -75,10 +76,10 @@ class AffiliateModal extends Component {
     }
   }
 
-  // On modal toggle
+  // On isModalOpen toggle
   toggle = () => {
     this.setState({
-      modal: !this.state.modal,
+      isModalOpen: !this.state.isModalOpen,
       isSent: false,
       errors: {}
     });
@@ -170,8 +171,8 @@ class AffiliateModal extends Component {
           <NavLink href="#" onClick={this.toggle}>
             Affiliate
           </NavLink>
-          <Modal isOpen={this.state.modal} toggle={this.toggle}>
-            <ModalHeader toggle={this.toggle}>Affiliate</ModalHeader>
+          <Modal isOpen={this.state.isModalOpen} toggle={this.toggle}>
+            <ModalHeader toggle={this.toggle}>Affiliate {this.state.selectedUniversity.name}</ModalHeader>
             <ModalBody>
               <Form onSubmit={this.handleSubmit}>
                 {/* Country drop-down selector*/}
@@ -244,12 +245,13 @@ class AffiliateModal extends Component {
                         </CardText>
                         {/* Send button */}
                         <Button
+                          size="sm"
                           color="info"
                           id={subscription.id}
                           name={subscription.months}
                           onClick={e => this.handleSubmit(e)}
                         >
-                          Send
+                          Send <FaPaperPlane />
                         </Button>
                       </CardBody>
                     </Card>
@@ -270,7 +272,7 @@ class AffiliateModal extends Component {
           <NavLink href="#" onClick={this.toggle}>
             Affiliate
           </NavLink>
-          <Modal isOpen={this.state.modal} toggle={this.toggle}>
+          <Modal isOpen={this.state.isModalOpen} toggle={this.toggle}>
             <ModalHeader toggle={this.toggle}>Affiliate</ModalHeader>
             <ModalBody>
               <Form onSubmit={this.handleSubmit}>
@@ -289,16 +291,17 @@ class AffiliateModal extends Component {
                           <h5>{subscription.forScreen}</h5>
                         </CardTitle>
                         <CardText className="subscription-price">
-                            {subscription.price} {EUR}
+                          {subscription.price} {EUR}
                         </CardText>
                         {/* Send button */}
                         <Button
+                          size="sm"
                           color="info"
                           id={subscription.id}
                           name={subscription.months}
                           onClick={e => this.handleSubmit(e)}
                         >
-                          Send
+                          Send <FaPaperPlane />
                         </Button>
                       </CardBody>
                     </Card>
@@ -319,7 +322,7 @@ class AffiliateModal extends Component {
           <NavLink href="#" onClick={this.toggle}>
             Affiliate
           </NavLink>
-          <Modal isOpen={this.state.modal} toggle={this.toggle}>
+          <Modal isOpen={this.state.isModalOpen} toggle={this.toggle}>
             <ModalHeader toggle={this.toggle}>Affiliate</ModalHeader>
             <ModalBody>
               <div className="m-3 lead">

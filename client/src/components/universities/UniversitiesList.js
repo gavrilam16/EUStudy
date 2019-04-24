@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { getUniversities } from "../../actions/universityActions";
 
 import UniversityPanel from "./UniversityPanel";
+import CardModal from "./UniversityCardModal";
 
 import {
   Row,
@@ -19,6 +20,7 @@ import {
   Input,
   InputGroup
 } from "reactstrap";
+import { FaExternalLinkAlt } from "react-icons/fa";
 import scrollToComponent from "react-scroll-to-component";
 
 class UniversitiesList extends Component {
@@ -49,7 +51,7 @@ class UniversitiesList extends Component {
       selectedUniversity: university
     });
 
-    // Scroll to University Panel component
+    // Scroll to UniversityPanel component
     scrollToComponent(this.University, {
       offset: 0,
       align: "middle",
@@ -131,7 +133,8 @@ class UniversitiesList extends Component {
                     >
                       {`${university.website}`
                         .replace(/^https?:\/\//i, "")
-                        .replace(/\/$/, "")}
+                        .replace(/\/$/, "")}{" "}
+                      {<FaExternalLinkAlt />}
                     </a>
                   </div>
                   <div className="university-card-right">
@@ -152,7 +155,8 @@ class UniversitiesList extends Component {
                       Second cycle: <b>{university.secondCycleFees}</b> {EUR}
                     </span>
                   </CardText>
-                  <div className="mt-4 text-center">
+                  <div className="mt-4 d-inline">
+                    {/* Learn More Button */}
                     <Button
                       color="info"
                       size="sm"
@@ -160,6 +164,13 @@ class UniversitiesList extends Component {
                     >
                       Learn More
                     </Button>
+                    {/* Modify Button */}
+                    {this.props.user.currentUser.role === "admin" ||
+                    (this.props.user.currentUser.role === "faculty" &&
+                      this.props.user.currentUser.university ===
+                        university.name) ? (
+                      <CardModal selectedUniversity={university} />
+                    ) : null}
                   </div>
                 </CardBody>
               </Card>
@@ -186,12 +197,14 @@ class UniversitiesList extends Component {
 UniversitiesList.propTypes = {
   getUniversities: PropTypes.func.isRequired,
   university: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
   isFetching: PropTypes.bool.isRequired
 };
 
 // Map state to props
 const mapStateToProps = state => ({
   university: state.university,
+  user: state.user,
   isFetching: state.university.isFetching
 });
 

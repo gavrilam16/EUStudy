@@ -10,7 +10,16 @@ router.get("/", (req, res) => {
   University.find()
     // Sort universities by name
     .sort({ name: 1 })
-    .then(universities => res.json(universities));
+    .then(universities => {
+      // Check if university is in the subscription period
+      universities.map(university => {
+        if (university.subscribedUntil < new Date()) {
+          // Disable if not
+          university.enabled = false;
+        }
+      });
+      res.json(universities);
+    });
 });
 
 // POST api/universities -- Create a university
@@ -18,7 +27,9 @@ router.post("/", (req, res, next) => {
   // Check if user already exists
   University.findOne({ name: req.body.name }).then(university => {
     if (university) {
-      return res.status(400).json({ affiliated: "University is already affiliated" });
+      return res
+        .status(400)
+        .json({ affiliated: "University is already affiliated" });
     } else {
       const university = new University({
         name: req.body.name,

@@ -1,29 +1,16 @@
 /* General */
 body {
   font-family: "Raleway", sans-serif;
-  background-color: #faf1f42f;
+  background-color: #fefcfc;
 }
 
 a:hover {
   text-decoration: none;
 }
 
-#top-image {
-  max-width: 100%;
-  height: auto;
-  margin-left: auto;
-  margin-right: auto;
-  opacity: 0.8;
-}
-
-/* Colors */
-.dark-blue {
-  color: #5244a3;
-}
-
 /* Main container */
 .container-fluid {
-  max-width: 1490px;
+  max-width: 1470px;
   padding: 0px;
   margin: 0px 20px;
   margin-left: auto;
@@ -62,7 +49,7 @@ a:hover {
 @media screen and (min-width: 600px) {
   .country-selectors {
     position: relative;
-    top: 2.2rem;
+    top: 2.4rem;
     z-index: 1;
     opacity: 0.95;
   }
@@ -84,7 +71,7 @@ a:hover {
 
 .country-info {
   border-radius: 3px;
-  background-color: #4cb69f;
+  background-color: #3f9b87;
   color: #faf9f8;
   margin-bottom: 0.6rem;
   padding: 1rem;
@@ -107,7 +94,7 @@ a:hover {
 }
 
 #country-panel-top {
-  margin-top: 2.5rem;
+  margin-top: 4rem;
   margin-bottom: 0.5rem;
 }
 
@@ -120,8 +107,8 @@ a:hover {
 @media screen and (min-width: 600px) {
   .country-buttons {
     position: relative;
-    top: 2.5rem;
-    right: 13rem;
+    bottom: 28.38rem;
+    right: 61.2rem;
     z-index: 1;
     opacity: 0.95;
   }
@@ -142,7 +129,7 @@ a:hover {
 }
 
 .university-card-header {
-  background-color: #c15772;
+  background-color: #b0415d;
   color: #faf9f8;
 }
 
@@ -158,6 +145,17 @@ a:hover {
   padding: 0.2rem;
 }
 
+.university-program {
+  margin: 0.5rem;
+  border: 0.5px ridge #89dac8;
+  border-radius: 3px;
+  padding: 0.6rem;
+}
+
+.university-program-domain {
+  color: #86898bf1;
+}
+
 #universities-panel {
   border-top: 0.04rem solid #e8e8e8;
 }
@@ -170,10 +168,14 @@ a:hover {
 }
 
 #university-panel-header {
-  background-color: #4cb69f;
+  background-color: #3f9b87;
   color: #faf9f8;
   text-align: center;
   font-size: 2rem;
+}
+
+#university-panel-left {
+  border-right: 1px dotted #d3d7db;
 }
 
 /* Affiliate */

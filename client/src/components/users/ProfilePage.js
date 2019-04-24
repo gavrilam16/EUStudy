@@ -7,6 +7,7 @@ import { logoutUser } from "../../actions/userActions";
 import { Container, Row, Col, Button } from "reactstrap";
 
 import AdminPanel from "./AdminPanel";
+import { FaSignOutAlt } from "react-icons/fa";
 
 class ProfilePage extends Component {
   // When user clicks the Log Out button
@@ -22,9 +23,11 @@ class ProfilePage extends Component {
     return (
       <Container className="container-fluid">
         <Row id="profile-panel">
-          <Col>
+          <Col xs={12} md={{ size: 10, offset: 1 }}>
             <h5>Hey there, {currentUser.name.split(" ")[0]}!</h5>
-            <Button color="primary" onClick={this.handleLogout}>Log Out</Button>
+            <Button color="dark" size="sm" onClick={this.handleLogout}>
+              Log Out <FaSignOutAlt />{" "}
+            </Button>
           </Col>
         </Row>
         {/* Show admin panel if admin */}

@@ -19,6 +19,7 @@ import {
   Label,
   Input
 } from "reactstrap";
+import { FaPencilAlt, FaPaperPlane } from 'react-icons/fa';
 
 import classnames from "classnames";
 
@@ -26,7 +27,7 @@ class UserModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false,
+      isModalOpen: false,
       selectedCountry: {
         properties: {}
       },
@@ -55,13 +56,13 @@ class UserModal extends Component {
     }
   }
 
-  // On modal toggle
+  // On isModalOpen toggle
   toggle = () => {
     if (this.mounted) {
       this.setState({
+        isModalOpen: !this.state.isModalOpen,
         name: this.props.selectedUser.name,
-        email: this.props.selectedUser.email,
-        modal: !this.state.modal
+        email: this.props.selectedUser.email
       });
     }
   };
@@ -145,10 +146,10 @@ class UserModal extends Component {
     return (
       <td>
         {/* Modal button */}
-        <Button color="info" href="#" onClick={this.toggle}>
-          Modify
+        <Button size="sm" href="#" onClick={this.toggle}>
+        <FaPencilAlt /> Modify
         </Button>
-        <Modal isOpen={this.state.modal} toggle={this.toggle}>
+        <Modal isOpen={this.state.isModalOpen} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Modifiy</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.handleSubmit}>
@@ -261,7 +262,7 @@ class UserModal extends Component {
               </FormGroup>
               {/* Submit button */}
               <Button className="mb-3" color="dark" block>
-                Submit
+              Submit < FaPaperPlane />
               </Button>
             </Form>
           </ModalBody>

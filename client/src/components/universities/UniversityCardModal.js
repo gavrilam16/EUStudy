@@ -16,17 +16,14 @@ import {
 } from "reactstrap";
 import { FaPencilAlt, FaPaperPlane } from "react-icons/fa";
 
-import moment from "moment";
-
-class UniversityModal extends Component {
+class UniversityCardModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isModalOpen: false,
-      name: "",
-      subscribedUntil: moment(
-        this.props.selectedUniversity.subscribedUntil
-      ).format()
+      website: "",
+      firstCycleFees: 0,
+      secondCycleFees: 0
     };
   }
 
@@ -42,10 +39,9 @@ class UniversityModal extends Component {
   toggle = () => {
     this.setState({
       isModalOpen: !this.state.isModalOpen,
-      name: this.props.selectedUniversity.name,
-      subscribedUntil: moment(
-        this.props.selectedUniversity.subscribedUntil
-      ).format()
+      website: this.props.selectedUniversity.website,
+      firstCycleFees: this.props.selectedUniversity.firstCycleFees,
+      secondCycleFees: this.props.selectedUniversity.secondCycleFees
     });
   };
 
@@ -61,66 +57,81 @@ class UniversityModal extends Component {
     // Get university input from state
     const university = {
       id: this.props.selectedUniversity._id,
-      name: this.state.name,
-      subscribedUntil: moment(this.state.subscribedUntil).format()
+      website: this.state.website,
+      firstCycleFees: this.state.firstCycleFees,
+      secondCycleFees: this.state.secondCycleFees
     };
 
     // Send modify request via modifyUniversity action
     this.props.modifyUniversity(university);
 
+    // Close modal
     this.toggle();
   };
 
   render() {
     return (
-      <td>
+      <div className="d-inline">
         {/* Modal button */}
-        <Button size="sm" onClick={this.toggle}>
+        <Button onClick={this.toggle} size="sm" className="ml-1">
           <FaPencilAlt /> Modify
         </Button>
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Modify</ModalHeader>
+          <ModalHeader toggle={this.toggle}>
+            Modify {this.props.selectedUniversity.name}
+          </ModalHeader>
           <ModalBody>
             <Form onSubmit={this.handleSubmit}>
-              {/* Name input*/}
+              {/* Website input*/}
               <FormGroup>
-                <Label for="name">Name *</Label>
+                <Label for="name">Website *</Label>
                 <Input
                   required
                   type="text"
-                  name="name"
-                  id="name"
-                  defaultValue={this.state.name}
+                  name="website"
+                  id="website"
+                  defaultValue={this.state.website}
                   onChange={e => this.handleChange(e)}
                 />
               </FormGroup>
-              {/* Subscribed until input*/}
+              {/* First cycle fees input*/}
               <FormGroup>
-                <Label for="name">Subscribed Until</Label>
+                <Label for="name">First Cycle Fees</Label>
                 <Input
-                  type="date"
-                  name="subscribedUntil"
-                  id="subscribedUntil"
-                  defaultValue={moment(this.state.subscribedUntil).format(
-                    "YYYY-MM-DD"
-                  )}
+                  type="number"
+                  name="firstCycleFees"
+                  id="firstCycleFees"
+                  min="0"
+                  defaultValue={this.state.firstCycleFees}
+                  onChange={e => this.handleChange(e)}
+                />
+              </FormGroup>
+              {/* Second cycle fees input*/}
+              <FormGroup>
+                <Label for="name">Second Cycle Fees</Label>
+                <Input
+                  type="number"
+                  name="secondCycleFees"
+                  id="secondCycleFees"
+                  min="0"
+                  defaultValue={this.state.secondCycleFees}
                   onChange={e => this.handleChange(e)}
                 />
               </FormGroup>
               {/* Submit button */}
               <Button className="mb-3" color="dark" block>
-                Submit < FaPaperPlane />
+                Submit <FaPaperPlane />
               </Button>
             </Form>
           </ModalBody>
         </Modal>
-      </td>
+      </div>
     );
   }
 }
 
 // Set propTypes
-UniversityModal.propTypes = {
+UniversityCardModal.propTypes = {
   modifyUniversity: PropTypes.func.isRequired,
   university: PropTypes.object.isRequired
 };
@@ -134,4 +145,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { modifyUniversity }
-)(UniversityModal);
+)(UniversityCardModal);

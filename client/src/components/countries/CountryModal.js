@@ -14,6 +14,7 @@ import {
   Label,
   Input
 } from "reactstrap";
+import { FaPencilAlt } from "react-icons/fa";
 
 class CountryModal extends Component {
   constructor(props) {
@@ -100,9 +101,10 @@ class CountryModal extends Component {
       receivingGrants: this.state.receivingGrants
     };
 
-    // Add country via addCountry action
+    // Modify country via modifyCountry action
     if (this.props.modify) {
       this.props.modifyCountry(country);
+      // Add country via addCountry action
     } else {
       this.props.addCountry(country);
     }
@@ -115,14 +117,14 @@ class CountryModal extends Component {
   };
 
   render() {
-    // Set isModalOpen button text
+    // Set modal button text
     const buttonText = this.props.modify ? "Modify" : "Add";
 
     return (
       <div className="d-inline">
         {/* Modal button */}
-        <Button color="info" onClick={this.toggle}>
-          {buttonText}
+        <Button size="sm" onClick={this.toggle}>
+          <FaPencilAlt /> {buttonText}
         </Button>
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggle}>
           {/* Modal Title */}

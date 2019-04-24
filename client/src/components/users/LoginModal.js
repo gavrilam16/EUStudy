@@ -24,7 +24,7 @@ class LoginModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false,
+      isModalOpen: false,
       email: "",
       password: "",
       errors: {}
@@ -55,10 +55,10 @@ class LoginModal extends Component {
     }
   }
 
-  // On modal toggle
+  // On isModalOpen toggle
   toggle = () => {
     this.setState({
-      modal: !this.state.modal,
+      isModalOpen: !this.state.isModalOpen,
       errors: {}
     });
   };
@@ -93,7 +93,7 @@ class LoginModal extends Component {
         <NavLink href="#" onClick={this.toggle} className="d-inline">
           {this.props.name}
         </NavLink>
-        <Modal isOpen={this.state.modal} toggle={this.toggle}>
+        <Modal isOpen={this.state.isModalOpen} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Login</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.handleSubmit}>

@@ -8,7 +8,6 @@ import { EUR } from "../../consts";
 import { Spinner } from "reactstrap";
 
 class CountryInfo extends Component {
-  
   render() {
     const country = this.props.selectedCountry;
 
