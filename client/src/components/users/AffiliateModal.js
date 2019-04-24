@@ -232,7 +232,7 @@ class AffiliateModal extends Component {
                     )}
                   </Input>
                 </FormGroup>
-                {/* Send Request button */}
+                {/* Send buttons */}
                 <div id="subscription-panel" className="mb-1">
                   {SUBSCRIPTIONS.map((subscription, i) => (
                     <Card key={i} className="ml-3 mr-3 text-center">

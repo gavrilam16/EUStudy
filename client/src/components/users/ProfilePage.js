@@ -7,6 +7,8 @@ import { logoutUser } from "../../actions/userActions";
 import { Container, Row, Col, Button } from "reactstrap";
 
 import AdminPanel from "./AdminPanel";
+import FacultyPanel from "./FacultyPanel";
+
 import { FaSignOutAlt } from "react-icons/fa";
 
 class ProfilePage extends Component {
@@ -20,6 +22,9 @@ class ProfilePage extends Component {
     const { currentUser } = this.props.user;
     // Set rule for showing the admin panel
     const showAdminPanel = currentUser.role === "admin" ? <AdminPanel /> : null;
+    const showFacultyPanel =
+      currentUser.role === "faculty" ? <FacultyPanel /> : null;
+
     return (
       <Container className="container-fluid">
         <Row id="profile-panel">
@@ -32,6 +37,8 @@ class ProfilePage extends Component {
         </Row>
         {/* Show admin panel if admin */}
         {showAdminPanel}
+        {/* Show faculty panel if faculty */}
+        {showFacultyPanel}
       </Container>
     );
   }

@@ -20,7 +20,7 @@ import {
   Input,
   InputGroup
 } from "reactstrap";
-import { FaExternalLinkAlt } from "react-icons/fa";
+import { FaExternalLinkAlt, FaUniversity } from "react-icons/fa";
 import scrollToComponent from "react-scroll-to-component";
 
 class UniversitiesList extends Component {
@@ -123,7 +123,7 @@ class UniversitiesList extends Component {
               <Card className="university-card">
                 <CardHeader className="university-card-header">
                   <div className="university-card-left">
-                    <span>{university.name}</span>
+                    <span><FaUniversity /> {university.name}</span>
                     <a
                       className="university-website d-block"
                       href={`${university.website}`}

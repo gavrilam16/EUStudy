@@ -36,7 +36,7 @@ class AdminPanel extends Component {
   }
 
   componentDidMount() {
-    // Get users from store via getUsers action
+    // Get users and universities from store via getUsers and getUniversities actions
     this.props.getUsers();
     this.props.getUniversities();
   }
@@ -173,7 +173,7 @@ class AdminPanel extends Component {
     if (this.props.isFetching) {
       return (
         <div className="text-center">
-          <Spinner id="admin-info-spinner" color="info" />
+          <Spinner id="profile-spinner" color="info" />
         </div>
       );
     } else {
