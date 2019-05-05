@@ -123,7 +123,6 @@ class MainPage extends Component {
       if (element.properties._id === id) {
         element.properties._id = undefined;
         countryData[index] = element;
-        console.log(element.properties);
       }
     }, countryData);
 

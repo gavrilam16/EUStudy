@@ -80,13 +80,16 @@ class UniversityProgramModal extends Component {
     let university = {};
     // If modifying program
     if (this.props.modify) {
+      // Copy selected university into a new object
       university = {
         id: this.props.selectedUniversity._id,
         programs: [...this.props.selectedUniversity.programs]
       };
-      let objIndex = university.programs.findIndex(
+      // Find the index of the selected program
+      const objIndex = university.programs.findIndex(
         obj => obj._id === this.props.selectedProgram._id
       );
+      // Add new program to the university object
       university.programs[objIndex] = {
         name: this.state.name,
         link: this.state.link,

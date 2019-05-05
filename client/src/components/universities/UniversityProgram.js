@@ -7,7 +7,7 @@ import { modifyUniversity } from "../../actions/universityActions";
 import UniversityProgramModal from "./UniversityProgramModal";
 import ConfirmModal from "./../ConfirmModal";
 
-import { EUR } from "../../consts";
+import { EUR, ADMISSION_STATUS } from "../../consts";
 
 import { Button } from "reactstrap";
 import { FaMinus, FaPlus, FaExternalLinkAlt } from "react-icons/fa";
@@ -29,7 +29,7 @@ class UniversityProgram extends Component {
     });
   };
 
-  // When the confirm modal sends callback
+  // When the delete confirm modal sends callback
   handleDelete = id => {
     // Remove the selected program from the programs array
     const university = {
@@ -46,6 +46,31 @@ class UniversityProgram extends Component {
     setTimeout(() => this.props.callBack(), 1000);
   };
 
+  // When the admission modal sends callback
+  handleAdmissionRequest = programId => {
+    // Copy selected university into a new object
+    let university = Object.assign({}, this.props.selectedUniversity);
+    university.id = this.props.selectedUniversity._id;
+    // Find the index of the selected program
+    const objIndex = this.props.selectedUniversity.programs.findIndex(
+      obj => obj._id === programId
+    );
+    // Add the new request to the program in the university object
+    university.programs[objIndex].admissionRequests = [
+      ...this.props.selectedUniversity.programs[objIndex].admissionRequests,
+      {
+        studentId: this.props.user.currentUser.id,
+        requestStatus: ADMISSION_STATUS[0]
+      }
+    ];
+
+    // Send modify request via modifyUniversity action
+    this.props.modifyUniversity(university);
+
+    // Refresh UniversityPanel after 1 second
+    setTimeout(() => this.props.callBack(), 1000);
+  };
+
   update = () => {
     // Send callback to UniversityPanel
     this.props.callBack();
@@ -53,6 +78,37 @@ class UniversityProgram extends Component {
 
   render() {
     const { selectedProgram } = this.props;
+
+    // If user is authenticated and not admin or faculty show admission button
+    const showAdmissionButton =
+      this.props.user.isAuthenticated &&
+      this.props.user.currentUser.role !== "admin" &&
+      this.props.user.currentUser.role !== "faculty" ? (
+        // If user has already submitted an admission request show message
+        selectedProgram.admissionRequests.some(
+          e => e.studentId === this.props.user.currentUser.id
+        ) ? (
+          <strong>
+            You have sent an admission request for this program. Verify the
+            request status on your <a href="/profile">profile page</a>.{" "}
+          </strong>
+        ) : (
+          // Otherwise show confirm modal
+          <ConfirmModal
+            key={uuid()}
+            tag="div"
+            buttonText="Admission Request"
+            title={`Start Admission for ${selectedProgram.name}?`}
+            message={`Are you sure you want to send an admission request for ${
+              selectedProgram.name
+            }?`}
+            callBack={this.handleAdmissionRequest.bind(
+              this,
+              selectedProgram._id
+            )}
+          />
+        )
+      ) : null;
 
     return (
       <div>
@@ -112,6 +168,8 @@ class UniversityProgram extends Component {
               />
             </div>
           ) : null}
+          {/* Start Admission Button */}
+          {showAdmissionButton}
         </div>
       </div>
     );

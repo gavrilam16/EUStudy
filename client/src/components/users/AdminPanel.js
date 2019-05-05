@@ -185,7 +185,7 @@ class AdminPanel extends Component {
               name="users"
               onClick={e => this.handleClick(e)}
             >
-              <FaUserAlt />
+              <FaUserAlt /> Users
             </Button>
             <Button
               color="primary"
@@ -193,7 +193,7 @@ class AdminPanel extends Component {
               className="ml-2"
               onClick={e => this.handleClick(e)}
             >
-              <FaUniversity />
+              <FaUniversity /> Universities
             </Button>
             {showData}
           </Col>

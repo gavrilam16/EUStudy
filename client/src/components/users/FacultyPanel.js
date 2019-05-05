@@ -6,8 +6,9 @@ import {
   getUniversities,
   modifyUniversity
 } from "../../actions/universityActions";
+import { getUsers } from "../../actions/userActions";
 
-import { SUBSCRIPTIONS, EUR } from "../../consts";
+import { SUBSCRIPTIONS, EUR, ADMISSION_STATUS } from "../../consts";
 
 import {
   Row,
@@ -17,7 +18,10 @@ import {
   Card,
   CardBody,
   CardText,
-  CardTitle
+  CardTitle,
+  Table,
+  FormGroup,
+  Input
 } from "reactstrap";
 import { FaPaperPlane, FaUniversity } from "react-icons/fa";
 
@@ -34,6 +38,7 @@ class FacultyPanel extends Component {
   componentDidMount() {
     // Get universities from store via getUniversities action
     this.props.getUniversities();
+    this.props.getUsers();
   }
 
   handleClick = (e, subscribedUniversity) => {
@@ -66,8 +71,37 @@ class FacultyPanel extends Component {
     this.props.modifyUniversity(university);
   };
 
+  handleChangeStatus = (
+    e,
+    selectedUniversity,
+    selectedProgram,
+    admissionRequest
+  ) => {
+    // Copy selected university into a new object
+    let university = Object.assign({}, selectedUniversity);
+    university.id = selectedUniversity._id;
+    // Find the index of the selected program
+    const objIndex = selectedUniversity.programs.findIndex(
+      obj => obj._id === selectedProgram._id
+    );
+    const objIndex2 = university.programs[objIndex].admissionRequests.findIndex(
+      obj => obj._id === admissionRequest._id
+    );
+    // Modifiy request to the program in the university object
+    university.programs[objIndex].admissionRequests[objIndex2].requestStatus =
+      e.target.value;
+
+    console.log(university);
+    // Send modify request via modifyUniversity action
+    this.props.modifyUniversity(university);
+  };
+
   render() {
     const { universities } = this.props.university;
+    const { users } = this.props.user;
+
+    //Counter for list number
+    let j = 1;
 
     // Show spinner if fetching from database
     if (this.props.isFetching) {
@@ -87,7 +121,7 @@ class FacultyPanel extends Component {
                   <div key={i}>
                     <p>
                       The {university.name} <FaUniversity /> is currently{" "}
-                      <b>visible</b> in the the universities list and it's
+                      <b>visible</b> in the the universities list and its
                       subscription end date is{" "}
                       <b>
                         {moment(university.subscribedUntil).format(
@@ -181,6 +215,74 @@ class FacultyPanel extends Component {
               ) : null
             )}
           </Col>
+          <Col xs={12} md={{ size: 10, offset: 1 }}>
+            <Table className="mt-3 text-center">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Program</th>
+                  <th>Admission Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {universities.map((university, i) =>
+                  university.programs.map(program =>
+                    program.admissionRequests.map(admissionRequest => (
+                      <tr key={i}>
+                        <th scope="row">{j++}</th>
+                        {/* User ame */}
+                        <td>
+                          {users.map(user =>
+                            user._id === admissionRequest.studentId
+                              ? user.name
+                              : null
+                          )}
+                        </td>
+                        {/* User email */}
+                        <td>
+                          {users.map(user =>
+                            user._id === admissionRequest.studentId
+                              ? user.email
+                              : null
+                          )}
+                        </td>
+                        {/* Program */}
+                        <td>{program.name}</td>
+                        {/* Admission status */}
+                        <td className="pb-0" >
+                          <FormGroup>
+                            <Input
+                              type="select"
+                              name="requestStatus"
+                              id="selectAdmissionStatus"
+                              bsSize="sm"
+                              defaultValue={admissionRequest.requestStatus}
+                              onChange={e =>
+                                this.handleChangeStatus(
+                                  e,
+                                  university,
+                                  program,
+                                  admissionRequest
+                                )
+                              }
+                            >
+                              {ADMISSION_STATUS.filter(
+                                status => status !== "Canceled"
+                              ).map((status, i) => (
+                                <option key={i}>{status}</option>
+                              ))}
+                            </Input>
+                          </FormGroup>
+                        </td>
+                      </tr>
+                    ))
+                  )
+                )}
+              </tbody>
+            </Table>
+          </Col>
         </Row>
       );
     }
@@ -189,6 +291,7 @@ class FacultyPanel extends Component {
 
 // Set propTypes
 FacultyPanel.propTypes = {
+  getUsers: PropTypes.func.isRequired,
   getUniversities: PropTypes.func.isRequired,
   modifyUniversity: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
@@ -206,5 +309,5 @@ const mapStateToProps = state => ({
 // Connect to store
 export default connect(
   mapStateToProps,
-  { getUniversities, modifyUniversity }
+  { getUsers, getUniversities, modifyUniversity }
 )(FacultyPanel);

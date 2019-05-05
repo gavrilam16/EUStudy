@@ -6,7 +6,7 @@ import { logoutUser } from "../actions/userActions";
 
 import RegisterModal from "./users/RegisterModal";
 import LoginModal from "./users/LoginModal";
-import AffiliateModal from "./users/AffiliateModal";
+import AffiliateModal from "./universities/AffiliateModal";
 import logo from "../static/images/logo.png";
 
 import {

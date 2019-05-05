@@ -8,6 +8,16 @@ a:hover {
   text-decoration: none;
 }
 
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+  outline: none;
+  box-shadow: none;
+}
+
 /* Main container */
 .container-fluid {
   max-width: 1470px;

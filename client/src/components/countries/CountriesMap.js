@@ -62,7 +62,7 @@ class CountriesMap extends Component {
                     style={{
                       // On default style
                       default: {
-                        //Fill choropleth based on the country data display
+                        // Fill choropleth based on the country data display
                         fill:
                           this.props.selectedData === "firstCycleFees"
                             ? popScale(geography.properties.firstCycleFees)

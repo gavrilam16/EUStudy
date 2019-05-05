@@ -47,7 +47,17 @@ const UniversitySchema = new Schema({
     },
     description: {
       type: String
-    }
+    },
+    admissionRequests: [
+      {
+        studentId: {
+          type: mongoose.Schema.Types.ObjectId
+        },
+        requestStatus: {
+          type: String
+        }
+      }
+    ],
   }],
   subscribedUntil: {
     type: Date

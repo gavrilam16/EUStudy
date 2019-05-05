@@ -37,7 +37,7 @@ class UniversityPanel extends Component {
   };
 
   render() {
-    if (this.state.selectedUniversity.programs !== undefined) {
+    if (this.state.selectedUniversity !== undefined && this.state.selectedUniversity.programs !== undefined) {
       // Get domains from programs
       let domains = this.state.selectedUniversity.programs.map(
         program => program.domain

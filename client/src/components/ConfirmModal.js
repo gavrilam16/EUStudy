@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt, FaPaperPlane } from "react-icons/fa";
 
 class ConfirmModal extends Component {
   constructor(props) {
@@ -32,17 +32,20 @@ class ConfirmModal extends Component {
 
     const inline = this.props.inline ? "d-inline" : null;
     const marginLeft = this.props.isSecondButton ? "ml-1" : null;
+    const buttonColor =
+      this.props.buttonText === "Delete" ? "danger" : "info";
 
     return (
       <Tag className={inline}>
         {/* Modal button -- Text from parent component */}
         <Button
-          color="danger"
+          color={buttonColor}
           size="sm"
           className={marginLeft}
           onClick={this.toggle}
         >
           {this.props.buttonText === "Delete" ? <FaTrashAlt /> : null}{" "}
+          {this.props.buttonText === "Admission Request" ? <FaPaperPlane /> : null}{" "}
           {this.props.buttonText}
         </Button>
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggle}>
@@ -53,7 +56,7 @@ class ConfirmModal extends Component {
             <h4 className="pt-4">{this.props.message}</h4> <br />
             <div className="text-center">
               {/* OK button */}
-              <Button size="lg" color="danger" onClick={this.handleClick}>
+              <Button size="lg" color={buttonColor} onClick={this.handleClick}>
                 OK
               </Button>
               {/* Cancel button */}

@@ -29,10 +29,10 @@ export const MAP_COLORS = [
 ];
 
 // Euro Smybol
-export const EUR = '€';
+export const EUR = "€";
 
 // Copyright Symbol
-export const COPYRIGHT = '©';
+export const COPYRIGHT = "©";
 
 // Positions
 export const POSITIONS = [
@@ -74,4 +74,7 @@ export const SUBSCRIPTIONS = [
     price: 135,
     forScreen: "1 Year"
   }
-]
+];
+
+// Admission Status
+export const ADMISSION_STATUS = ["Sent", "Processing", "Completed", "Anulled", "Canceled"];
