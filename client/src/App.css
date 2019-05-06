@@ -197,6 +197,12 @@ a:hover {
   display: inline-flex;
 }
 
+@media screen and (min-width: 600px) {
+  #subscription-panel {
+    margin-left: 22rem;
+  }
+}
+
 /* Profile */
 #profile-panel {
   margin-top: 5rem;
