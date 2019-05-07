@@ -233,7 +233,7 @@ class AffiliateModal extends Component {
                   </Input>
                 </FormGroup>
                 {/* Send buttons */}
-                <div id="subscription-panel" className="mb-1">
+                <div id="subscription-panel-affiliate" className="mb-1">
                   {SUBSCRIPTIONS.map((subscription, i) => (
                     <Card key={i} className="ml-3 mr-3 text-center">
                       <CardBody>
@@ -283,7 +283,7 @@ class AffiliateModal extends Component {
                   </p>
                 </div>
                 <p className="lead">Choose a payment plan:</p>
-                <div id="subscription-panel" className="mb-1">
+                <div id="subscription-panel-affiliate" className="mb-1">
                   {SUBSCRIPTIONS.map((subscription, i) => (
                     <Card key={i} className="ml-3 mr-3 text-center">
                       <CardBody>

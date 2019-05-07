@@ -22,6 +22,10 @@ class UniversityCardModal extends Component {
     this.state = {
       isModalOpen: false,
       website: "",
+      address: "",
+      foundingYear: 0,
+      motto: "",
+      description: "",
       firstCycleFees: 0,
       secondCycleFees: 0
     };
@@ -40,6 +44,10 @@ class UniversityCardModal extends Component {
     this.setState({
       isModalOpen: !this.state.isModalOpen,
       website: this.props.selectedUniversity.website,
+      address: this.props.selectedUniversity.address,
+      foundingYear: this.props.selectedUniversity.foundingYear,
+      motto: this.props.selectedUniversity.motto,
+      description: this.props.selectedUniversity.description,
       firstCycleFees: this.props.selectedUniversity.firstCycleFees,
       secondCycleFees: this.props.selectedUniversity.secondCycleFees
     });
@@ -58,6 +66,10 @@ class UniversityCardModal extends Component {
     const university = {
       id: this.props.selectedUniversity._id,
       website: this.state.website,
+      address: this.state.address,
+      foundingYear: this.state.foundingYear,
+      motto: this.state.motto,
+      description: this.state.description,
       firstCycleFees: this.state.firstCycleFees,
       secondCycleFees: this.state.secondCycleFees
     };
@@ -84,7 +96,7 @@ class UniversityCardModal extends Component {
             <Form onSubmit={this.handleSubmit}>
               {/* Website input*/}
               <FormGroup>
-                <Label for="name">Website *</Label>
+                <Label for="website">Website *</Label>
                 <Input
                   required
                   type="text"
@@ -94,9 +106,56 @@ class UniversityCardModal extends Component {
                   onChange={e => this.handleChange(e)}
                 />
               </FormGroup>
+              {/* Address input*/}
+              <FormGroup>
+                <Label for="motto">Address *</Label>
+                <Input
+                  required
+                  type="text"
+                  name="address"
+                  id="address"
+                  defaultValue={this.state.address}
+                  onChange={e => this.handleChange(e)}
+                />
+              </FormGroup>
+              {/* Founding Year input*/}
+              <FormGroup>
+                <Label for="foundingYear">Founding Year *</Label>
+                <Input
+                  required
+                  type="number"
+                  name="foundingYear"
+                  id="foundingYear"
+                  min="0"
+                  defaultValue={this.state.foundingYear}
+                  onChange={e => this.handleChange(e)}
+                />
+              </FormGroup>
+              {/* Motto input*/}
+              <FormGroup>
+                <Label for="motto">Motto</Label>
+                <Input
+                  type="text"
+                  name="motto"
+                  id="motto"
+                  defaultValue={this.state.motto}
+                  onChange={e => this.handleChange(e)}
+                />
+              </FormGroup>
+              {/* Description input*/}
+              <FormGroup>
+                <Label for="motto">Description</Label>
+                <Input
+                  type="text"
+                  name="description"
+                  id="description"
+                  defaultValue={this.state.description}
+                  onChange={e => this.handleChange(e)}
+                />
+              </FormGroup>
               {/* First cycle fees input*/}
               <FormGroup>
-                <Label for="name">First Cycle Fees</Label>
+                <Label for="firstCycleFees">First Cycle Fees</Label>
                 <Input
                   type="number"
                   name="firstCycleFees"
@@ -108,7 +167,7 @@ class UniversityCardModal extends Component {
               </FormGroup>
               {/* Second cycle fees input*/}
               <FormGroup>
-                <Label for="name">Second Cycle Fees</Label>
+                <Label for="secondCycleFees">Second Cycle Fees</Label>
                 <Input
                   type="number"
                   name="secondCycleFees"

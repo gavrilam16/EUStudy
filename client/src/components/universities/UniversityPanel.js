@@ -37,7 +37,10 @@ class UniversityPanel extends Component {
   };
 
   render() {
-    if (this.state.selectedUniversity !== undefined && this.state.selectedUniversity.programs !== undefined) {
+    if (
+      this.state.selectedUniversity !== undefined &&
+      this.state.selectedUniversity.programs !== undefined
+    ) {
       // Get domains from programs
       let domains = this.state.selectedUniversity.programs.map(
         program => program.domain
@@ -52,7 +55,20 @@ class UniversityPanel extends Component {
           </Col>
           {/* Panel Left Side */}
           <Col sm={12} md={6} id="university-panel-left">
-            <div className="p-3">Details</div>
+            <div className="pl-3 pr-3 pt-3">
+              Founding Year: <b>{this.state.selectedUniversity.foundingYear}</b>
+            </div>
+            <div className="pl-3 pr-3">
+              Address: <b>{this.state.selectedUniversity.address}</b>
+            </div>
+            <div className="p-3 text-justify">
+              {this.state.selectedUniversity.description}
+            </div>
+            <div className="pl-3 pr-3 pb-3 text-justify font-weight-bold">
+              Choose one of the domains on the right to learn more about the
+              programs you can apply to and submit an admission request if
+              you're interested.
+            </div>
           </Col>
           {/* Panel Right Side */}
           <Col sm={12} md={6}>

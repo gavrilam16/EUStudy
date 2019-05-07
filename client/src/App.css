@@ -193,12 +193,12 @@ a:hover {
   font-size: 1.7rem;
 }
 
-#subscription-panel {
+#subscription-panel-affiliate, #subscription-panel-faculty {
   display: inline-flex;
 }
 
 @media screen and (min-width: 600px) {
-  #subscription-panel {
+  #subscription-panel-faculty {
     margin-left: 22rem;
   }
 }

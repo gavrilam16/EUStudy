@@ -11,10 +11,18 @@ const UniversitySchema = new Schema({
     type: String,
     required: true
   },
-  foundingYear: {
-    type: Number
+  address: {
+    type: String,
+    required: true
   },
   website: {
+    type: String
+  },
+  foundingYear: {
+    type: Number,
+    required: true
+  },
+  motto: {
     type: String
   },
   description: {

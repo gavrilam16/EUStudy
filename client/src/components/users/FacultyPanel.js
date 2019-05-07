@@ -131,7 +131,7 @@ class FacultyPanel extends Component {
                       . Extend the subscription period by choosing one of the
                       following options:
                     </p>
-                    <div id="subscription-panel" className="mb-1">
+                    <div id="subscription-panel-faculty" className="mb-1">
                       {SUBSCRIPTIONS.map((subscription, i) => (
                         <Card key={i} className="ml-3 mr-3 text-center">
                           <CardBody>

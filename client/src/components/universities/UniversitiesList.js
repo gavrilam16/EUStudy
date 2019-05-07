@@ -123,7 +123,9 @@ class UniversitiesList extends Component {
               <Card className="university-card">
                 <CardHeader className="university-card-header">
                   <div className="university-card-left">
-                    <span><FaUniversity /> {university.name}</span>
+                    <span>
+                      <FaUniversity /> {university.name}
+                    </span>
                     <a
                       className="university-website d-block"
                       href={`${university.website}`}
@@ -148,11 +150,14 @@ class UniversitiesList extends Component {
                 </CardHeader>
                 <CardBody>
                   <CardText>
-                    <span className="d-block">
-                      First cycle: <b>{university.firstCycleFees}</b> {EUR}
+                  <span className="d-block mb-1">
+                      Motto: <i>{university.motto}</i>
                     </span>
                     <span className="d-block">
-                      Second cycle: <b>{university.secondCycleFees}</b> {EUR}
+                      First cycle fees: <b>{university.firstCycleFees}</b> {EUR}
+                    </span>
+                    <span className="d-block">
+                      Second cycle fees: <b>{university.secondCycleFees}</b> {EUR}
                     </span>
                   </CardText>
                   <div className="mt-4 d-inline">
