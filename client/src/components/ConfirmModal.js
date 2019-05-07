@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
-import { FaTrashAlt, FaPaperPlane, FaTimesCircle } from "react-icons/fa";
+import { FaTrashAlt, FaUserGraduate, FaTimesCircle } from "react-icons/fa";
 
 class ConfirmModal extends Component {
   constructor(props) {
@@ -45,7 +45,7 @@ class ConfirmModal extends Component {
           onClick={this.toggle}
         >
           {this.props.buttonText === "Delete" ? <FaTrashAlt /> : null}{" "}
-          {this.props.buttonText === "Admission Request" ? <FaPaperPlane /> : null}{" "}
+          {this.props.buttonText === "Admission Request" ? <FaUserGraduate /> : null}{" "}
           {this.props.buttonText}{" "}
           {this.props.buttonText === "Cancel" ? <FaTimesCircle /> : null}{" "}
         </Button>

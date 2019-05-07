@@ -217,6 +217,7 @@ class FacultyPanel extends Component {
           </Col>
           {/* Admission requests */}
           <Col xs={12} md={{ size: 10, offset: 1 }}>
+          <h5 className="mt-3">Admission Requests</h5>
             <Table className="mt-3 text-center">
               <thead>
                 <tr>

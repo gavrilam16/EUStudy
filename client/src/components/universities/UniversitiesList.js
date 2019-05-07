@@ -150,14 +150,17 @@ class UniversitiesList extends Component {
                 </CardHeader>
                 <CardBody>
                   <CardText>
-                  <span className="d-block mb-1">
-                      Motto: <i>{university.motto}</i>
+                    {university.motto ? (
+                      <span className="d-block mb-1">
+                        Motto: <i>{university.motto}</i>
+                      </span>
+                    ) : null}
+                    <span className="d-block">
+                      First cycle fees: <i>{university.firstCycleFees}</i> {EUR}
                     </span>
                     <span className="d-block">
-                      First cycle fees: <b>{university.firstCycleFees}</b> {EUR}
-                    </span>
-                    <span className="d-block">
-                      Second cycle fees: <b>{university.secondCycleFees}</b> {EUR}
+                      Second cycle fees: <i>{university.secondCycleFees}</i>{" "}
+                      {EUR}
                     </span>
                   </CardText>
                   <div className="mt-4 d-inline">

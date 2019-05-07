@@ -128,7 +128,7 @@ class UniversityProgram extends Component {
           className="university-program"
           style={this.state.isShowingDetails ? {} : { display: "none" }}
         >
-          <p>{selectedProgram.description}</p>
+          <p className="text-justify">{selectedProgram.description}</p>
           <p>
             Fees: <b>{selectedProgram.fees}</b> {EUR}
           </p>

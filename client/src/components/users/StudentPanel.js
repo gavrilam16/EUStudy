@@ -12,12 +12,7 @@ import ConfirmModal from "./../ConfirmModal";
 
 import { ADMISSION_STATUS } from "../../consts";
 
-import {
-  Row,
-  Col,
-  Spinner,
-  Table
-} from "reactstrap";
+import { Row, Col, Spinner, Table } from "reactstrap";
 
 import uuid from "uuid";
 
@@ -65,7 +60,12 @@ class StudentPanel extends Component {
       return (
         <Row className="mt-5">
           <Col xs={12} md={{ size: 10, offset: 1 }}>
-            <Table className="mt-3 text-center">
+            <h6>
+              In the table below you can follow that status of your <b>admission
+              requests</b>. If you've changed your mind, you can also <b>try to cancel</b> your requests if still possible. If you have not yet applied for any program, you can do
+              so from the <a href="/">main page</a>.
+            </h6>
+            <Table className="mt-5 text-center">
               <thead>
                 <tr>
                   <th>#</th>

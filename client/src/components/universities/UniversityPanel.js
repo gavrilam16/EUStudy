@@ -56,10 +56,10 @@ class UniversityPanel extends Component {
           {/* Panel Left Side */}
           <Col sm={12} md={6} id="university-panel-left">
             <div className="pl-3 pr-3 pt-3">
-              Founding Year: <b>{this.state.selectedUniversity.foundingYear}</b>
+              Founding Year: <i>{this.state.selectedUniversity.foundingYear}</i>
             </div>
             <div className="pl-3 pr-3">
-              Address: <b>{this.state.selectedUniversity.address}</b>
+              Address: <i>{this.state.selectedUniversity.address}</i>
             </div>
             <div className="p-3 text-justify">
               {this.state.selectedUniversity.description}
