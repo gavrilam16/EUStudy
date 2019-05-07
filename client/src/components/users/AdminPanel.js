@@ -22,7 +22,7 @@ import {
   FormGroup,
   CustomInput
 } from "reactstrap";
-import { FaUserAlt, FaUniversity } from "react-icons/fa";
+import { FaUserGraduate, FaUniversity } from "react-icons/fa";
 
 import uuid from "uuid";
 import moment from "moment";
@@ -185,7 +185,7 @@ class AdminPanel extends Component {
               name="users"
               onClick={e => this.handleClick(e)}
             >
-              <FaUserAlt /> Users
+              <FaUserGraduate /> Users
             </Button>
             <Button
               color="primary"

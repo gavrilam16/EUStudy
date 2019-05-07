@@ -77,4 +77,5 @@ export const SUBSCRIPTIONS = [
 ];
 
 // Admission Status
-export const ADMISSION_STATUS = ["Sent", "Processing", "Completed", "Anulled", "Canceled"];
+// Canceled must always be the last element in the array
+export const ADMISSION_STATUS = ["Sent", "Processing", "Anulled", "Completed", "Canceled"];

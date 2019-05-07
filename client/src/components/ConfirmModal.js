@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
-import { FaTrashAlt, FaPaperPlane } from "react-icons/fa";
+import { FaTrashAlt, FaPaperPlane, FaTimesCircle } from "react-icons/fa";
 
 class ConfirmModal extends Component {
   constructor(props) {
@@ -46,7 +46,8 @@ class ConfirmModal extends Component {
         >
           {this.props.buttonText === "Delete" ? <FaTrashAlt /> : null}{" "}
           {this.props.buttonText === "Admission Request" ? <FaPaperPlane /> : null}{" "}
-          {this.props.buttonText}
+          {this.props.buttonText}{" "}
+          {this.props.buttonText === "Cancel" ? <FaTimesCircle /> : null}{" "}
         </Button>
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggle}>
           {/* Title from parent component */}
@@ -55,18 +56,18 @@ class ConfirmModal extends Component {
             {/* Message from parent component */}
             <h4 className="pt-4">{this.props.message}</h4> <br />
             <div className="text-center">
-              {/* OK button */}
+              {/* Yes button */}
               <Button size="lg" color={buttonColor} onClick={this.handleClick}>
-                OK
+                Yes
               </Button>
-              {/* Cancel button */}
+              {/* No button */}
               <Button
                 size="lg"
                 className="d-inline ml-1"
                 color="dark"
                 onClick={this.toggle}
               >
-                Cancel
+                No
               </Button>
             </div>
           </ModalBody>

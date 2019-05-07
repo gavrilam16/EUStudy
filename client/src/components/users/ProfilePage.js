@@ -8,6 +8,7 @@ import { Container, Row, Col, Button } from "reactstrap";
 
 import AdminPanel from "./AdminPanel";
 import FacultyPanel from "./FacultyPanel";
+import StudentPanel from "./StudentPanel";
 
 import { FaSignOutAlt } from "react-icons/fa";
 
@@ -24,6 +25,12 @@ class ProfilePage extends Component {
     const showAdminPanel = currentUser.role === "admin" ? <AdminPanel /> : null;
     const showFacultyPanel =
       currentUser.role === "faculty" ? <FacultyPanel /> : null;
+    const showStudentPanel =
+      this.props.user.isAuthenticated &&
+      currentUser.role !== "admin" &&
+      currentUser.role !== "faculty" ? (
+        <StudentPanel />
+      ) : null;
 
     return (
       <Container className="container-fluid">
@@ -39,6 +46,8 @@ class ProfilePage extends Component {
         {showAdminPanel}
         {/* Show faculty panel if faculty */}
         {showFacultyPanel}
+        {/* Show student panel if not faculty or admin */}
+        {showStudentPanel}
       </Container>
     );
   }

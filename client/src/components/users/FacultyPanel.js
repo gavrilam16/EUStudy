@@ -91,7 +91,6 @@ class FacultyPanel extends Component {
     university.programs[objIndex].admissionRequests[objIndex2].requestStatus =
       e.target.value;
 
-    console.log(university);
     // Send modify request via modifyUniversity action
     this.props.modifyUniversity(university);
   };
@@ -113,6 +112,7 @@ class FacultyPanel extends Component {
     } else {
       return (
         <Row className="mt-5">
+          {/* University subcription */}
           <Col xs={12} md={{ size: 10, offset: 1 }}>
             {universities.map((university, i) =>
               university.name === this.props.user.currentUser.university ? (
@@ -215,6 +215,7 @@ class FacultyPanel extends Component {
               ) : null
             )}
           </Col>
+          {/* Admission requests */}
           <Col xs={12} md={{ size: 10, offset: 1 }}>
             <Table className="mt-3 text-center">
               <thead>
@@ -224,60 +225,70 @@ class FacultyPanel extends Component {
                   <th>Email</th>
                   <th>Program</th>
                   <th>Admission Status</th>
+                  <th>Change</th>
                 </tr>
               </thead>
               <tbody>
                 {universities.map((university, i) =>
                   university.programs.map(program =>
-                    program.admissionRequests.map(admissionRequest => (
-                      <tr key={i}>
-                        <th scope="row">{j++}</th>
-                        {/* User ame */}
-                        <td>
-                          {users.map(user =>
-                            user._id === admissionRequest.studentId
-                              ? user.name
-                              : null
-                          )}
-                        </td>
-                        {/* User email */}
-                        <td>
-                          {users.map(user =>
-                            user._id === admissionRequest.studentId
-                              ? user.email
-                              : null
-                          )}
-                        </td>
-                        {/* Program */}
-                        <td>{program.name}</td>
-                        {/* Admission status */}
-                        <td className="pb-0" >
-                          <FormGroup>
-                            <Input
-                              type="select"
-                              name="requestStatus"
-                              id="selectAdmissionStatus"
-                              bsSize="sm"
-                              defaultValue={admissionRequest.requestStatus}
-                              onChange={e =>
-                                this.handleChangeStatus(
-                                  e,
-                                  university,
-                                  program,
-                                  admissionRequest
-                                )
-                              }
-                            >
-                              {ADMISSION_STATUS.filter(
-                                status => status !== "Canceled"
-                              ).map((status, i) => (
-                                <option key={i}>{status}</option>
-                              ))}
-                            </Input>
-                          </FormGroup>
-                        </td>
-                      </tr>
-                    ))
+                    program.admissionRequests.map(admissionRequest =>
+                      university.name ===
+                      this.props.user.currentUser.university ? (
+                        <tr key={i}>
+                          <th scope="row">{j++}</th>
+                          {/* User name */}
+                          <td>
+                            {users.map(user =>
+                              user._id === admissionRequest.studentId
+                                ? user.name
+                                : null
+                            )}
+                          </td>
+                          {/* User email */}
+                          <td>
+                            {users.map(user =>
+                              user._id === admissionRequest.studentId
+                                ? user.email
+                                : null
+                            )}
+                          </td>
+                          {/* Program */}
+                          <td>{program.name}</td>
+                          {/* Admission status */}
+                          <td>{admissionRequest.requestStatus}</td>
+                          {/* Change status */}
+                          <td className="pb-0">
+                            <FormGroup>
+                              <Input
+                                type="select"
+                                name="requestStatus"
+                                id="selectAdmissionStatus"
+                                bsSize="sm"
+                                onChange={e =>
+                                  this.handleChangeStatus(
+                                    e,
+                                    university,
+                                    program,
+                                    admissionRequest
+                                  )
+                                }
+                              >
+                                <option value="" hidden>
+                                  {" "}
+                                  Choose a status{" "}
+                                </option>
+                                {ADMISSION_STATUS.filter(
+                                  status =>
+                                    status !== "Canceled" && status !== "Sent"
+                                ).map((status, i) => (
+                                  <option key={i}>{status}</option>
+                                ))}
+                              </Input>
+                            </FormGroup>
+                          </td>
+                        </tr>
+                      ) : null
+                    )
                   )
                 )}
               </tbody>
