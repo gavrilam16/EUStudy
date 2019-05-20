@@ -16,6 +16,8 @@ import {
 } from "reactstrap";
 import { FaPencilAlt, FaPaperPlane } from "react-icons/fa";
 
+import moment from "moment";
+
 class UniversityCardModal extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +29,9 @@ class UniversityCardModal extends Component {
       motto: "",
       description: "",
       firstCycleFees: 0,
-      secondCycleFees: 0
+      secondCycleFees: 0,
+      admissionStartDate: moment().format(),
+      admissionEndDate: moment().format()
     };
   }
 
@@ -49,7 +53,13 @@ class UniversityCardModal extends Component {
       motto: this.props.selectedUniversity.motto,
       description: this.props.selectedUniversity.description,
       firstCycleFees: this.props.selectedUniversity.firstCycleFees,
-      secondCycleFees: this.props.selectedUniversity.secondCycleFees
+      secondCycleFees: this.props.selectedUniversity.secondCycleFees,
+      admissionStartDate: moment(
+        this.props.selectedUniversity.admissionStartDate
+      ).format(),
+      admissionEndDate: moment(
+        this.props.selectedUniversity.admissionEndDate
+      ).format()
     });
   };
 
@@ -71,7 +81,9 @@ class UniversityCardModal extends Component {
       motto: this.state.motto,
       description: this.state.description,
       firstCycleFees: this.state.firstCycleFees,
-      secondCycleFees: this.state.secondCycleFees
+      secondCycleFees: this.state.secondCycleFees,
+      admissionStartDate: moment(this.state.admissionStartDate).format(),
+      admissionEndDate: moment(this.state.admissionEndDate).format()
     };
 
     // Send modify request via modifyUniversity action
@@ -142,14 +154,29 @@ class UniversityCardModal extends Component {
                   onChange={e => this.handleChange(e)}
                 />
               </FormGroup>
-              {/* Description input*/}
+              {/* Admission Start Date*/}
               <FormGroup>
-                <Label for="motto">Description</Label>
+                <Label for="admissionStartDate">Admission Start Date</Label>
                 <Input
-                  type="text"
-                  name="description"
-                  id="description"
-                  defaultValue={this.state.description}
+                  type="date"
+                  name="admissionStartDate"
+                  id="admissionStartDate"
+                  defaultValue={moment(this.state.admissionStartDate).format(
+                    "YYYY-MM-DD"
+                  )}
+                  onChange={e => this.handleChange(e)}
+                />
+              </FormGroup>
+              {/* Admission End Date*/}
+              <FormGroup>
+                <Label for="admissionEndDate">Admission End Date</Label>
+                <Input
+                  type="date"
+                  name="admissionEndDate"
+                  id="admissionEndDate"
+                  defaultValue={moment(this.state.admissionEndDate).format(
+                    "YYYY-MM-DD"
+                  )}
                   onChange={e => this.handleChange(e)}
                 />
               </FormGroup>
@@ -174,6 +201,17 @@ class UniversityCardModal extends Component {
                   id="secondCycleFees"
                   min="0"
                   defaultValue={this.state.secondCycleFees}
+                  onChange={e => this.handleChange(e)}
+                />
+              </FormGroup>
+              {/* Description input*/}
+              <FormGroup>
+                <Label for="motto">Description</Label>
+                <Input
+                  type="text"
+                  name="description"
+                  id="description"
+                  defaultValue={this.state.description}
                   onChange={e => this.handleChange(e)}
                 />
               </FormGroup>

@@ -67,6 +67,12 @@ const UniversitySchema = new Schema({
       }
     ],
   }],
+  admissionStartDate: {
+    type: Date
+  },
+  admissionEndDate: {
+    type: Date
+  },
   subscribedUntil: {
     type: Date
   },

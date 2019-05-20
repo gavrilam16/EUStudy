@@ -41,6 +41,8 @@ router.post("/", (req, res, next) => {
         description: req.body.description,
         firstCycleFees: req.body.firstCycleFees,
         secondCycleFees: req.body.secondCycleFees,
+        admissionStartDate: req.body.admissionStartDate,
+        admissionEndDate: req.body.admissionEndDate,
         subscribedUntil: req.body.subscribedUntil,
         enabled: req.body.enabled
       });
