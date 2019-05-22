@@ -13,9 +13,12 @@ import {
   Spinner,
   Form,
   FormGroup,
-  Input
+  Input,
+  Button
 } from "reactstrap";
 import uuid from "uuid";
+
+import { FaBookOpen, FaUniversity } from "react-icons/fa";
 
 import CountryModal from "./countries/CountryModal";
 import CountriesMap from "./countries/CountriesMap";
@@ -23,6 +26,7 @@ import CountriesList from "./countries/CountriesList";
 import CountryInfo from "./countries/CountryInfo";
 import ConfirmModal from "./ConfirmModal";
 import UniversitiesList from "./universities/UniversitiesList";
+import UniversityProgramsList from "./universities/UniversityProgramsList";
 
 class MainPage extends Component {
   constructor(props) {
@@ -33,7 +37,8 @@ class MainPage extends Component {
       },
       isAdded: false,
       isLoading: true,
-      selectedData: DATA_SETS[0].name
+      selectedData: DATA_SETS[0].name,
+      selectedPanel: "universities"
     };
   }
 
@@ -129,6 +134,13 @@ class MainPage extends Component {
     // Will refresh CountryInfo
     this.setState({
       isAdded: false
+    });
+  };
+
+  // When user click on the Programs or Universities Button
+  handlePanelChange = e => {
+    this.setState({
+      selectedPanel: e.target.name
     });
   };
 
@@ -266,9 +278,35 @@ class MainPage extends Component {
               {displayButtons}
             </Col>
           </Row>
-          <UniversitiesList
-            countryCode={this.state.selectedCountry.properties.ISO_A2}
-          />
+          {/* Select Panel Buttons */}
+          <Row>
+            <div className="m-4">
+          <Button
+              color="secondary"
+              name="universities"
+              onClick={e => this.handlePanelChange(e)}
+            >
+              <FaUniversity /> Universities
+            </Button>
+            <Button
+              color="secondary"
+              name="users"
+              className="ml-2"
+              onClick={e => this.handlePanelChange(e)}
+            >
+              <FaBookOpen /> Programs
+            </Button>
+            </div>
+          </Row>
+          {this.state.selectedPanel === "universities" ? (
+            <UniversitiesList
+              countryCode={this.state.selectedCountry.properties.ISO_A2}
+            />
+          ) : (
+            <UniversityProgramsList
+              countryCode={this.state.selectedCountry.properties.ISO_A2}
+            />
+          )}
           <hr />
           {/* Footer*/}
           <Row>

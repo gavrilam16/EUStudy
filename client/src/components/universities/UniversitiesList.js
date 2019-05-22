@@ -202,7 +202,7 @@ class UniversitiesList extends Component {
                           moment(university.admissionEndDate)
                         ) ? (
                           <span className="d-block university-admission-period font-weight-bold">
-                            The university is recieving admissions.
+                            The university is receiving admission requests.
                           </span>
                         ) : null}
                       </span>
