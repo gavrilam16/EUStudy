@@ -23,6 +23,8 @@ import {
 import { FaExternalLinkAlt, FaUniversity } from "react-icons/fa";
 import scrollToComponent from "react-scroll-to-component";
 
+import moment from "moment";
+
 class UniversitiesList extends Component {
   constructor(props) {
     super(props);
@@ -156,12 +158,55 @@ class UniversitiesList extends Component {
                       </span>
                     ) : null}
                     <span className="d-block">
-                      First cycle fees: <i>{university.firstCycleFees}</i> {EUR}
+                      First cycle fees: <b>{university.firstCycleFees}</b> {EUR}
                     </span>
                     <span className="d-block">
-                      Second cycle fees: <i>{university.secondCycleFees}</i>{" "}
+                      Second cycle fees: <b>{university.secondCycleFees}</b>{" "}
                       {EUR}
                     </span>
+                    {university.admissionStartDate ? (
+                      <span className="d-block">
+                        Admission period:{" "}
+                        <b>
+                          {moment(university.admissionStartDate).format(
+                            "MMMM Do YYYY"
+                          )}
+                        </b>{" "}
+                        -{" "}
+                        <b>
+                          {moment(university.admissionEndDate).format(
+                            "MMMM Do YYYY"
+                          )}
+                          .
+                        </b>
+                        {/* If admission period begins in less than 7 days */}
+                        {moment(university.admissionStartDate).diff(
+                          moment(),
+                          "days"
+                        ) <= 7 &&
+                        moment(university.admissionStartDate).diff(
+                          moment(),
+                          "days"
+                        ) > 0 ? (
+                          <span className="d-block university-admission-period font-weight-bold">
+                            Admission starts in{" "}
+                            {moment(university.admissionStartDate).diff(
+                              moment(),
+                              "days"
+                            )}{" "}
+                            days.{" "}
+                          </span>
+                        ) : null}
+                        {moment().isBetween(
+                          moment(university.admissionStartDate),
+                          moment(university.admissionEndDate)
+                        ) ? (
+                          <span className="d-block university-admission-period font-weight-bold">
+                            The university is recieving admissions.
+                          </span>
+                        ) : null}
+                      </span>
+                    ) : null}
                   </CardText>
                   <div className="mt-4 d-inline">
                     {/* Learn More Button */}

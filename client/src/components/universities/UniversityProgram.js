@@ -130,7 +130,7 @@ class UniversityProgram extends Component {
         >
           <p className="text-justify">{selectedProgram.description}</p>
           <p>
-            Fees: <b>{selectedProgram.fees}</b> {EUR}
+            Fees: <b>{selectedProgram.fees}</b> {EUR} per year.
           </p>
           <a
             className="d-block mb-2"
