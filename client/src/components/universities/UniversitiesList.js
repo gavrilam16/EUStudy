@@ -109,7 +109,7 @@ class UniversitiesList extends Component {
               type="search"
               name="search"
               id="searchUniversity"
-              placeholder="Search University"
+              placeholder="Search an university"
               onChange={e => this.handleSearch(e)}
             />
             <Button onClick={this.handleViewAll} className="ml-2">
@@ -120,7 +120,7 @@ class UniversitiesList extends Component {
         {universities
           .filter(university => university.enabled)
           .map((university, i) => (
-            <Col key={i} sm={12} md={3}>
+            <Col key={i} sm={12} md={3} className="mt-3">
               {/* University card */}
               <Card className="university-card">
                 <CardHeader className="university-card-header">

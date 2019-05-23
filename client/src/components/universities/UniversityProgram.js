@@ -14,6 +14,8 @@ import { FaMinus, FaPlus, FaExternalLinkAlt } from "react-icons/fa";
 
 import uuid from "uuid";
 
+import moment from "moment";
+
 class UniversityProgram extends Component {
   constructor(props) {
     super(props);
@@ -83,7 +85,11 @@ class UniversityProgram extends Component {
     const showAdmissionButton =
       this.props.user.isAuthenticated &&
       this.props.user.currentUser.role !== "admin" &&
-      this.props.user.currentUser.role !== "faculty" ? (
+      this.props.user.currentUser.role !== "faculty" &&
+      moment().isBetween(
+        moment(this.props.selectedUniversity.admissionStartDate),
+        moment(this.props.selectedUniversity.admissionEndDate)
+      ) ? (
         // If user has already submitted an admission request show message
         selectedProgram.admissionRequests.some(
           e => e.studentId === this.props.user.currentUser.id
@@ -112,9 +118,24 @@ class UniversityProgram extends Component {
 
     return (
       <div>
-        <h6 className="d-inline">
-          {selectedProgram.name}, {selectedProgram.degree}
-        </h6>
+        {moment().isBetween(
+          moment(this.props.selectedUniversity.admissionStartDate),
+          moment(this.props.selectedUniversity.admissionEndDate)
+        ) ? (
+            <h6 className="d-inline">
+              <span className="font-weight-bold">{selectedProgram.name}</span><i>, {selectedProgram.degree}
+              {this.props.showUniversity
+                ? ", " + this.props.selectedUniversity.name
+                : null}
+            </i></h6>
+        ) : (
+          <h6 className="d-inline">
+            {selectedProgram.name}<i>, {selectedProgram.degree}
+            {this.props.showUniversity
+              ? ", " + this.props.selectedUniversity.name
+              : null}
+          </i></h6>
+        )}
         <Button
           outline
           color="info"

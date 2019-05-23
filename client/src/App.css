@@ -166,12 +166,18 @@ a:hover {
   color: #86898bf1;
 }
 
-.university-admission-period {
+.university-admission-period,
+.degree-title {
   color: #b0415d;
 }
 
 #universities-panel {
   border-top: 0.04rem solid #e8e8e8;
+}
+
+#universities-programs-panel {
+  border-top: 0.04rem solid #e8e8e8;
+  padding: 0 2rem;
 }
 
 #university-panel {
@@ -192,12 +198,25 @@ a:hover {
   border-right: 1px dotted #d3d7db;
 }
 
+#select-panel-buttons {
+  margin: 0 2rem;
+}
+
+@media screen and (min-width: 600px) {
+  #select-panel-buttons {
+    position: relative;
+    top: 3.4rem;
+    z-index: 1;
+  }
+}
+
 /* Affiliate */
 .subscription-price {
   font-size: 1.7rem;
 }
 
-#subscription-panel-affiliate, #subscription-panel-faculty {
+#subscription-panel-affiliate,
+#subscription-panel-faculty {
   display: inline-flex;
 }
 

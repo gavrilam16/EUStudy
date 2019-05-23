@@ -35,14 +35,8 @@ router.post("/", (req, res, next) => {
         name: req.body.name,
         countryCode: req.body.countryCode,
         website: req.body.website,
-        address: req.body.address,
-        foundingYear: req.body.foundingYear,
-        motto: req.body.motto,
-        description: req.body.description,
         firstCycleFees: req.body.firstCycleFees,
         secondCycleFees: req.body.secondCycleFees,
-        admissionStartDate: req.body.admissionStartDate,
-        admissionEndDate: req.body.admissionEndDate,
         subscribedUntil: req.body.subscribedUntil,
         enabled: req.body.enabled
       });

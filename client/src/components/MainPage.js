@@ -280,7 +280,7 @@ class MainPage extends Component {
           </Row>
           {/* Select Panel Buttons */}
           <Row>
-            <div className="m-4">
+            <div id="select-panel-buttons">
           <Button
               color="secondary"
               name="universities"

@@ -32,6 +32,13 @@ class UniversityProgramsList extends Component {
     });
   }
 
+  // When the program modal sends callback
+  update = () => {
+    this.setState({
+      admissionSent: true
+    });
+  };
+
   // When user types in the search input
   handleSearchDomain = e => {
     this.setState({
@@ -65,47 +72,6 @@ class UniversityProgramsList extends Component {
       );
     }
 
-    // if (this.state.searchCourse) {
-    //   universities = universities
-    //     .filter(university =>
-    //       university.programs.every(
-    //         program => program.name === this.state.searchCourse
-    //       )
-    //     )
-    //     // .map(university => {
-    //     //   let newElt = Object.assign({}, university); // copies element
-    //     //   return newElt.programs.filter(
-    //     //     program => program.name === this.state.searchCourse
-    //     //   );
-    //     // });
-    // }
-
-    // Filter universities on search
-    // universities = universities.map(university => {
-    //   if (university !== undefined && university.programs !== undefined && university.programs.domain !== undefined) {
-    //     university.programs.filter(
-    //       program =>
-    //         program.name
-    //           .toLowerCase()
-    //           .indexOf(this.state.searchCourse.toLowerCase()) !== -1
-    //     );
-    //   } else {
-    //     return null;
-    //   }
-    // });
-
-    // universities = universities.filter(university => {
-    //   if (university.name !== undefined) {
-    //     return (
-    //       university.name
-    //         .toLowerCase()
-    //         .indexOf(this.state.search.toLowerCase()) !== -1
-    //     );
-    //   } else {
-    //     return null;
-    //   }
-    // });
-
     // Get domains arrays
     let bachelorsDomains = [];
     let mastersDomains = [];
@@ -122,7 +88,9 @@ class UniversityProgramsList extends Component {
           );
         return undefined;
       });
+      // Keep just unique values and sort
       bachelorsDomains = [...new Set(bachelorsDomains)].sort();
+      // Filter when the user is searching
       bachelorsDomains = bachelorsDomains.filter(
         domain =>
           domain
@@ -140,7 +108,9 @@ class UniversityProgramsList extends Component {
           );
         return undefined;
       });
+      // Keep just unique values and sort
       mastersDomains = [...new Set(mastersDomains)].sort();
+      // Filter when the user is searching
       mastersDomains = mastersDomains.filter(
         domain =>
           domain
@@ -157,25 +127,34 @@ class UniversityProgramsList extends Component {
           );
         return undefined;
       });
+      // Keep just unique values and sort
       PhdDomains = [...new Set(PhdDomains)].sort();
+      // Filter when the user is searching
+      PhdDomains = PhdDomains.filter(
+        domain =>
+          domain
+            .toLowerCase()
+            .indexOf(this.state.searchDomain.toLowerCase()) !== -1
+      );
 
       return (
-        <Row>
-          <Col md={{ size: 3, offset: 9 }}>
+        <Row id="universities-programs-panel">
+          <Col md={{ size: 4, offset: 8 }}>
             {/* Search and View All */}
             <InputGroup className="mt-3">
               <Input
+                className="mr-2"
                 type="search"
                 name="searchDomain"
                 id="searchDomain"
-                placeholder="Search Domain"
+                placeholder="Search by domain"
                 onChange={e => this.handleSearchDomain(e)}
               />
               <Input
                 type="search"
                 name="searchCourse"
                 id="searchCourse"
-                placeholder="Search Course"
+                placeholder="Search a program"
                 onChange={e => this.handleSearchCourse(e)}
               />
               <Button onClick={this.handleViewAll} className="ml-2">
@@ -183,12 +162,14 @@ class UniversityProgramsList extends Component {
               </Button>
             </InputGroup>
           </Col>
-          {/* Bachelor Degree's */}
-          <Col md={4}>
-            {"Bachelor's Degrees"}
+          {/* Bachelor Degrees */}
+          <Col md={6} className="mt-4">
+            <h4 className="degree-title font-weight-bold">Bachelor's Degree</h4>
             {bachelorsDomains.map((domain, i) => (
               <div key={i}>
-                <h6 className="university-program-domain lead">{domain}</h6>
+                {this.state.searchCourse === "" ? (
+                  <h6 className="university-program-domain lead">{domain}</h6>
+                ) : null}
                 {universities
                   .filter(university => university.enabled)
                   .map((university, i) => (
@@ -199,7 +180,9 @@ class UniversityProgramsList extends Component {
                           program =>
                             program.name
                               .toLowerCase()
-                              .indexOf(this.state.searchCourse.toLowerCase()) !== -1
+                              .indexOf(
+                                this.state.searchCourse.toLowerCase()
+                              ) !== -1
                         )
                         .map(program =>
                           program.degree === ACADEMIC_DEGREES[0] ||
@@ -208,6 +191,7 @@ class UniversityProgramsList extends Component {
                               key={program._id}
                               selectedUniversity={university}
                               selectedProgram={program}
+                              showUniversity={true}
                               callBack={this.update}
                             />
                           ) : null
@@ -217,12 +201,14 @@ class UniversityProgramsList extends Component {
               </div>
             ))}
           </Col>
-          {/* Master's Degree's */}
-          <Col md={4}>
-            {"Master's Degrees"}
+          {/* Master's Degrees */}
+          <Col md={6} className="mt-4">
+            <h4 className="degree-title font-weight-bold">Master's Degree</h4>
             {mastersDomains.map((domain, i) => (
               <div key={i}>
-                <h6 className="university-program-domain lead">{domain}</h6>
+                {this.state.searchCourse === "" ? (
+                  <h6 className="university-program-domain lead">{domain}</h6>
+                ) : null}
                 {universities
                   .filter(university => university.enabled)
                   .map((university, i) => (
@@ -233,7 +219,9 @@ class UniversityProgramsList extends Component {
                           program =>
                             program.name
                               .toLowerCase()
-                              .indexOf(this.state.searchCourse.toLowerCase()) !== -1
+                              .indexOf(
+                                this.state.searchCourse.toLowerCase()
+                              ) !== -1
                         )
                         .map(program =>
                           program.degree === ACADEMIC_DEGREES[2] ||
@@ -242,6 +230,45 @@ class UniversityProgramsList extends Component {
                               key={program._id}
                               selectedUniversity={university}
                               selectedProgram={program}
+                              showUniversity={true}
+                              callBack={this.update}
+                            />
+                          ) : null
+                        )}
+                    </div>
+                  ))}
+              </div>
+            ))}
+          </Col>
+          {/* PhD's */}
+          <Col md={6} className="mt-4">
+            <h4 className="degree-title font-weight-bold">PhD</h4>
+            {PhdDomains.map((domain, i) => (
+              <div key={i}>
+                {this.state.searchCourse === "" ? (
+                  <h6 className="university-program-domain lead">{domain}</h6>
+                ) : null}
+                {universities
+                  .filter(university => university.enabled)
+                  .map((university, i) => (
+                    <div key={i} md={4}>
+                      {university.programs
+                        .filter(program => program.domain === domain)
+                        .filter(
+                          program =>
+                            program.name
+                              .toLowerCase()
+                              .indexOf(
+                                this.state.searchCourse.toLowerCase()
+                              ) !== -1
+                        )
+                        .map(program =>
+                          program.degree === ACADEMIC_DEGREES[4] ? (
+                            <UniversityProgram
+                              key={program._id}
+                              selectedUniversity={university}
+                              selectedProgram={program}
+                              showUniversity={true}
                               callBack={this.update}
                             />
                           ) : null

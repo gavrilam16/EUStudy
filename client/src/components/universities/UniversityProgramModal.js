@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { modifyUniversity } from "../../actions/universityActions";
 
+import { ACADEMIC_DEGREES } from "../../consts";
+
 import {
   Button,
   Modal,
@@ -184,13 +186,20 @@ class UniversityProgramModal extends Component {
               <FormGroup>
                 <Label for="name">Degree *</Label>
                 <Input
-                  required
-                  type="text"
+                  type="select"
                   name="degree"
                   id="degree"
                   defaultValue={this.state.degree}
                   onChange={e => this.handleChange(e)}
-                />
+                >
+                  <option value="" hidden>
+                    {" "}
+                    Choose degree{" "}
+                  </option>
+                  {ACADEMIC_DEGREES.map((status, i) => (
+                    <option key={i}>{status}</option>
+                  ))}
+                </Input>
               </FormGroup>
               {/* Fees input*/}
               <FormGroup>

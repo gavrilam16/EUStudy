@@ -12,15 +12,13 @@ const UniversitySchema = new Schema({
     required: true
   },
   address: {
-    type: String,
-    required: true
+    type: String
   },
   website: {
     type: String
   },
   foundingYear: {
-    type: Number,
-    required: true
+    type: Number
   },
   motto: {
     type: String
