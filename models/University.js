@@ -34,6 +34,10 @@ const UniversitySchema = new Schema({
     type: Number,
     default: 0
   },
+  THERanking: {
+    type: Number,
+    default: 0
+  },
   programs: [{
     name: {
       type: String

@@ -31,7 +31,9 @@ class UniversitiesList extends Component {
     this.state = {
       selectedUniversity: {},
       countryCode: this.props.countryCode,
-      search: ""
+      search: "",
+      isTop10Enabled: false,
+      isTop50Enabled: false
     };
   }
 
@@ -68,10 +70,28 @@ class UniversitiesList extends Component {
     });
   };
 
+  // When user clicks the Top 10 button
+  handleTop10 = () => {
+    this.setState({
+      isTop10Enabled: true,
+      isTop50Enabled: false
+    });
+  };
+
+  // When user clicks the Top 50 button
+  handleTop50 = () => {
+    this.setState({
+      isTop10Enabled: false,
+      isTop50Enabled: true
+    });
+  };
+
   // When user clicks the View All button
   handleViewAll = () => {
     this.setState({
-      countryCode: undefined
+      countryCode: undefined,
+      isTop10Enabled: false,
+      isTop50Enabled: false,
     });
   };
 
@@ -100,10 +120,32 @@ class UniversitiesList extends Component {
       }
     });
 
+    // Filter universities on Top 10
+    if (this.state.isTop10Enabled) {
+      universities = universities.filter(university => {
+        if (university.name !== undefined) {
+          return university.THERanking !== 0 && university.THERanking <= 10;
+        } else {
+          return null;
+        }
+      });
+    }
+
+    // Filter universities on Top 50
+    if (this.state.isTop50Enabled) {
+      universities = universities.filter(university => {
+        if (university.name !== undefined) {
+          return university.THERanking !== 0 && university.THERanking <= 50;
+        } else {
+          return null;
+        }
+      });
+    }
+
     return (
       <Row id="universities-panel">
-        <Col md={{ size: 3, offset: 9 }}>
-          {/* Search and View All */}
+        <Col md={{ size: 4, offset: 8 }}>
+          {/* Search, Tops and View All */}
           <InputGroup className="mt-3">
             <Input
               type="search"
@@ -112,6 +154,12 @@ class UniversitiesList extends Component {
               placeholder="Search an university"
               onChange={e => this.handleSearch(e)}
             />
+            <Button onClick={this.handleTop10} className="ml-2">
+              Top 10
+            </Button>
+            <Button onClick={this.handleTop50} className="ml-2">
+              Top 50
+            </Button>
             <Button onClick={this.handleViewAll} className="ml-2">
               View All
             </Button>
@@ -155,6 +203,11 @@ class UniversitiesList extends Component {
                     {university.motto ? (
                       <span className="d-block mb-1">
                         Motto: <i>{university.motto}</i>
+                      </span>
+                    ) : null}
+                    {university.THERanking !== 0 ? (
+                      <span className="d-block mb-1">
+                        ET Ranking: <b>{university.THERanking}</b>
                       </span>
                     ) : null}
                     <span className="d-block">

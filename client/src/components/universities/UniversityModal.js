@@ -26,7 +26,8 @@ class UniversityModal extends Component {
       name: "",
       subscribedUntil: moment(
         this.props.selectedUniversity.subscribedUntil
-      ).format()
+      ).format(),
+      THERanking: 0
     };
   }
 
@@ -45,7 +46,8 @@ class UniversityModal extends Component {
       name: this.props.selectedUniversity.name,
       subscribedUntil: moment(
         this.props.selectedUniversity.subscribedUntil
-      ).format()
+      ).format(),
+      THERanking: this.props.selectedUniversity.THERanking
     });
   };
 
@@ -62,7 +64,8 @@ class UniversityModal extends Component {
     const university = {
       id: this.props.selectedUniversity._id,
       name: this.state.name,
-      subscribedUntil: moment(this.state.subscribedUntil).format()
+      subscribedUntil: moment(this.state.subscribedUntil).format(),
+      THERanking: this.state.THERanking
     };
 
     // Send modify request via modifyUniversity action
@@ -107,9 +110,21 @@ class UniversityModal extends Component {
                   onChange={e => this.handleChange(e)}
                 />
               </FormGroup>
+              {/* Times Higher Education Ranking input*/}
+              <FormGroup>
+                <Label for="THERanking">THE Ranking</Label>
+                <Input
+                  required
+                  type="number"
+                  name="THERanking"
+                  id="THERanking"
+                  defaultValue={this.state.THERanking}
+                  onChange={e => this.handleChange(e)}
+                />
+              </FormGroup>
               {/* Submit button */}
               <Button className="mb-3" color="dark" block>
-                Submit < FaPaperPlane />
+                Submit <FaPaperPlane />
               </Button>
             </Form>
           </ModalBody>
