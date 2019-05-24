@@ -55,6 +55,13 @@ const UniversitySchema = new Schema({
       type: Number,
       default: 0
     },
+    duration: {
+      type: String
+    },
+    ECTS: {
+      type: Number,
+      default: 0
+    },
     description: {
       type: String
     },

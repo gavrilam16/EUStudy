@@ -122,19 +122,25 @@ class UniversityProgram extends Component {
           moment(this.props.selectedUniversity.admissionStartDate),
           moment(this.props.selectedUniversity.admissionEndDate)
         ) ? (
-            <h6 className="d-inline">
-              <span className="font-weight-bold">{selectedProgram.name}</span><i>, {selectedProgram.degree}
+          <h6 className="d-inline">
+            <span className="font-weight-bold">{selectedProgram.name}</span>
+            <i>
+              , {selectedProgram.degree}
               {this.props.showUniversity
                 ? ", " + this.props.selectedUniversity.name
                 : null}
-            </i></h6>
+            </i>
+          </h6>
         ) : (
           <h6 className="d-inline">
-            {selectedProgram.name}<i>, {selectedProgram.degree}
-            {this.props.showUniversity
-              ? ", " + this.props.selectedUniversity.name
-              : null}
-          </i></h6>
+            {selectedProgram.name}
+            <i>
+              , {selectedProgram.degree}
+              {this.props.showUniversity
+                ? ", " + this.props.selectedUniversity.name
+                : null}
+            </i>
+          </h6>
         )}
         <Button
           outline
@@ -150,11 +156,23 @@ class UniversityProgram extends Component {
           style={this.state.isShowingDetails ? {} : { display: "none" }}
         >
           <p className="text-justify">{selectedProgram.description}</p>
-          <p>
-            Fees: <b>{selectedProgram.fees}</b> {EUR} per year.
-          </p>
+          {selectedProgram.fees !== 0 ? (
+            <span className="d-block">
+              Fees: <b>{selectedProgram.fees}</b> {EUR} per year.
+            </span>
+          ) : null}
+          {selectedProgram.duration ? (
+            <span className="d-block">
+              Duration: <b>{selectedProgram.duration}</b>
+            </span>
+          ) : null}
+          {selectedProgram.ECTS !== 0 ? (
+            <span className="d-block">
+              ECTS: <b>{selectedProgram.ECTS}</b>
+            </span>
+          ) : null}
           <a
-            className="d-block mb-2"
+            className="d-block mt-2 mb-2"
             href={selectedProgram.link}
             target="_blank"
             rel="noopener noreferrer"

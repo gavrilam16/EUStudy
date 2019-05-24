@@ -27,7 +27,9 @@ class UniversityProgramModal extends Component {
       link: "",
       domain: "",
       degree: "",
-      fees: "",
+      fees: 0,
+      duration: "",
+      ECTS: 0,
       description: ""
     };
   }
@@ -51,6 +53,8 @@ class UniversityProgramModal extends Component {
           domain: this.props.selectedProgram.domain,
           degree: this.props.selectedProgram.degree,
           fees: this.props.selectedProgram.fees,
+          ECTS: this.props.selectedProgram.ECTS,
+          duration: this.props.selectedProgram.duration,
           description: this.props.selectedProgram.description,
           isModalOpen: !this.state.isModalOpen
         });
@@ -62,6 +66,8 @@ class UniversityProgramModal extends Component {
           domain: "",
           degree: "",
           fees: 0,
+          duration: "",
+          ECTS: 0,
           description: "",
           isModalOpen: !this.state.isModalOpen
         });
@@ -98,6 +104,8 @@ class UniversityProgramModal extends Component {
         domain: this.state.domain,
         degree: this.state.degree,
         fees: this.state.fees,
+        duration: this.state.duration,
+        ECTS: this.state.ECTS,
         description: this.state.description
       };
       // If adding new program
@@ -112,6 +120,8 @@ class UniversityProgramModal extends Component {
             domain: this.state.domain,
             degree: this.state.degree,
             fees: this.state.fees,
+            duration: this.state.duration,
+            ECTS: this.state.ECTS,
             description: this.state.description
           }
         ]
@@ -201,6 +211,17 @@ class UniversityProgramModal extends Component {
                   ))}
                 </Input>
               </FormGroup>
+              {/* Duration input*/}
+              <FormGroup>
+                <Label for="duration">Duration</Label>
+                <Input
+                  type="text"
+                  name="duration"
+                  id="duration"
+                  defaultValue={this.state.duration}
+                  onChange={e => this.handleChange(e)}
+                />
+              </FormGroup>
               {/* Fees input*/}
               <FormGroup>
                 <Label for="name">Fees *</Label>
@@ -211,6 +232,18 @@ class UniversityProgramModal extends Component {
                   id="fees"
                   min="0"
                   defaultValue={this.state.fees}
+                  onChange={e => this.handleChange(e)}
+                />
+              </FormGroup>
+              {/* ECTS input*/}
+              <FormGroup>
+                <Label for="ects">ECTS</Label>
+                <Input
+                  type="number"
+                  name="ECTS"
+                  id="ECTS"
+                  min="0"
+                  defaultValue={this.state.ECTS}
                   onChange={e => this.handleChange(e)}
                 />
               </FormGroup>
