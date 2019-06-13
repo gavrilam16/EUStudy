@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import { getUniversities } from "../../actions/universityActions";
 
 import UniversityPanel from "./UniversityPanel";
-import CardModal from "./UniversityCardModal";
+import UniversityCardModal from "./UniversityCardModal";
 
 import {
   Row,
@@ -275,7 +275,7 @@ class UniversitiesList extends Component {
                     (this.props.user.currentUser.role === "faculty" &&
                       this.props.user.currentUser.university ===
                         university.name) ? (
-                      <CardModal selectedUniversity={university} />
+                      <UniversityCardModal selectedUniversity={university} />
                     ) : null}
                   </div>
                 </CardBody>
