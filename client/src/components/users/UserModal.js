@@ -150,7 +150,7 @@ class UserModal extends Component {
         <FaPencilAlt /> Modify
         </Button>
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Modifiy</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Modify</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.handleSubmit}>
               {/* Name input */}

@@ -8,7 +8,9 @@ import {
 } from "../../actions/universityActions";
 import { getUsers } from "../../actions/userActions";
 
-import { SUBSCRIPTIONS, EUR, ADMISSION_STATUS } from "../../consts";
+import AdmissionRequestsModal from "./../universities/AdmissionRequestsModal";
+
+import { SUBSCRIPTIONS, EUR } from "../../consts";
 
 import {
   Row,
@@ -19,21 +21,18 @@ import {
   CardBody,
   CardText,
   CardTitle,
-  Table,
-  FormGroup,
-  Input
+  Table
 } from "reactstrap";
 import { FaPaperPlane, FaUniversity } from "react-icons/fa";
 
+import uuid from "uuid";
 import moment from "moment";
 
 class FacultyPanel extends Component {
   constructor() {
     super();
     this.state = {
-      extended: false,
-      comments: "",
-      requestStatus: ""
+      extended: false
     };
   }
 
@@ -76,33 +75,6 @@ class FacultyPanel extends Component {
   // Get user input in state
   handleChange = e => {
     this.setState({ [e.target.id]: e.target.value });
-  };
-
-  handleSubmit = (e, selectedUniversity, selectedProgram, admissionRequest) => {
-    // Copy selected university into a new object
-    let university = Object.assign({}, selectedUniversity);
-    university.id = selectedUniversity._id;
-    // Find the index of the selected program
-    const objIndex = selectedUniversity.programs.findIndex(
-      obj => obj._id === selectedProgram._id
-    );
-    const objIndex2 = university.programs[objIndex].admissionRequests.findIndex(
-      obj => obj._id === admissionRequest._id
-    );
-    // Modifiy request to the program in the university object
-    if (this.state.requestStatus !== "") {
-      university.programs[objIndex].admissionRequests[
-        objIndex2
-      ].requestStatus = this.state.requestStatus;
-    }
-    if (this.state.comments !== "") {
-      university.programs[objIndex].admissionRequests[
-        objIndex2
-      ].comments = this.state.comments;
-    }
-
-    // Send modify request via modifyUniversity action
-    this.props.modifyUniversity(university);
   };
 
   render() {
@@ -235,8 +207,7 @@ class FacultyPanel extends Component {
                   <th>Name</th>
                   <th>Email</th>
                   <th>Program</th>
-                  <th>Admission Status</th>
-                  <th>Change</th>
+                  <th>Status</th>
                   <th>Comments</th>
                   <th>Save changes</th>
                 </tr>
@@ -269,65 +240,16 @@ class FacultyPanel extends Component {
                           <td>{program.name}</td>
                           {/* Admission status */}
                           <td>{admissionRequest.requestStatus}</td>
-                          {/* Change status */}
-                          <td className="pb-0">
-                            <FormGroup>
-                              <Input
-                                type="select"
-                                name="requestStatus"
-                                id="requestStatus"
-                                bsSize="sm"
-                                onChange={e => this.handleChange(e)}
-                              >
-                                {ADMISSION_STATUS.filter(
-                                  status =>
-                                    status !== "Canceled" && status !== "Sent"
-                                ).map((status, i) => (
-                                  <option
-                                    selected={
-                                      status === admissionRequest.requestStatus
-                                    }
-                                    key={i}
-                                  >
-                                    {status}
-                                  </option>
-                                ))}
-                              </Input>
-                            </FormGroup>
-                          </td>
                           {/* Admission comments */}
-                          <td>
-                            {" "}
-                            <FormGroup>
-                              <Input
-                                type="textarea"
-                                name="comments"
-                                id="comments"
-                                rows="2"
-                                defaultValue={admissionRequest.comments}
-                                onChange={e => this.handleChange(e)}
-                              />
-                            </FormGroup>
-                          </td>
-                          <td>
-                            {/* Send button */}
-                            <Button
-                              size="sm"
-                              color="info"
-                              id="send"
-                              name="send"
-                              onClick={e =>
-                                this.handleSubmit(
-                                  e,
-                                  university,
-                                  program,
-                                  admissionRequest
-                                )
-                              }
-                            >
-                              Send <FaPaperPlane />
-                            </Button>
-                          </td>
+                          <td>{admissionRequest.comments}</td>
+                          {/* Send button */}
+                          <AdmissionRequestsModal
+                            key={uuid()}
+                            selectedUniversity={university}
+                            selectedProgram={program}
+                            selectedAdmissionRequest={admissionRequest}
+                            selectedUser={users.filter(user => user._id === admissionRequest.studentId )}
+                          />
                         </tr>
                       ) : null
                     )

@@ -94,9 +94,7 @@ class StudentPanel extends Component {
                           {/* Admission comments */}
                           <td>{admissionRequest.comments}</td>
                             {admissionRequest.requestStatus ===
-                              ADMISSION_STATUS[0] ||
-                            admissionRequest.requestStatus ===
-                              ADMISSION_STATUS[1] ? (
+                              ADMISSION_STATUS[0] ? (
                               <ConfirmModal
                                 key={uuid()}
                                 tag="td"
