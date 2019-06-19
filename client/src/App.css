@@ -18,6 +18,10 @@ a:hover {
   box-shadow: none;
 }
 
+textarea {
+  resize: none;
+}
+
 /* Main container */
 .container-fluid {
   max-width: 1470px;

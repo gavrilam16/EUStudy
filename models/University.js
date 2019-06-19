@@ -72,6 +72,9 @@ const UniversitySchema = new Schema({
         },
         requestStatus: {
           type: String
+        },
+        comments: {
+          type: String
         }
       }
     ],

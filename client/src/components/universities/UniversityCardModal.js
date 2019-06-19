@@ -208,7 +208,8 @@ class UniversityCardModal extends Component {
               <FormGroup>
                 <Label for="motto">Description</Label>
                 <Input
-                  type="text"
+                  type="textarea"
+                  rows="4"
                   name="description"
                   id="description"
                   defaultValue={this.state.description}

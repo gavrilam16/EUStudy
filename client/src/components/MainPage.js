@@ -116,6 +116,16 @@ class MainPage extends Component {
     });
   };
 
+    // When UniversitiesList or UniversityProgramsLisst sends callback after ViewAll
+    updateViewAll = () => {
+      // Mark country as isAdded
+      this.setState({
+        selectedCountry: {
+          properties: {}
+        },
+      });
+    };
+
   // When the confirm modal sends callback
   handleDelete = id => {
     // Delete country from database via deleteCountry action
@@ -301,10 +311,12 @@ class MainPage extends Component {
           {this.state.selectedPanel === "universities" ? (
             <UniversitiesList
               countryCode={this.state.selectedCountry.properties.ISO_A2}
+              callBack={this.updateViewAll}
             />
           ) : (
             <UniversityProgramsList
               countryCode={this.state.selectedCountry.properties.ISO_A2}
+              callBack={this.updateViewAll}
             />
           )}
           <hr />

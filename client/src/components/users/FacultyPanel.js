@@ -31,7 +31,9 @@ class FacultyPanel extends Component {
   constructor() {
     super();
     this.state = {
-      extended: false
+      extended: false,
+      comments: "",
+      requestStatus: ""
     };
   }
 
@@ -71,12 +73,12 @@ class FacultyPanel extends Component {
     this.props.modifyUniversity(university);
   };
 
-  handleChangeStatus = (
-    e,
-    selectedUniversity,
-    selectedProgram,
-    admissionRequest
-  ) => {
+  // Get user input in state
+  handleChange = e => {
+    this.setState({ [e.target.id]: e.target.value });
+  };
+
+  handleSubmit = (e, selectedUniversity, selectedProgram, admissionRequest) => {
     // Copy selected university into a new object
     let university = Object.assign({}, selectedUniversity);
     university.id = selectedUniversity._id;
@@ -88,8 +90,16 @@ class FacultyPanel extends Component {
       obj => obj._id === admissionRequest._id
     );
     // Modifiy request to the program in the university object
-    university.programs[objIndex].admissionRequests[objIndex2].requestStatus =
-      e.target.value;
+    if (this.state.requestStatus !== "") {
+      university.programs[objIndex].admissionRequests[
+        objIndex2
+      ].requestStatus = this.state.requestStatus;
+    }
+    if (this.state.comments !== "") {
+      university.programs[objIndex].admissionRequests[
+        objIndex2
+      ].comments = this.state.comments;
+    }
 
     // Send modify request via modifyUniversity action
     this.props.modifyUniversity(university);
@@ -217,7 +227,7 @@ class FacultyPanel extends Component {
           </Col>
           {/* Admission requests */}
           <Col xs={12} md={{ size: 10, offset: 1 }}>
-          <h5 className="mt-3">Admission Requests</h5>
+            <h5 className="mt-3">Admission Requests</h5>
             <Table className="mt-3 text-center">
               <thead>
                 <tr>
@@ -227,6 +237,8 @@ class FacultyPanel extends Component {
                   <th>Program</th>
                   <th>Admission Status</th>
                   <th>Change</th>
+                  <th>Comments</th>
+                  <th>Save changes</th>
                 </tr>
               </thead>
               <tbody>
@@ -263,29 +275,58 @@ class FacultyPanel extends Component {
                               <Input
                                 type="select"
                                 name="requestStatus"
-                                id="selectAdmissionStatus"
+                                id="requestStatus"
                                 bsSize="sm"
-                                onChange={e =>
-                                  this.handleChangeStatus(
-                                    e,
-                                    university,
-                                    program,
-                                    admissionRequest
-                                  )
-                                }
+                                onChange={e => this.handleChange(e)}
                               >
-                                <option value="" hidden>
-                                  {" "}
-                                  Choose a status{" "}
-                                </option>
                                 {ADMISSION_STATUS.filter(
                                   status =>
                                     status !== "Canceled" && status !== "Sent"
                                 ).map((status, i) => (
-                                  <option key={i}>{status}</option>
+                                  <option
+                                    selected={
+                                      status === admissionRequest.requestStatus
+                                    }
+                                    key={i}
+                                  >
+                                    {status}
+                                  </option>
                                 ))}
                               </Input>
                             </FormGroup>
+                          </td>
+                          {/* Admission comments */}
+                          <td>
+                            {" "}
+                            <FormGroup>
+                              <Input
+                                type="textarea"
+                                name="comments"
+                                id="comments"
+                                rows="2"
+                                defaultValue={admissionRequest.comments}
+                                onChange={e => this.handleChange(e)}
+                              />
+                            </FormGroup>
+                          </td>
+                          <td>
+                            {/* Send button */}
+                            <Button
+                              size="sm"
+                              color="info"
+                              id="send"
+                              name="send"
+                              onClick={e =>
+                                this.handleSubmit(
+                                  e,
+                                  university,
+                                  program,
+                                  admissionRequest
+                                )
+                              }
+                            >
+                              Send <FaPaperPlane />
+                            </Button>
                           </td>
                         </tr>
                       ) : null

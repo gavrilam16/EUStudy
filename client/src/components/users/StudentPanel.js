@@ -61,9 +61,11 @@ class StudentPanel extends Component {
         <Row className="mt-5">
           <Col xs={12} md={{ size: 10, offset: 1 }}>
             <h6>
-              In the table below you can follow that status of your <b>admission
-              requests</b>. If you've changed your mind, you can also <b>try to cancel</b> your requests if still possible. If you have not yet applied for any program, you can do
-              so from the <a href="/">main page</a>.
+              In the table below you can follow that status of your{" "}
+              <b>admission requests</b>. If you've changed your mind, you can
+              also <b>try to cancel</b> your requests if still possible. If you
+              have not yet applied for any program, you can do so from the{" "}
+              <a href="/">main page</a>.
             </h6>
             <Table className="mt-5 text-center">
               <thead>
@@ -71,6 +73,7 @@ class StudentPanel extends Component {
                   <th>#</th>
                   <th>Program</th>
                   <th>Admission Status</th>
+                  <th>Comments</th>
                   <th>Cancel</th>
                 </tr>
               </thead>
@@ -88,26 +91,28 @@ class StudentPanel extends Component {
                           <td className="pb-0">
                             {admissionRequest.requestStatus}
                           </td>
-                          {admissionRequest.requestStatus ===
-                            ADMISSION_STATUS[0] ||
-                          admissionRequest.requestStatus ===
-                            ADMISSION_STATUS[1] ? (
-                            <ConfirmModal
-                              key={uuid()}
-                              tag="td"
-                              buttonText="Cancel"
-                              title="Cancel"
-                              message={`Are you sure you want to cancel your admission request for ${
-                                program.name
-                              }?`}
-                              callBack={this.handleCancel.bind(
-                                this,
-                                university,
-                                program,
-                                admissionRequest
-                              )}
-                            />
-                          ) : null}
+                          {/* Admission comments */}
+                          <td>{admissionRequest.comments}</td>
+                            {admissionRequest.requestStatus ===
+                              ADMISSION_STATUS[0] ||
+                            admissionRequest.requestStatus ===
+                              ADMISSION_STATUS[1] ? (
+                              <ConfirmModal
+                                key={uuid()}
+                                tag="td"
+                                buttonText="Cancel"
+                                title="Cancel"
+                                message={`Are you sure you want to cancel your admission request for ${
+                                  program.name
+                                }?`}
+                                callBack={this.handleCancel.bind(
+                                  this,
+                                  university,
+                                  program,
+                                  admissionRequest
+                                )}
+                              />
+                            ) : null}
                         </tr>
                       ) : null
                     )

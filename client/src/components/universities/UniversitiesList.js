@@ -89,10 +89,11 @@ class UniversitiesList extends Component {
   // When user clicks the View All button
   handleViewAll = () => {
     this.setState({
-      countryCode: undefined,
+      countryCode: "",
       isTop10Enabled: false,
       isTop50Enabled: false,
     });
+    this.props.callBack();
   };
 
   render() {

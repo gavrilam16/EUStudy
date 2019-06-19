@@ -57,6 +57,7 @@ class UniversityProgramsList extends Component {
     this.setState({
       countryCode: undefined
     });
+    this.props.callBack();
   };
 
   render() {

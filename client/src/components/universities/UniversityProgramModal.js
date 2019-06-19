@@ -252,7 +252,8 @@ class UniversityProgramModal extends Component {
                 <Label for="name">Description *</Label>
                 <Input
                   required
-                  type="text"
+                  type="textarea"
+                  rows="4"
                   name="description"
                   id="description"
                   defaultValue={this.state.description}
