@@ -109,13 +109,13 @@ class UniversityPanel extends Component {
       return (
         <Row id="university-panel">
           <Col md={12} id="university-panel-header" className="p-2">
-            Choose an university
+            Choose a university
           </Col>
           <Col>
             <div className="p-3">
               <p>
-                Select an university by pressing the <strong>Learn More</strong>{" "}
-                button of one of the cards above. Choose another country from
+                Select a university by pressing the <strong>Learn More</strong>{" "}
+                button from one of the cards above. Choose another country from
                 the map or click the <strong>View All</strong> button if no
                 university card is available.
               </p>

@@ -62,7 +62,8 @@ class UniversityProgram extends Component {
       ...this.props.selectedUniversity.programs[objIndex].admissionRequests,
       {
         studentId: this.props.user.currentUser.id,
-        requestStatus: ADMISSION_STATUS[0]
+        requestStatus: ADMISSION_STATUS[0],
+        requestDate: moment()
       }
     ];
 

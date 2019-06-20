@@ -91,7 +91,7 @@ class AdmissionRequestsModal extends Component {
     return (
       <td>
         {/* Modal button */}
-        <Button size="sm" href="#" onClick={this.toggle}>
+        <Button disabled={this.props.selectedAdmissionRequest.requestStatus === "Canceled"} size="sm" href="#" onClick={this.toggle}>
           <FaPencilAlt /> Modify
         </Button>
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggle}>

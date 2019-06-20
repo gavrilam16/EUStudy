@@ -75,7 +75,10 @@ const UniversitySchema = new Schema({
         },
         comments: {
           type: String
-        }
+        },
+        requestDate: {
+          type: Date
+        },
       }
     ],
   }],

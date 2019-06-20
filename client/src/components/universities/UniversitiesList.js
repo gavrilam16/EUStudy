@@ -108,6 +108,7 @@ class UniversitiesList extends Component {
         university => university.countryCode === this.state.countryCode
       );
     }
+    
     // Filter universities on search
     universities = universities.filter(university => {
       if (university.name !== undefined) {
@@ -152,7 +153,7 @@ class UniversitiesList extends Component {
               type="search"
               name="search"
               id="searchUniversity"
-              placeholder="Search an university"
+              placeholder="Search a university"
               onChange={e => this.handleSearch(e)}
             />
             <Button onClick={this.handleTop10} className="ml-2">
