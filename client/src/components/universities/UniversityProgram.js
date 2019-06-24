@@ -118,7 +118,7 @@ class UniversityProgram extends Component {
       ) : null;
 
     return (
-      <div>
+      <div className="mt-1">
         {moment().isBetween(
           moment(this.props.selectedUniversity.admissionStartDate),
           moment(this.props.selectedUniversity.admissionEndDate)

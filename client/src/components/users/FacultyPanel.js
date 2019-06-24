@@ -172,7 +172,7 @@ class FacultyPanel extends Component {
                       . Extend the subscription period by choosing one of the
                       following options:
                     </p>
-                    <div id="subscription-panel" className="mb-1">
+                    <div id="subscription-panel-faculty" className="mb-1">
                       {SUBSCRIPTIONS.map((subscription, i) => (
                         <Card key={i} className="ml-3 mr-3 text-center">
                           <CardBody>
@@ -201,7 +201,7 @@ class FacultyPanel extends Component {
                       <p className="mt-3">
                         {" "}
                         A request has been sent to the page administrators. You
-                        will recieve a response by email in the next hours.
+                        will receive a response by email in the next hours.
                       </p>
                     ) : null}
                   </div>
@@ -253,7 +253,7 @@ class FacultyPanel extends Component {
                             {/* Request date */}
                             <td>
                               {moment(admissionRequest.requestDate).format(
-                                "MMMM Do YYYY, h:mm:ss A"
+                                "MMMM Do YYYY, h:mm A"
                               )}
                             </td>
 

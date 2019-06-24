@@ -14,6 +14,7 @@ import { ADMISSION_STATUS } from "../../consts";
 
 import { Row, Col, Spinner, Table } from "reactstrap";
 
+import moment from "moment";
 import uuid from "uuid";
 
 class StudentPanel extends Component {
@@ -71,6 +72,7 @@ class StudentPanel extends Component {
               <thead>
                 <tr>
                   <th>#</th>
+                  <th>Sent</th>
                   <th>Program</th>
                   <th>Admission Status</th>
                   <th>Comments</th>
@@ -85,6 +87,12 @@ class StudentPanel extends Component {
                       this.props.user.currentUser.id ? (
                         <tr key={i}>
                           <th scope="row">{j++}</th>
+                          {/* Request date */}
+                          <td>
+                            {moment(admissionRequest.requestDate).format(
+                              "MMMM Do YYYY, h:mm A"
+                            )}
+                          </td>
                           {/* Program */}
                           <td>{program.name}</td>
                           {/* Admission status */}
@@ -93,24 +101,24 @@ class StudentPanel extends Component {
                           </td>
                           {/* Admission comments */}
                           <td>{admissionRequest.comments}</td>
-                            {admissionRequest.requestStatus ===
-                              ADMISSION_STATUS[0] ? (
-                              <ConfirmModal
-                                key={uuid()}
-                                tag="td"
-                                buttonText="Cancel"
-                                title="Cancel"
-                                message={`Are you sure you want to cancel your admission request for ${
-                                  program.name
-                                }?`}
-                                callBack={this.handleCancel.bind(
-                                  this,
-                                  university,
-                                  program,
-                                  admissionRequest
-                                )}
-                              />
-                            ) : null}
+                          {admissionRequest.requestStatus ===
+                          ADMISSION_STATUS[0] ? (
+                            <ConfirmModal
+                              key={uuid()}
+                              tag="td"
+                              buttonText="Cancel"
+                              title="Cancel"
+                              message={`Are you sure you want to cancel your admission request for ${
+                                program.name
+                              }?`}
+                              callBack={this.handleCancel.bind(
+                                this,
+                                university,
+                                program,
+                                admissionRequest
+                              )}
+                            />
+                          ) : null}
                         </tr>
                       ) : null
                     )
