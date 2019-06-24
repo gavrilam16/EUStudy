@@ -71,12 +71,12 @@ class StudentPanel extends Component {
             <Table className="mt-5 text-center">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Sent</th>
-                  <th>Program</th>
-                  <th>Admission Status</th>
-                  <th>Comments</th>
-                  <th>Cancel</th>
+                  <th style={{ width: "5%" }}>#</th>
+                  <th style={{ width: "19%" }}>Sent</th>
+                  <th style={{ width: "22%" }}>Program</th>
+                  <th style={{ width: "16%" }}>Status</th>
+                  <th style={{ width: "19%" }}>Comments</th>
+                  <th style={{ width: "19%" }}>Cancel</th>
                 </tr>
               </thead>
               <tbody>
@@ -94,7 +94,7 @@ class StudentPanel extends Component {
                             )}
                           </td>
                           {/* Program */}
-                          <td>{program.name}</td>
+                          <td>{program.name}, {university.name}</td>
                           {/* Admission status */}
                           <td className="pb-0">
                             {admissionRequest.requestStatus}

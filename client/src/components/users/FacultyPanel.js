@@ -225,14 +225,14 @@ class FacultyPanel extends Component {
             <Table className="mt-3 text-center">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Sent</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Program</th>
-                  <th>Status</th>
-                  <th>Comments</th>
-                  <th>Modify</th>
+                  <th style={{ width: "5%" }}>#</th>
+                  <th style={{ width: "13.57%" }}>Sent</th>
+                  <th style={{ width: "13.57%" }}>Name</th>
+                  <th style={{ width: "13.57%" }}>Email</th>
+                  <th style={{ width: "15.57%" }}>Program</th>
+                  <th style={{ width: "11.57%" }}>Status</th>
+                  <th style={{ width: "13.57%" }}>Comments</th>
+                  <th style={{ width: "13.57%" }}>Modify</th>
                 </tr>
               </thead>
               <tbody>
